@@ -1,0 +1,306 @@
+<template>
+  <div>
+    <Header :title="title">
+      <div slot="data">
+        <v-item-group class="mt-2 pa-4">
+          <div class="text-center red--text">Ban con 3 ngay 2 gio de cham diem</div>
+          <v-subheader class="mb-n2">Da cham: {{ daCham }}/{{ items.length }}</v-subheader>
+          <v-data-table
+              :headers="headers"
+              :items="filteredItems"
+              item-key="text"
+              class="elevation-1 rounded-0"
+          >
+
+            <template v-slot:header.trangThai="{ header }">
+              {{ header.text }}
+              <v-menu offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn icon v-bind="attrs" v-on="on">
+                    <v-icon class="ml-n4" small color="white">
+                      mdi-filter
+                    </v-icon>
+                  </v-btn>
+                </template>
+                <v-card class="pa-4 py-0" style="cursor: pointer">
+                  <v-list>
+
+                    <v-list-item-content @click="type= 'All' ">
+                      <v-list-item-title>Tất cả</v-list-item-title>
+                    </v-list-item-content>
+
+                    <v-list-item-content>
+                      <v-list-item-title  @click="type= 'Done' ">Đã chấm</v-list-item-title>
+                    </v-list-item-content>
+
+                    <v-list-item-content  @click="type= 'NotDone' ">
+                      <v-list-item-title>Chưa chấm</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list>
+                </v-card>
+              </v-menu>
+            </template>
+
+            <template v-slot:item.trangThai="{item}">
+              <div v-if=item.trangThai>
+                Đã chấm
+              </div>
+              <div v-else>
+                Chưa chấm
+              </div>
+            </template>
+
+            <template v-slot:item.tacVu="{ item }">
+              <v-icon
+                  small
+                  class="mr-2"
+                  @click="editItem(item)"
+              >
+                mdi-pencil
+              </v-icon>
+            </template>
+          </v-data-table>
+        </v-item-group>
+      </div>
+    </Header>
+    <FormDiemLT :dialog.sync="dialog"></FormDiemLT>
+  </div>
+</template>
+
+<script>
+import Header from "@/components/Header";
+import FormDiemLT from "@/pages/listMembers/FormDiemLT";
+import {eventbus} from "@/main"
+
+export default {
+  name: "ListMembers",
+  components: {
+    FormDiemLT,
+    Header
+  },
+  data() {
+    return {
+      title: "Danh sách thành viên",
+      headers: [
+        {
+          text: 'STT',
+          align: 'left',
+          sortable: false,
+          value: 'stt',
+          width: '7%'
+        },
+        {
+          text: 'Mã sinh viên',
+          align: 'start',
+          sortable: false,
+          value: 'maSinhVien',
+          width: '20%'
+        },
+        {
+          text: 'Họ tên',
+          align: 'start',
+          value: 'hoTen',
+          width: '25%',
+          sort: (hoTen1, hoTen2) => {
+
+            hoTen1 = hoTen1.trim()
+            hoTen2 = hoTen2.trim()
+
+            let ten1 = hoTen1.substr(hoTen1.lastIndexOf(" ") + 1);
+            let ten2 = hoTen2.substr(hoTen2.lastIndexOf(" ") + 1);
+
+            return ten1.localeCompare(ten2);
+          }
+        },
+        {
+          text: 'Điểm cá nhân chấm',
+          align: 'start',
+          value: 'diemCaNhanCham',
+          width: '20%'
+        },
+        {
+          text: 'Trạng thái',
+          align: 'start',
+          value: 'trangThai',
+          sortable: false,
+          width: '15%',
+        },
+        {
+          text: 'Tác vụ',
+          align: 'start',
+          sortable: false,
+          value: 'tacVu',
+          width: '15%'
+        }
+      ],
+      items: [
+        {
+          stt: 1,
+          maSinhVien: '675105050',
+          hoTen: 'Lê Thanh Huyền',
+          diemCaNhanCham: 91,
+          trangThai: true
+        },
+        {
+          stt: 2,
+          maSinhVien: '675105027',
+          hoTen: 'Nguyễn Vũ Chí Dũng',
+          diemCaNhanCham: 90,
+          trangThai: true
+        },
+        {
+          stt: 3,
+          maSinhVien: '675105021',
+          hoTen: 'Đinh Quang Đạo',
+          diemCaNhanCham: 88,
+          trangThai: true
+        },
+        {
+          stt: 4,
+          maSinhVien: '675105082',
+          hoTen: 'Nguyễn Hải Long',
+          diemCaNhanCham: 50,
+          trangThai: false
+        },
+        {
+          stt: 5,
+          maSinhVien: '675105092',
+          hoTen: 'Đỗ Ngọc Anh',
+          diemCaNhanCham: 60,
+          trangThai: true
+        },
+        // {
+        //   stt: 6,
+        //   maSinhVien: '675105012',
+        //   hoTen: 'Lê Ngọc Liên',
+        //   diemCaNhanCham: 59,
+        //   trangThai: true
+        // },
+        // {
+        //   stt: 7,
+        //   maSinhVien: '675105091',
+        //   hoTen: 'Lê Thị Ngọc',
+        //   diemCaNhanCham: 70,
+        //   trangThai: false,
+        // },
+        // {
+        //   stt: 8,
+        //   maSinhVien: '675105092',
+        //   hoTen: 'Đỗ Ngọc Anh',
+        //   diemCaNhanCham: 60,
+        //   trangThai: true
+        // },
+        // {
+        //   stt: 9,
+        //   maSinhVien: '675105012',
+        //   hoTen: 'Lê Ngọc Liên',
+        //   diemCaNhanCham: 59,
+        //   trangThai: true
+        // },
+        // {
+        //   stt: 10,
+        //   maSinhVien: '675105091',
+        //   hoTen: 'Lê Thị Ngọc',
+        //   diemCaNhanCham: 70,
+        //   trangThai: false
+        // },
+        // {
+        //   stt: 1,
+        //   maSinhVien: '675105050',
+        //   hoTen: 'Lê Thanh Huyền',
+        //   diemCaNhanCham: 91,
+        //   trangThai: true
+        // },
+        // {
+        //   stt: 2,
+        //   maSinhVien: '675105027',
+        //   hoTen: 'Nguyễn Vũ Chí Dũng',
+        //   diemCaNhanCham: 90,
+        //   trangThai: true
+        // },
+        // {
+        //   stt: 3,
+        //   maSinhVien: '675105021',
+        //   hoTen: 'Đinh Quang Đạo',
+        //   diemCaNhanCham: 88,
+        //   trangThai: true
+        // },
+        // {
+        //   stt: 4,
+        //   maSinhVien: '675105082',
+        //   hoTen: 'Nguyễn Hải Long',
+        //   diemCaNhanCham: 50,
+        //   trangThai: false
+        // },
+        // {
+        //   stt: 5,
+        //   maSinhVien: '675105092',
+        //   hoTen: 'Đỗ Ngọc Anh',
+        //   diemCaNhanCham: 60,
+        //   trangThai: true
+        // },
+        // {
+        //   stt: 6,
+        //   maSinhVien: '675105012',
+        //   hoTen: 'Lê Ngọc Liên',
+        //   diemCaNhanCham: 59,
+        //   trangThai: true
+        // },
+        // {
+        //   stt: 7,
+        //   maSinhVien: '675105091',
+        //   hoTen: 'Lê Thị Ngọc',
+        //   diemCaNhanCham: 70,
+        //   trangThai: false,
+        // },
+        // {
+        //   stt: 8,
+        //   maSinhVien: '675105092',
+        //   hoTen: 'Đỗ Ngọc Anh',
+        //   diemCaNhanCham: 60,
+        //   trangThai: true
+        // },
+        // {
+        //   stt: 9,
+        //   maSinhVien: '675105012',
+        //   hoTen: 'Lê Ngọc Liên',
+        //   diemCaNhanCham: 59,
+        //   trangThai: true
+        // },
+        // {
+        //   stt: 10,
+        //   maSinhVien: '675105091',
+        //   hoTen: 'Lê Thị Ngọc',
+        //   diemCaNhanCham: 70,
+        //   trangThai: false
+        // }
+      ],
+      daCham: 0,
+      dialog: false,
+      type: 'All'
+    }
+  },
+  created() {
+    this.daCham = this.items.filter(item => item.trangThai == true).length
+  },
+  computed: {
+    // eslint-disable-next-line vue/return-in-computed-property
+    filteredItems() {
+      if(this.type === "All") return this.items
+      if(this.type === "Done") return this.items.filter(item => item.trangThai == true)
+      if(this.type === "NotDone") return this.items.filter(item => item.trangThai == false)
+    }
+  },
+  methods: {
+    editItem(item) {
+      this.dialog = true
+      eventbus.$emit('hello', item)
+      // return item
+    },
+  }
+}
+</script>
+
+<style scoped>
+
+</style>
