@@ -1,0 +1,221 @@
+<template>
+<div>
+  <Header :title="title">
+    <div slot="data">
+      <v-item-group class="mt-2 pa-4">
+        <v-data-table
+            :headers="headers"
+            :items="filteredItems"
+            item-key="text"
+            class="elevation-1 rounded-0 mt-4"
+        >
+          <template v-slot:header.coVan="{header}">
+            {{ header.text }}
+            <v-menu offset-y>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon v-bind="attrs" vstart-on="on">
+                  <v-icon class="ml-n4" small color="white">
+                    mdi-filter
+                  </v-icon>
+                </v-btn>
+              </template>
+              <v-card class="pa-4 py-0" style="cursor: pointer">
+                <v-list>
+
+                  <v-list-item-content>
+                    <v-list-item-title @click="filterCoVan= 'All' ">Tất cả</v-list-item-title>
+                  </v-list-item-content>
+
+                  <v-list-item-content v-for="(item, index) in listCoVan"
+                                       :key="index"
+                                       @click="filterCoVan= item.name">
+                    <v-list-item-title>{{ item.name }}</v-list-item-title>
+                  </v-list-item-content>
+
+                </v-list>
+              </v-card>
+            </v-menu>
+          </template>
+
+          <template v-slot:header.trangThai="{ header }">
+            {{ header.text }}
+            <v-menu offset-y>
+
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon v-bind="attrs" v-on="on">
+                  <v-icon class="ml-n4" small color="white">
+                    mdi-filter
+                  </v-icon>
+                </v-btn>
+              </template>
+
+              <v-card class="pa-4 py-0" style="cursor: pointer">
+                <v-list>
+
+                  <v-list-item-content @click="type= 'All' ">
+                    <v-list-item-title>Tất cả</v-list-item-title>
+                  </v-list-item-content>
+
+                  <v-list-item-content>
+                    <v-list-item-title @click="type= true ">Đã duyệt</v-list-item-title>
+                  </v-list-item-content>
+
+                  <v-list-item-content @click="type= false ">
+                    <v-list-item-title>Chưa duyệt</v-list-item-title>
+                  </v-list-item-content>
+                </v-list>
+              </v-card>
+            </v-menu>
+          </template>
+
+          <template v-slot:item.trangThai="{item}">
+            <div v-if=item.trangThai>
+              Đã duyệt
+            </div>
+            <div v-else>
+              Chưa duyệt
+            </div>
+          </template>
+
+          <template v-slot:item.tacVu="{ item }">
+            <v-icon
+                small
+                class="mr-2"
+                :item="item"
+            >
+              mdi-pencil
+            </v-icon>
+          </template>
+        </v-data-table>
+      </v-item-group>
+    </div>
+  </Header>
+
+</div>
+</template>
+
+<script>
+import Header from "@/components/Header";
+export default {
+  name: "ListClassGV",
+  components: {
+    Header
+  },
+  data(){
+    return {
+      title: 'Danh sách lớp học',
+      headers: [
+        {
+          text: 'STT',
+          align: 'left',
+          sortable: false,
+          value: 'stt',
+          width: '7%'
+        },
+        {
+          text: 'Lớp',
+          align: 'start',
+          value: 'lop',
+          width: '20%'
+        },
+        {
+          text: 'Cố vấn học tập',
+          align: 'start',
+          value: 'coVan',
+          sortable: false,
+          width: '25%'
+          // sort: (hoTen1, hoTen2) => {
+          //
+          //   hoTen1 = hoTen1.trim()
+          //   hoTen2 = hoTen2.trim()
+          //
+          //   let ten1 = hoTen1.substr(hoTen1.lastIndexOf(" ") + 1);
+          //   let ten2 = hoTen2.substr(hoTen2.lastIndexOf(" ") + 1);
+          //
+          //   return ten1.localeCompare(ten2);
+          // }
+        },
+        {
+          text: 'Số phiếu điểm ren luyện',
+          align: 'start',
+          value: 'soPhieu',
+          sortable: false,
+          width: '20%'
+        },
+        {
+          text: 'Trạng thái',
+          align: 'start',
+          value: 'trangThai',
+          sortable: false,
+          width: '15%'
+        },
+        {
+          text: 'Tác vụ',
+          align: 'start',
+          sortable: false,
+          value: 'tacVu',
+          width: '15%'
+        }
+      ],
+      items: [
+        {
+          stt: 1,
+          lop: 'K67C',
+          coVan: 'Le Thanh Huyen',
+          trangThai: true
+        },
+        {
+          stt: 2,
+          lop: 'K67A',
+          coVan: 'Nguyen Van A',
+          trangThai: false
+        },
+        {
+          stt: 3,
+          lop: 'K67B',
+          coVan: 'Le Thanh Huyen',
+          trangThai: false
+        },
+        {
+          stt: 4,
+          lop: 'K68A',
+          coVan: 'Nguyen Van A',
+          trangThai: false
+        },
+        {
+          stt: 5,
+          lop: 'K68B',
+          coVan: 'Le Thanh Huyen',
+          trangThai: true
+        },
+        {
+          stt: 6,
+          lop: 'K68C',
+          coVan: 'Le Thanh Huyen',
+          trangThai: false
+        }
+      ],
+      listCoVan: [
+        {name : 'Le Thanh Huyen'},
+        {name : 'Nguyen Van A'}
+      ],
+      filterCoVan: 'All',
+      type: 'All'
+    }
+  },
+  computed: {
+    filteredItems(){
+      if (this.filterCoVan == "All" && this.type == "All") return this.items
+      else if (this.filterCoVan !== "All" && this.type !== "All") {
+        return this.items.filter(item => item.coVan == this.filterCoVan && item.trangThai == this.type)
+      } else {
+        return this.items.filter(item => item.coVan == this.filterCoVan || item.trangThai == this.type)
+      }
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

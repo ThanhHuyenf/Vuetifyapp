@@ -6,26 +6,29 @@
           <div>
             <Counter :year="2021"
                      :month="11"
-                     :date="7"
+                     :date="9"
                      :hours="16"
                      :minute="0"></Counter>
           </div>
+          <v-row no-gutters align="end">
+            <v-col cols="3">
+              <v-subheader class="mb-n5">Da cham: {{ daCham }}/{{ items.length }}</v-subheader>
+            </v-col>
 
-          <v-list-item>
-            <v-list-item-content>So lop : {{classes.length}}</v-list-item-content>
-            <v-list-item-content>So sinh vien : {{items.length}}</v-list-item-content>
+            <v-col cols="4" class="ml-auto">
+              <v-text-field
+                  placeholder="Nhap ma sinh vien"
+                  append-icon="mdi-magnify"
+                  hide-details
+              ></v-text-field>
+            </v-col>
+          </v-row>
 
-          </v-list-item>
-
-          <v-list-item>
-          </v-list-item>
-
-          <v-subheader class="mb-n2">Da cham: {{ daCham }}/{{ items.length }}</v-subheader>
           <v-data-table
               :headers="headers"
               :items="filteredItems"
               item-key="text"
-              class="elevation-1 rounded-0"
+              class="elevation-1 rounded-0 mt-4"
           >
             <template v-slot:header.lop="{header}">
               {{ header.text }}
@@ -301,7 +304,9 @@ export default {
         {class: "K67D"},
         {class: "K68C"}
       ],
-      filterClass: "All"
+      filterClass: "All",
+      // msv: '',
+      flag: false
     }
   },
 
@@ -322,9 +327,8 @@ export default {
     editItem(item) {
       this.dialog = true
       eventbus.$emit('hello', item)
-    },
+    }
   }
-
 }
 </script>
 

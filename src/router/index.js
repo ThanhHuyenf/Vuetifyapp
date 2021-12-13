@@ -1,16 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
 import Login from "../login/Login";
 
 import Sidebar from "@/pages/Sidebar";
-
 import Profile from "@/pages/profile/Profile";
-
 import ResultsHistory from "@/pages/resultsHistory/ResultsHistory";
-
 import ListMembers from "@/pages/listMembers/ListMembers"
-
 import ListMembersGV from "@/pages/listMembersGV/ListMembersGV";
+import ListClassGV from "@/pages/listClassesGV/ListClassGV";
 
 Vue.use(VueRouter)
 
@@ -25,11 +23,6 @@ const routes = [
     name: 'Dashboard',
     component: Sidebar,
     children: [
-      {
-        path: '/about',
-        name: 'About',
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-      },
       {
         path: '/profile',
         name: 'Profile',
@@ -49,7 +42,12 @@ const routes = [
         path: '/listMembersGV',
         name: 'ListMembersGV',
         component: ListMembersGV
-      }
+      },
+      {
+        path: '/listClassesGV',
+        name: 'ListMembersGV',
+        component: ListClassGV
+      },
     ]
   },
 

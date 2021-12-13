@@ -36,7 +36,9 @@ tr:hover{
     text-transform: none !important;
     letter-spacing: normal !important;
 }
-
+.reset-btn {
+    background: white;
+}
 /*CSS cho menu ngang*/
 .v-tab{
     text-transform: none !important;

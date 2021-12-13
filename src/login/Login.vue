@@ -15,7 +15,7 @@
 
                     <v-text-field
                         label="Tên tài khoản"
-                        v-model="email"
+                        v-model="user_id"
                         required
                         append-icon="mdi-account-outline"
                     ></v-text-field>
@@ -61,7 +61,7 @@ export default {
       passwordRules: [
         (v) => !!v || 'Password is required',
       ],
-      email: '',
+      user_id: '',
       loading: false
     }
   },
@@ -70,7 +70,7 @@ export default {
       this.loading= true
       if (this.$refs.form.validate()) {
         this.$axios.post('http://localhost:3001/api/login', {
-          email: this.email,
+          user_id: this.user_id,
           password: this.password
         })
         .then(res => {
