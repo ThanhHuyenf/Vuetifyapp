@@ -9,10 +9,7 @@
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
                 rgba(60, 64, 67, 0.15) 0px 2px 6px 2px !important;
 }
-/*thead tr:nth-child(1){*/
-/*    !*background: #212121 !important;*!*/
-/*    color: #000 !important;*/
-/*}*/
+
 thead th{
     color: #ffffff !important;
     background: #212121 !important;
@@ -21,7 +18,7 @@ thead th{
 tr:nth-child(odd){
     background: #f5f5f5 !important;
 }
-tr:hover{
+thead tr:hover{
     background: #e0e0e0 !important;
 }
 .mdi-arrow-up{
@@ -50,3 +47,17 @@ tr:hover{
     display: flex !important;
     flex-direction: row !important;
 }
+
+/*Css cho ther router-link*/
+a {
+    text-decoration: none !important;
+}
+
+.v-date-picker-table table thead:first-child{
+    background: red !important;
+}
+
+.dates-wrapper{
+    flex-direction: column !important;
+}
+

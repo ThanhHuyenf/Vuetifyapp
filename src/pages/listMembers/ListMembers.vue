@@ -12,6 +12,10 @@
               class="elevation-1 rounded-0"
           >
 
+            <template #item.index="{ item }">
+              {{ filteredItems.indexOf(item) +1}}
+            </template>
+
             <template v-slot:header.trangThai="{ header }">
               {{ header.text }}
               <v-menu offset-y>
@@ -30,10 +34,10 @@
                     </v-list-item-content>
 
                     <v-list-item-content>
-                      <v-list-item-title  @click="type= 'Done' ">Đã chấm</v-list-item-title>
+                      <v-list-item-title @click="type= 'Done' ">Đã chấm</v-list-item-title>
                     </v-list-item-content>
 
-                    <v-list-item-content  @click="type= 'NotDone' ">
+                    <v-list-item-content @click="type= 'NotDone' ">
                       <v-list-item-title>Chưa chấm</v-list-item-title>
                     </v-list-item-content>
                   </v-list>
@@ -50,32 +54,35 @@
               </div>
             </template>
 
-            <template v-slot:item.tacVu="{ item }">
-              <v-icon
-                  small
-                  class="mr-2"
-                  @click="editItem(item)"
-              >
-                mdi-pencil
-              </v-icon>
+            <template v-slot:item.tacVu="{item}">
+              <router-link :to="{
+                                 name: 'ListMembers.FormDiemLT',
+                                 params: {id: item.maSinhVien}
+              }">
+                <v-icon
+                    small
+                    class="mr-2"
+                >
+                  mdi-pencil
+                </v-icon>
+              </router-link>
             </template>
           </v-data-table>
         </v-item-group>
       </div>
     </Header>
-    <FormDiemLT :dialog.sync="dialog"></FormDiemLT>
+    <!--    <FormDiemLT :dialog.sync="dialog"></FormDiemLT>-->
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header";
-import FormDiemLT from "@/pages/listMembers/FormDiemLT";
-import {eventbus} from "@/main"
+// import FormDiemLT from "@/pages/listMembers/FormDiemLT";
+// import {eventbus} from "@/main"
 
 export default {
   name: "ListMembers",
   components: {
-    FormDiemLT,
     Header
   },
   data() {
@@ -83,10 +90,10 @@ export default {
       title: "Danh sách thành viên",
       headers: [
         {
-          text: 'STT',
+          text: '#',
           align: 'left',
           sortable: false,
-          value: 'stt',
+          value: 'index',
           width: '7%'
         },
         {
@@ -135,145 +142,35 @@ export default {
       ],
       items: [
         {
-          stt: 1,
           maSinhVien: '675105050',
           hoTen: 'Lê Thanh Huyền',
           diemCaNhanCham: 91,
           trangThai: true
         },
         {
-          stt: 2,
           maSinhVien: '675105027',
           hoTen: 'Nguyễn Vũ Chí Dũng',
           diemCaNhanCham: 90,
           trangThai: true
         },
         {
-          stt: 3,
           maSinhVien: '675105021',
           hoTen: 'Đinh Quang Đạo',
           diemCaNhanCham: 88,
           trangThai: true
         },
         {
-          stt: 4,
           maSinhVien: '675105082',
           hoTen: 'Nguyễn Hải Long',
           diemCaNhanCham: 50,
           trangThai: false
         },
         {
-          stt: 5,
           maSinhVien: '675105092',
           hoTen: 'Đỗ Ngọc Anh',
           diemCaNhanCham: 60,
           trangThai: true
         },
-        // {
-        //   stt: 6,
-        //   maSinhVien: '675105012',
-        //   hoTen: 'Lê Ngọc Liên',
-        //   diemCaNhanCham: 59,
-        //   trangThai: true
-        // },
-        // {
-        //   stt: 7,
-        //   maSinhVien: '675105091',
-        //   hoTen: 'Lê Thị Ngọc',
-        //   diemCaNhanCham: 70,
-        //   trangThai: false,
-        // },
-        // {
-        //   stt: 8,
-        //   maSinhVien: '675105092',
-        //   hoTen: 'Đỗ Ngọc Anh',
-        //   diemCaNhanCham: 60,
-        //   trangThai: true
-        // },
-        // {
-        //   stt: 9,
-        //   maSinhVien: '675105012',
-        //   hoTen: 'Lê Ngọc Liên',
-        //   diemCaNhanCham: 59,
-        //   trangThai: true
-        // },
-        // {
-        //   stt: 10,
-        //   maSinhVien: '675105091',
-        //   hoTen: 'Lê Thị Ngọc',
-        //   diemCaNhanCham: 70,
-        //   trangThai: false
-        // },
-        // {
-        //   stt: 1,
-        //   maSinhVien: '675105050',
-        //   hoTen: 'Lê Thanh Huyền',
-        //   diemCaNhanCham: 91,
-        //   trangThai: true
-        // },
-        // {
-        //   stt: 2,
-        //   maSinhVien: '675105027',
-        //   hoTen: 'Nguyễn Vũ Chí Dũng',
-        //   diemCaNhanCham: 90,
-        //   trangThai: true
-        // },
-        // {
-        //   stt: 3,
-        //   maSinhVien: '675105021',
-        //   hoTen: 'Đinh Quang Đạo',
-        //   diemCaNhanCham: 88,
-        //   trangThai: true
-        // },
-        // {
-        //   stt: 4,
-        //   maSinhVien: '675105082',
-        //   hoTen: 'Nguyễn Hải Long',
-        //   diemCaNhanCham: 50,
-        //   trangThai: false
-        // },
-        // {
-        //   stt: 5,
-        //   maSinhVien: '675105092',
-        //   hoTen: 'Đỗ Ngọc Anh',
-        //   diemCaNhanCham: 60,
-        //   trangThai: true
-        // },
-        // {
-        //   stt: 6,
-        //   maSinhVien: '675105012',
-        //   hoTen: 'Lê Ngọc Liên',
-        //   diemCaNhanCham: 59,
-        //   trangThai: true
-        // },
-        // {
-        //   stt: 7,
-        //   maSinhVien: '675105091',
-        //   hoTen: 'Lê Thị Ngọc',
-        //   diemCaNhanCham: 70,
-        //   trangThai: false,
-        // },
-        // {
-        //   stt: 8,
-        //   maSinhVien: '675105092',
-        //   hoTen: 'Đỗ Ngọc Anh',
-        //   diemCaNhanCham: 60,
-        //   trangThai: true
-        // },
-        // {
-        //   stt: 9,
-        //   maSinhVien: '675105012',
-        //   hoTen: 'Lê Ngọc Liên',
-        //   diemCaNhanCham: 59,
-        //   trangThai: true
-        // },
-        // {
-        //   stt: 10,
-        //   maSinhVien: '675105091',
-        //   hoTen: 'Lê Thị Ngọc',
-        //   diemCaNhanCham: 70,
-        //   trangThai: false
-        // }
       ],
       daCham: 0,
       dialog: false,
@@ -286,18 +183,11 @@ export default {
   computed: {
     // eslint-disable-next-line vue/return-in-computed-property
     filteredItems() {
-      if(this.type === "All") return this.items
-      if(this.type === "Done") return this.items.filter(item => item.trangThai == true)
-      if(this.type === "NotDone") return this.items.filter(item => item.trangThai == false)
+      if (this.type === "All") return this.items
+      if (this.type === "Done") return this.items.filter(item => item.trangThai == true)
+      if (this.type === "NotDone") return this.items.filter(item => item.trangThai == false)
     }
   },
-  methods: {
-    editItem(item) {
-      this.dialog = true
-      eventbus.$emit('hello', item)
-      // return item
-    },
-  }
 }
 </script>
 

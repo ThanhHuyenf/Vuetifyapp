@@ -6,9 +6,14 @@ import Login from "../login/Login";
 import Sidebar from "@/pages/Sidebar";
 import Profile from "@/pages/profile/Profile";
 import ResultsHistory from "@/pages/resultsHistory/ResultsHistory";
+
 import ListMembers from "@/pages/listMembers/ListMembers"
+import FormDiemLT from "@/components/FormDiemLT";
+
 import ListMembersGV from "@/pages/listMembersGV/ListMembersGV";
 import ListClassGV from "@/pages/listClassesGV/ListClassGV";
+
+import ManageTime from "@/pages/manageTime/ManageTime";
 
 Vue.use(VueRouter)
 
@@ -36,7 +41,12 @@ const routes = [
       {
         path: '/listMembers',
         name: 'ListMembers',
-        component: ListMembers
+        component: ListMembers,
+      },
+      {
+        path: '/listMembers/user_id=:id',
+        name: 'ListMembers.FormDiemLT',
+        component: FormDiemLT,
       },
       {
         path: '/listMembersGV',
@@ -48,6 +58,12 @@ const routes = [
         name: 'ListMembersGV',
         component: ListClassGV
       },
+      {
+        path: '/manageTime',
+        name: 'ManageTime',
+        component: ManageTime
+      },
+
     ]
   },
 

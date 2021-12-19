@@ -28,8 +28,14 @@
               :headers="headers"
               :items="filteredItems"
               item-key="text"
+              fixed-header
               class="elevation-1 rounded-0 mt-4"
           >
+
+            <template #item.index="{ item }">
+              {{ filteredItems.indexOf(item) +1}}
+            </template>
+
             <template v-slot:header.lop="{header}">
               {{ header.text }}
               <v-menu offset-y>
@@ -129,7 +135,7 @@ export default {
       title: "Danh sách thành viên",
       headers: [
         {
-          text: 'STT',
+          text: '#',
           align: 'left',
           sortable: false,
           value: 'stt',
@@ -194,7 +200,6 @@ export default {
       ],
       items: [
         {
-          stt: 1,
           maSinhVien: '675105050',
           lop: "K67A",
           hoTen: 'Lê Thanh Huyền',
@@ -203,7 +208,6 @@ export default {
           trangThai: true
         },
         {
-          stt: 2,
           maSinhVien: '675105027',
           hoTen: 'Nguyễn Vũ Chí Dũng',
           lop: "K67B",
@@ -212,7 +216,6 @@ export default {
           trangThai: true
         },
         {
-          stt: 3,
           maSinhVien: '675105021',
           hoTen: 'Đinh Quang Đạo',
           lop: "K67C",
@@ -221,7 +224,6 @@ export default {
           trangThai: true
         },
         {
-          stt: 4,
           maSinhVien: '675105082',
           hoTen: 'Nguyễn Hải Long',
           lop: "K67D",
@@ -230,7 +232,6 @@ export default {
           trangThai: false
         },
         {
-          stt: 5,
           maSinhVien: '675105092',
           hoTen: 'Đỗ Ngọc Anh',
           lop: "K68C",
@@ -239,7 +240,6 @@ export default {
           trangThai: true
         },
         {
-          stt: 6,
           maSinhVien: '675105059',
           lop: "K67B",
           hoTen: 'Nguyen Van A',
@@ -248,7 +248,6 @@ export default {
           trangThai: true
         },
         {
-          stt: 7,
           maSinhVien: '675105011',
           lop: "K67D",
           hoTen: 'Lê Thi  B',
@@ -257,7 +256,6 @@ export default {
           trangThai: false
         },
         {
-          stt: 8,
           maSinhVien: '675105062',
           lop: "K67A",
           hoTen: 'Vu Cong Thanh',
@@ -266,7 +264,6 @@ export default {
           trangThai: false
         },
         {
-          stt: 9,
           maSinhVien: '675105091',
           lop: "K67C",
           hoTen: 'Dao Ngoc E',
@@ -275,7 +272,6 @@ export default {
           trangThai: true
         },
         {
-          stt: 10,
           maSinhVien: '675105050',
           lop: "K67A",
           hoTen: 'Tran Van B',
@@ -284,7 +280,6 @@ export default {
           trangThai: true
         },
         {
-          stt: 11,
           maSinhVien: '675105022',
           lop: "K68C",
           hoTen: 'Au Manh Quang',
