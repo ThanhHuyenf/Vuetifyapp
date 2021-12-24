@@ -140,45 +140,16 @@ export default {
           width: '15%'
         }
       ],
-      items: [
-        {
-          maSinhVien: '675105050',
-          hoTen: 'Lê Thanh Huyền',
-          diemCaNhanCham: 91,
-          trangThai: true
-        },
-        {
-          maSinhVien: '675105027',
-          hoTen: 'Nguyễn Vũ Chí Dũng',
-          diemCaNhanCham: 90,
-          trangThai: true
-        },
-        {
-          maSinhVien: '675105021',
-          hoTen: 'Đinh Quang Đạo',
-          diemCaNhanCham: 88,
-          trangThai: true
-        },
-        {
-          maSinhVien: '675105082',
-          hoTen: 'Nguyễn Hải Long',
-          diemCaNhanCham: 50,
-          trangThai: false
-        },
-        {
-          maSinhVien: '675105092',
-          hoTen: 'Đỗ Ngọc Anh',
-          diemCaNhanCham: 60,
-          trangThai: true
-        },
-      ],
+      items: [],
       daCham: 0,
       dialog: false,
       type: 'All'
     }
   },
   created() {
+    this.getData()
     this.daCham = this.items.filter(item => item.trangThai == true).length
+
   },
   computed: {
     // eslint-disable-next-line vue/return-in-computed-property
@@ -188,6 +159,14 @@ export default {
       if (this.type === "NotDone") return this.items.filter(item => item.trangThai == false)
     }
   },
+  methods: {
+    getData(){
+      this.$axios.get('http://localhost:3000/listMembers')
+      .then(res => {
+        this.items= res.data
+      })
+    }
+  }
 }
 </script>
 

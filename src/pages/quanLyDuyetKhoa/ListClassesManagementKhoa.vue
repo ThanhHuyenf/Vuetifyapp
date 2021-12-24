@@ -2,7 +2,7 @@
   <div>
     <Header :title="title">
       <div slot="data">
-        <v-item-group class="mt-2 pa-4">
+        <v-item-group class="pa-4">
           <v-data-table
               :headers="headers"
               :items="filteredItems"
@@ -82,22 +82,34 @@
               </div>
             </template>
 
-            <template v-slot:item.tacVu="{ item }" @click="edit(item)">
-              Xem chi tiết
+            <template v-slot:item.duyet="{ item }" @click="edit(item)">
+
+              <router-link :to="{
+                                 name: 'QuanLyDuyetKhoa.Detail',
+                                 params: {
+                                   class: item.lop,
+                                   hocKy: 1,
+                                   namHoc: '2020-2021'
+                                 }
+              }">
+                <div class="detail-class">Xem chi tiết</div>
+              </router-link>
+
             </template>
+
           </v-data-table>
         </v-item-group>
       </div>
     </Header>
-
   </div>
+
 </template>
 
 <script>
-import Header from "@/components/Header";
 
+import Header from "@/components/Header";
 export default {
-  name: "ListClassGV",
+  name: "ListClassesKhoa",
   components: {
     Header
   },
@@ -116,24 +128,14 @@ export default {
           text: 'Lớp',
           align: 'start',
           value: 'lop',
-          width: '20%'
+          width: '15%'
         },
         {
           text: 'Cố vấn học tập',
           align: 'start',
           value: 'coVan',
           sortable: false,
-          width: '25%'
-          // sort: (hoTen1, hoTen2) => {
-          //
-          //   hoTen1 = hoTen1.trim()
-          //   hoTen2 = hoTen2.trim()
-          //
-          //   let ten1 = hoTen1.substr(hoTen1.lastIndexOf(" ") + 1);
-          //   let ten2 = hoTen2.substr(hoTen2.lastIndexOf(" ") + 1);
-          //
-          //   return ten1.localeCompare(ten2);
-          // }
+          width: '20%'
         },
         {
           text: 'Số phiếu điểm rèn luyện',
@@ -150,52 +152,21 @@ export default {
           width: '15%'
         },
         {
-          text: 'Tác vụ',
+          text: 'Duyệt',
           align: 'start',
           sortable: false,
-          value: 'tacVu',
+          value: 'duyet',
           width: '15%'
         }
       ],
-      items: [
-        {
-          lop: 'K67C',
-          coVan: 'Le Thanh Huyen',
-          trangThai: true
-        },
-        {
-          lop: 'K67A',
-          coVan: 'Nguyen Van A',
-          trangThai: false
-        },
-        {
-          lop: 'K67B',
-          coVan: 'Le Thanh Huyen',
-          trangThai: false
-        },
-        {
-          lop: 'K68A',
-          coVan: 'Nguyen Van A',
-          trangThai: false
-        },
-        {
-          lop: 'K68B',
-          coVan: 'Le Thanh Huyen',
-          trangThai: true
-        },
-        {
-          lop: 'K68C',
-          coVan: 'Le Thanh Huyen',
-          trangThai: false
-        }
-      ],
-      listCoVan: [
-        {name: 'Le Thanh Huyen'},
-        {name: 'Nguyen Van A'}
-      ],
+      items: [],
+      listCoVan: [],
       filterCoVan: 'All',
       type: 'All'
     }
+  },
+  created() {
+    this.getData()
   },
   computed: {
     filteredItems() {
@@ -208,13 +179,28 @@ export default {
     }
   },
   methods: {
-    edit(item) {
-      return item
+    getData() {
+      this.$axios.get('http://localhost:3000/listClassesKhoa')
+          .then(res => {
+            this.items = res.data
+          })
+
+      this.$axios.get('http://localhost:3000/listCoVanClassesKhoa')
+          .then(res => {
+            this.listCoVan = res.data
+          })
+    },
+    editItem(item) {
+      this.$refs.classKhoa.openDialog('update', item)
     }
   }
 }
 </script>
 
 <style scoped>
-
+.detail-class{
+  cursor: pointer;
+  text-decoration: underline;
+  color: rgba(0, 0, 0, 0.87);
+}
 </style>

@@ -25,7 +25,8 @@
             <v-item>
               <v-card-text class="text-center
                text-decoration-underline
-               row-pointer ">Thay đổi ảnh đại diện
+               row-pointer "
+              @click="changeImg()">Thay đổi ảnh đại diện
               </v-card-text>
             </v-item>
           </v-item-group>
@@ -40,6 +41,8 @@
         </v-card>
       </div>
     </Header>
+
+    <FormChangeImg ref="dialogChangeImg"></FormChangeImg>
   </div>
 
 </template>
@@ -48,10 +51,11 @@
 import Header from "@/components/Header";
 import Info from "@/components/Info"
 import ChangePassword from "@/components/ChangePassword";
+import FormChangeImg from "@/components/FormChangeImg";
 
 export default {
   name: "Profile",
-  components: {ChangePassword, Header, Info},
+  components: {FormChangeImg, ChangePassword, Header, Info},
   data() {
     return {
       title: "Thông tin cá nhân",
@@ -78,6 +82,9 @@ export default {
             this.info.email = res.data.email
             this.info.chucVu = res.data.role
           })
+    },
+    changeImg(){
+      this.$refs.dialogChangeImg.openDialog()
     },
     updatePassword(e) {
       this.$axios.post('http://localhost:3001/api/change-password', {

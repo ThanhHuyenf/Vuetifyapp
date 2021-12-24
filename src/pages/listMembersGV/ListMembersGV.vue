@@ -33,7 +33,7 @@
           >
 
             <template #item.index="{ item }">
-              {{ filteredItems.indexOf(item) +1}}
+              {{ filteredItems.indexOf(item) + 1 }}
             </template>
 
             <template v-slot:header.lop="{header}">
@@ -138,7 +138,7 @@ export default {
           text: '#',
           align: 'left',
           sortable: false,
-          value: 'stt',
+          value: 'index',
           width: '5%'
         },
         {
@@ -198,113 +198,16 @@ export default {
           width: '15%'
         }
       ],
-      items: [
-        {
-          maSinhVien: '675105050',
-          lop: "K67A",
-          hoTen: 'Lê Thanh Huyền',
-          diemCaNhanCham: 91,
-          diemCBLNhanCham: 90,
-          trangThai: true
-        },
-        {
-          maSinhVien: '675105027',
-          hoTen: 'Nguyễn Vũ Chí Dũng',
-          lop: "K67B",
-          diemCaNhanCham: 90,
-          diemCBLNhanCham: 70,
-          trangThai: true
-        },
-        {
-          maSinhVien: '675105021',
-          hoTen: 'Đinh Quang Đạo',
-          lop: "K67C",
-          diemCaNhanCham: 88,
-          diemCBLNhanCham: 90,
-          trangThai: true
-        },
-        {
-          maSinhVien: '675105082',
-          hoTen: 'Nguyễn Hải Long',
-          lop: "K67D",
-          diemCaNhanCham: 50,
-          diemCBLNhanCham: 45,
-          trangThai: false
-        },
-        {
-          maSinhVien: '675105092',
-          hoTen: 'Đỗ Ngọc Anh',
-          lop: "K68C",
-          diemCaNhanCham: 60,
-          diemCBLNhanCham: 71,
-          trangThai: true
-        },
-        {
-          maSinhVien: '675105059',
-          lop: "K67B",
-          hoTen: 'Nguyen Van A',
-          diemCaNhanCham: 91,
-          diemCBLNhanCham: 90,
-          trangThai: true
-        },
-        {
-          maSinhVien: '675105011',
-          lop: "K67D",
-          hoTen: 'Lê Thi  B',
-          diemCaNhanCham: 76,
-          diemCBLNhanCham: 75,
-          trangThai: false
-        },
-        {
-          maSinhVien: '675105062',
-          lop: "K67A",
-          hoTen: 'Vu Cong Thanh',
-          diemCaNhanCham: 88,
-          diemCBLNhanCham: 70,
-          trangThai: false
-        },
-        {
-          maSinhVien: '675105091',
-          lop: "K67C",
-          hoTen: 'Dao Ngoc E',
-          diemCaNhanCham: 91,
-          diemCBLNhanCham: 89,
-          trangThai: true
-        },
-        {
-          maSinhVien: '675105050',
-          lop: "K67A",
-          hoTen: 'Tran Van B',
-          diemCaNhanCham: 77,
-          diemCBLNhanCham: 80,
-          trangThai: true
-        },
-        {
-          maSinhVien: '675105022',
-          lop: "K68C",
-          hoTen: 'Au Manh Quang',
-          diemCaNhanCham: 70,
-          diemCBLNhanCham: 91,
-          trangThai: false
-        },
-
-
-      ],
+      items: [],
       dialog: false,
       type: 'All',
-      classes: [
-        {class: "K67A"},
-        {class: "K67B"},
-        {class: "K67C"},
-        {class: "K67D"},
-        {class: "K68C"}
-      ],
+      classes: [],
       filterClass: "All",
-      // msv: '',
-      flag: false
     }
   },
-
+  created() {
+    this.getData()
+  },
   computed: {
     filteredItems() {
       if (this.filterClass == "All" && this.type == "All") return this.items
@@ -319,6 +222,16 @@ export default {
     }
   },
   methods: {
+    getData() {
+      this.$axios.get('http://localhost:3000/listMembersGV')
+          .then(res => {
+            this.items = res.data
+          })
+      this.$axios.get('http://localhost:3000/listClassesGV')
+      .then(res => {
+        this.classes = res.data
+      })
+    },
     editItem(item) {
       this.dialog = true
       eventbus.$emit('hello', item)
