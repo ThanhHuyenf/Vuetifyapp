@@ -26,18 +26,19 @@
               <v-card-text class="text-center
                text-decoration-underline
                row-pointer "
-              @click="changeImg()">Thay đổi ảnh đại diện
+                           @click="changeImg()">Thay đổi ảnh đại diện
               </v-card-text>
             </v-item>
           </v-item-group>
           <div v-if="isProfile">
-            <Info :info="info"></Info>
+            <Info></Info>
           </div>
 
           <!--          Giao dien thay doi mat khau-->
           <v-form ref="form" v-if="!isProfile">
-            <ChangePassword @update-password="updatePassword"></ChangePassword>
+            <ChangePassword></ChangePassword>
           </v-form>
+
         </v-card>
       </div>
     </Header>
@@ -59,50 +60,13 @@ export default {
   data() {
     return {
       title: "Thông tin cá nhân",
-      info: {
-        user_id: '',
-        hoVaTen: '',
-        ngaySinh: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-        email: '',
-        chucVu: '',
-      },
       isProfile: true,
-
     }
-  },
-  created() {
-    this.getData()
   },
   methods: {
-    getData() {
-      this.$axios.get('http://localhost:3001/api/users')
-          .then(res => {
-            this.info.user_id = res.data.user_id
-            this.info.hoVaTen = res.data.name
-            this.info.email = res.data.email
-            this.info.chucVu = res.data.role
-          })
-    },
-    changeImg(){
+    changeImg() {
       this.$refs.dialogChangeImg.openDialog()
     },
-    updatePassword(e) {
-      this.$axios.post('http://localhost:3001/api/change-password', {
-        oldPassword: e[0],
-        newPassword: e[1]
-      })
-          .then(res => {
-            if (res.status == 200) {
-              // this.loadingChangePassword = false
-              location.reload();
-            }
-            if (res.status == 401) {
-              // this.equal = false
-              // this.messagePassword = "Mat khau khong chinh xac"
-            }
-          })
-    }
-
   }
 
 }

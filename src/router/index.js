@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Login from "../login/Login";
+import ForgotPassWord from "@/login/ForgotPassWord";
+import ResetPassword from "@/login/ResetPassword";
 import Sidebar from "@/pages/Sidebar";
 
 //Sinh vien
@@ -32,6 +34,16 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/forgotpassword',
+    name: 'ForgotPassword',
+    component: ForgotPassWord
+  },
+  {
+    path: '/reset/:token',
+    name: 'ResetPassword',
+    component: ResetPassword
   },
   {
     path: '/',

@@ -106,7 +106,6 @@
 <script>
 export default {
   name: "Profile",
-  props: ['info'],
   data(){
     return {
       isEditing: false,
@@ -115,11 +114,29 @@ export default {
         v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail chưa đúng định dạng'
       ],
       menu: false,
+      info: {
+        user_id: '',
+        hoVaTen: '',
+        ngaySinh: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+        email: '',
+        chucVu: '',
+      },
     }
   },
+  created() {
+    this.getData()
+  },
   methods: {
+    getData(){
+      this.$axios.get('http://api.lethanhhuyen.nvcd.xyz/api/detail-users')
+          .then(res => {
+            this.info.user_id = res.data.user_id
+            this.info.hoVaTen = res.data.name
+            this.info.email = res.data.email
+            this.info.chucVu = res.data.role
+          })
+    },
     save() {
-      // this.$emit('update-info', [this.info.ngaySinh, this.info.email])
       this.isEditing = !this.isEditing
       this.$axios.put('http://localhost:3001/api/users', {
         // ngaySinh = e[0],

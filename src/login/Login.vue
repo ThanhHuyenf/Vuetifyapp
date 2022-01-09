@@ -11,7 +11,16 @@
             <v-card>
               <v-card-text class="pt-4">
                 <div>
-                  <v-form v-model="valid" ref="form">
+                  <v-form v-model="valid" ref="form" @submit.prevent="submit">
+
+                    <v-alert
+                        v-model="wrongAcc"
+                        outlined
+                        dense
+                        type="error"
+                    >
+                      Tài khoản/ mật khẩu không chính xác
+                    </v-alert>
 
                     <v-text-field
                         label="Tên tài khoản"
@@ -30,16 +39,17 @@
                         required
                     ></v-text-field>
                     <v-layout justify-space-between>
-                      <v-btn @click="submit"
-                             class="blue darken-2 white--text"
-                             :loading="loading">Đăng nhập</v-btn>
-                      <a href="">Forgot Password</a>
+                      <v-btn class="blue darken-2 white--text"
+                             :loading="loading"
+                             type="submit">
+                        Đăng nhập
+                      </v-btn>
+                      <a href="http://localhost:8080/forgotpassword">Quên mật khẩu</a>
                     </v-layout>
                   </v-form>
                 </div>
               </v-card-text>
             </v-card>
-
           </v-flex>
         </v-layout>
       </v-container>
@@ -53,7 +63,7 @@
 <script>
 export default {
   name: "Login",
-  data () {
+  data() {
     return {
       valid: false,
       e1: false,
@@ -62,26 +72,32 @@ export default {
         (v) => !!v || 'Password is required',
       ],
       user_id: '',
-      loading: false
+      loading: false,
+      wrongAcc: false
     }
   },
   methods: {
-    submit () {
-      this.loading= true
-      if (this.$refs.form.validate()) {
-        this.$axios.post('http://localhost:3001/api/login', {
-          user_id: this.user_id,
-          password: this.password
-        })
-        .then(res => {
-          if(res.status== 200){
-            localStorage.setItem("token", res.data.token)
-            this.$router.push('/profile')
-            this.loading=false
-          }else {
-          }
-        })
-      }
+    clear(){
+      this.$refs.form.resetValidation()
+      this.user_id= ''
+      this.password = ''
+    },
+    submit() {
+      this.loading = true
+      this.$axios.post('http://api.lethanhhuyen.nvcd.xyz/api/auth/login', {
+        id: this.user_id,
+        password: this.password
+      })
+      .then(res=>{
+        this.loading = false
+        localStorage.setItem("token", res.data.token)
+        this.$router.push('/profile')
+      })
+      .catch(e => {
+        this.loading = false
+        this.wrongAcc= true
+        this.clear()
+      })
     }
   },
 }
