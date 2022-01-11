@@ -62,7 +62,7 @@
               </v-card-text>
             </v-card>
             <v-card v-else>
-              <v-card v-if="noerror" class="pa-4" >
+              <v-card v-if="noerror" class="pa-4">
                 <v-card-text>
                   Thay đổi mật khẩu thành công!
                 </v-card-text>
@@ -73,7 +73,7 @@
                 </v-btn>
               </v-card>
 
-              <v-card v-else  class="pa-4">
+              <v-card v-else class="pa-4">
                 <v-card-text>
                   Lỗi! Vui lòng thử lại sau 10 phút! Chin cám ưnnn
                 </v-card-text>
@@ -131,7 +131,7 @@ export default {
       } else {
         this.loading = true
 
-        this.$axios.post('http://api.lethanhhuyen.nvcd.xyz/api/common/reset-password', {
+        this.$services.LoginService.resetPassword({
           token: this.$route.params.token,
           newPassword: this.newPassword
         })

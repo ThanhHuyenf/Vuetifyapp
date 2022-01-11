@@ -77,9 +77,7 @@ export default {
         this.emtyEmail = true
       } else {
         this.loading = true
-        this.$axios.post('http://api.lethanhhuyen.nvcd.xyz/api/common/create-reset-password', {
-          email: this.email
-        })
+        this.$services.LoginService.forgotPassword({email: this.email})
             .then(() => {
               this.success = true
               this.loading = false

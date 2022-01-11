@@ -6,12 +6,14 @@ import vuetify from './plugins/vuetify'
 import axios from "axios";
 import _ from 'lodash';
 import moment from "moment/moment";
+import services from "@/services";
 
 export const eventbus = new Vue()
 
 Vue.config.productionTip = false
 Vue.prototype.$lodash = _;
 Vue.prototype.$moment = moment;
+Vue.prototype.$services = services;
 
 const instance = axios.create();
 instance.interceptors.request.use(
@@ -24,7 +26,13 @@ instance.interceptors.request.use(
     error => Promise.reject(error),
 );
 
+const envElement = document.getElementById('env');
+const env = JSON.parse(envElement.innerHTML);
+
 Vue.prototype.$axios = instance;
+Vue.url.options.root = env.apiEndpoint;
+
+
 
 new Vue({
     router,

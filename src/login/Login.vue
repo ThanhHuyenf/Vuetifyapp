@@ -77,27 +77,27 @@ export default {
     }
   },
   methods: {
-    clear(){
+    clear() {
       this.$refs.form.resetValidation()
-      this.user_id= ''
+      this.user_id = ''
       this.password = ''
     },
     submit() {
       this.loading = true
-      this.$axios.post('http://api.lethanhhuyen.nvcd.xyz/api/auth/login', {
+      this.$services.LoginService.query({
         id: this.user_id,
         password: this.password
       })
-      .then(res=>{
-        this.loading = false
-        localStorage.setItem("token", res.data.token)
-        this.$router.push('/profile')
-      })
-      .catch(e => {
-        this.loading = false
-        this.wrongAcc= true
-        this.clear()
-      })
+          .then(res => {
+            this.loading = false
+            localStorage.setItem("token", res.data.token)
+            this.$router.push('/profile')
+          })
+          .catch(e => {
+            this.loading = false
+            this.wrongAcc = true
+            this.clear()
+          })
     }
   },
 }
