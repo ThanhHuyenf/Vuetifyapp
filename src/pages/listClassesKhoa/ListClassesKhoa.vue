@@ -3,6 +3,13 @@
     <Header :title="title">
       <div slot="data">
         <v-item-group class="pa-4">
+
+          <div class="text-center red--text mb-4">
+            <v-btn @click="addNew">
+              Thêm
+            </v-btn>
+          </div>
+
           <v-data-table
               :headers="headers"
               :items="filteredItems"
@@ -30,7 +37,8 @@
                 <v-list>
                   <v-list-item>
                     <v-list-item-title @click="edit(item)">Chỉnh sửa</v-list-item-title>
-
+                  </v-list-item>
+                  <v-list-item>
                     <router-link :to="{
                                  name: 'DetailClass',
                                  params: {
@@ -40,7 +48,9 @@
               }">
                       <v-list-item-title>Xem chi tiết</v-list-item-title>
                     </router-link>
+                  </v-list-item>
 
+                  <v-list-item>
                     <v-list-item-title @click="deleteItem(item)">Xoá</v-list-item-title>
                   </v-list-item>
                 </v-list>
@@ -108,7 +118,7 @@ export default {
           align: 'start',
           sortable: false,
           value: 'thoiGian',
-          width: '20%'
+          width: '15%'
         },
         {
           text: 'Tác vụ',
@@ -144,10 +154,13 @@ export default {
             this.items = res.data
           })
     },
+    addNew(){
+
+    },
     edit(item) {
       this.$refs.dialogEditItem.openDialog(item)
     },
-    deleteItem(item){
+    deleteItem(item) {
       this.$refs.dialogDelete.openDialog(item)
     }
   }

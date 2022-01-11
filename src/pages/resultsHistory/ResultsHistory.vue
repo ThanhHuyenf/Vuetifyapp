@@ -1,28 +1,29 @@
 <template>
-<div>
-  <Header :title="title">
-    <div slot="data">
-      <v-item-group class="mt-7 pa-4">
-        <v-data-table
-            :headers="headers"
-            :items="items"
-            item-key="text"
-            :hide-default-footer="true"
-            class="elevation-1 rounded-0"
-        >
-        </v-data-table>
-      </v-item-group>
-    </div>
-  </Header>
-</div>
+  <div>
+    <Header :title="title">
+      <div slot="data">
+        <v-item-group class="mt-7 pa-4">
+          <v-data-table
+              :headers="headers"
+              :items="items"
+              item-key="text"
+              :hide-default-footer="true"
+              class="elevation-1 rounded-0"
+          >
+          </v-data-table>
+        </v-item-group>
+      </div>
+    </Header>
+  </div>
 </template>
 
 <script>
 import Header from "@/components/Header";
+
 export default {
   name: "ResultsHistory",
   components: {Header},
-  data(){
+  data() {
     return {
       title: 'Kết quả điểm rèn luyện',
       headers: [
@@ -51,56 +52,18 @@ export default {
           width: "35%"
         },
       ],
-      items: [
-        {
-          hocKy: 1,
-          namHoc: "2020- 2021",
-          tongDiem: 40,
-          xepLoai: 'Kha'
-        },
-        {
-          hocKy: 2,
-          namHoc: "2020- 2021",
-          tongDiem: 50,
-          xepLoai: 'Kha'
-        },
-        {
-          hocKy: 1,
-          namHoc: "2020- 2021",
-          tongDiem: 40,
-          xepLoai: 'Kha'
-        },
-        {
-          hocKy: 2,
-          namHoc: "2020- 2021",
-          tongDiem: 50,
-          xepLoai: 'Kha'
-        },
-        {
-          hocKy: 1,
-          namHoc: "2020- 2021",
-          tongDiem: 40,
-          xepLoai: 'Kha'
-        },
-        {
-          hocKy: 2,
-          namHoc: "2020- 2021",
-          tongDiem: 50,
-          xepLoai: 'Kha'
-        },
-        {
-          hocKy: 1,
-          namHoc: "2020- 2021",
-          tongDiem: 40,
-          xepLoai: 'Kha'
-        },
-        {
-          hocKy: 2,
-          namHoc: "2020- 2021",
-          tongDiem: 50,
-          xepLoai: 'Kha'
-        }
-      ]
+      items: []
+    }
+  },
+  created() {
+    this.getData()
+  },
+  methods: {
+    getData() {
+      this.$axios.get("http://localhost:3000/resultHistory")
+          .then(res => {
+            this.items = res.data
+          })
     }
   }
 }

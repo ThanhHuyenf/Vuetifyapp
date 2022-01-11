@@ -8,6 +8,8 @@ const LoginService = Vue.resource('api/auth/login', {}, {
     forgotPassword : { method: 'POST', url: 'api/common/create-reset-password'},
     resetPassword : { method: 'POST', url: 'api/common/reset-password'}
 })
+
+
 const services = {
     LoginService
 }
