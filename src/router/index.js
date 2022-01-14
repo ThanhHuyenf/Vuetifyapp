@@ -30,92 +30,112 @@ import ManageTime from "@/pages/manageTime/ManageTime";
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login
-  },
-  {
-    path: '/forgotpassword',
-    name: 'ForgotPassword',
-    component: ForgotPassWord
-  },
-  {
-    path: '/reset/:token',
-    name: 'ResetPassword',
-    component: ResetPassword
-  },
-  {
-    path: '/',
-    name: 'Dashboard',
-    component: Sidebar,
-    children: [
-      {
-        path: '/profile',
-        name: 'Profile',
-        component: Profile
-      },
-      {
-        path: '/resultsHistory',
-        name: 'ResultsHistory',
-        component: ResultsHistory
-      },
-      {
-        path: '/listMembers',
-        name: 'ListMembers',
-        component: ListMembers,
-      },
-      {
-        path: '/listMembers/user_id=:id',
-        name: 'ListMembers.FormDiemLT',
-        component: FormDiemLT,
-      },
-      {
-        path: '/listMembersGV',
-        name: 'ListMembersGV',
-        component: ListMembersGV
-      },
-      {
-        path: '/listClassesGV',
-        name: 'ListMembersGV',
-        component: ListClassGV
-      },
-      {
-        path: '/manageTime',
-        name: 'ManageTime',
-        component: ManageTime
-      },
-      {
-        path: '/ListClassesKhoa',
-        name: 'ListClassKhoa',
-        component: ListClassesKhoa
-      },
-      {
-        path: '/ListClassesKhoa/khoa=:khoa/class=:class',
-        name: 'DetailClass',
-        component: DetailClass
-      },
-      {
-        path: '/quanLyDuyetKhoa',
-        name: 'QuanLyDuyetKhoa',
-        component: ListClassesManagementKhoa
-      },
-      {
-        path: '/quanLyDuyetKhoa/detail/class=:class/hocKy=:hocKy/namHoc=:namHoc',
-        name: 'QuanLyDuyetKhoa.Detail',
-        component: DetailClassKhoa
+    {
+        path: '/login',
+        name: 'Login',
+        component: Login
+    },
+    {
+        path: '/forgotpassword',
+        name: 'ForgotPassword',
+        component: ForgotPassWord
+    },
+    {
+        path: '/reset/:token',
+        name: 'ResetPassword',
+        component: ResetPassword
+    },
+    {
+        path: '/',
+        name: 'Dashboard',
+        component: Sidebar,
+        redirect: '/profile',
+        children: [
+            {
+                path: '/profile',
+                name: 'Profile',
+                component: Profile
+            },
+            {
+                path: '/resultsHistory',
+                name: 'ResultsHistory',
+                component: ResultsHistory
+            },
+            {
+                path: '/listMembers',
+                name: 'ListMembers',
+                component: ListMembers,
+            },
+            {
+                path: '/listMembers/user_id=:id',
+                name: 'ListMembers.FormDiemLT',
+                component: FormDiemLT,
+            },
+            {
+                path: '/listMembersGV',
+                name: 'ListMembersGV',
+                component: ListMembersGV
+            },
+            {
+                path: '/listClassesGV',
+                name: 'ListMembersGV',
+                component: ListClassGV
+            },
+            {
+                path: '/manageTime',
+                name: 'ManageTime',
+                component: ManageTime
+            },
+            {
+                path: '/ListClassesKhoa',
+                name: 'ListClassKhoa',
+                component: ListClassesKhoa
+            },
+            {
+                path: '/ListClassesKhoa/khoa=:khoa/class=:class',
+                name: 'DetailClass',
+                component: DetailClass
+            },
+            {
+                path: '/quanLyDuyetKhoa',
+                name: 'QuanLyDuyetKhoa',
+                component: ListClassesManagementKhoa
+            },
+            {
+                path: '/quanLyDuyetKhoa/detail/class=:class/hocKy=:hocKy/namHoc=:namHoc',
+                name: 'QuanLyDuyetKhoa.Detail',
+                component: DetailClassKhoa
 
-      }
+            }
+        ],
 
-    ]
-  },
+    },
+    {path: '*', redirect: '/'}
 
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes
+})
+
+router.beforeEach((to, from, next) => {
+    if (to.name === 'Login') {
+        return next();
+    }
+    localStorage.setItem('me','abc')
+    const account = localStorage.getItem('me');
+    if (!account) {
+        return next({
+            name: 'Login',
+            query: {
+                // eslint-disable-next-line no-restricted-globals
+                redirect: '/profile',
+            },
+        });
+    }
+    return next()
 })
 
 export default router

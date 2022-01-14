@@ -91,6 +91,7 @@ export default {
           .then(res => {
             this.loading = false
             localStorage.setItem("token", res.data.token)
+            localStorage.setItem("user", {})
             this.$router.push('/profile')
           })
           .catch(e => {

@@ -36,6 +36,7 @@
 
                 <v-list>
                   <v-list-item>
+<!--                    <v-icon>mdi-facebook</v-icon>-->
                     <v-list-item-title @click="edit(item)">Chỉnh sửa</v-list-item-title>
                   </v-list-item>
                   <v-list-item>

@@ -15,6 +15,8 @@ Vue.prototype.$lodash = _;
 Vue.prototype.$moment = moment;
 Vue.prototype.$services = services;
 
+
+// Setting up for axios
 const instance = axios.create();
 instance.interceptors.request.use(
     (config) => {
