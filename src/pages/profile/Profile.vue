@@ -53,17 +53,10 @@ import Header from "@/components/Header";
 import Info from "@/components/Info"
 import ChangePassword from "@/components/ChangePassword";
 import FormChangeImg from "@/components/FormChangeImg";
-import jwt_decode from "jwt-decode";
 
 export default {
   name: "Profile",
   components: {FormChangeImg, ChangePassword, Header, Info},
-  created() {
-    var token = localStorage.getItem("token");
-    var decoded = jwt_decode(token);
-
-    console.log(decoded);
-  },
   data() {
     return {
       title: "Thông tin cá nhân",

@@ -17,8 +17,8 @@
         <v-row class="flex-column mt-4">
           <v-list-item>
             <v-list-item-content class="text-center">
-              <v-list-item-title>{{name}}</v-list-item-title>
-              <v-list-item-subtitle>{{maSV}}</v-list-item-subtitle>
+              <v-list-item-title class="text-uppercase">{{tag.name}}</v-list-item-title>
+              <v-list-item-subtitle>{{tag.id}}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-row>
@@ -50,19 +50,29 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
   name: "Sidebar",
   data (){
     return {
-      name: "LE THANH HUYEN",
-      maSV: "675105050",
-      selectedItem: 0,
-      items: [
-        { text: 'Real-Time', icon: 'mdi-clock' },
-        { text: 'Audience', icon: 'mdi-account' },
-        { text: 'Conversions', icon: 'mdi-flag' },
-      ],
+      selectedItem: 0
     }
+  },
+  created() {
+    this.getMenu()
+    this.getTag()
+  },
+  computed: {
+    items(){
+     return  this.$store.state.menu
+    },
+    tag(){
+      return this.$store.state.tag
+    }
+  },
+  methods: {
+    ...mapActions(['getMenu', 'getTag'])
   }
 }
 </script>
