@@ -21,13 +21,12 @@
 
 <script>
 import Header from "@/components/Header";
-
 export default {
-  name: "DetailClass",
-  components: {Header},
-  data() {
+  name: "DetailFaculties",
+  components: {Header },
+  data(){
     return {
-      title: "Thông tin chi tiết lớp",
+      title: "Thông tin chi tiết khoa",
       headers: [
         {
           text: '#',
@@ -118,20 +117,9 @@ export default {
           value: 'tong',
           width: '6%'
         },
-
       ],
       items: []
-    }
-  },
-  created() {
-    this.getData()
-  },
-  methods: {
-    getData() {
-      this.$axios.get('http://localhost:3000/detailClass')
-          .then(res => {
-            this.items = res.data
-          })
+
     }
   }
 }

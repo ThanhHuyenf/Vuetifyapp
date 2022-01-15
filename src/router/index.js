@@ -26,6 +26,8 @@ import DetailClassKhoa from "@/pages/quanLyDuyetKhoa/DetailClassKhoa";
 
 //Nha truong
 import ManageTime from "@/pages/manageTime/ManageTime";
+import ListFaculties from "@/pages/listFaculties/ListFaculties";
+import DetailFaculty from "@/pages/listFaculties/DetailFaculty";
 
 Vue.use(VueRouter)
 
@@ -87,12 +89,12 @@ const routes = [
                 component: ManageTime
             },
             {
-                path: '/ListClassesKhoa',
+                path: '/listClassesKhoa',
                 name: 'ListClassKhoa',
                 component: ListClassesKhoa
             },
             {
-                path: '/ListClassesKhoa/khoa=:khoa/class=:class',
+                path: '/listClassesKhoa/khoa=:khoa/class=:class',
                 name: 'DetailClass',
                 component: DetailClass
             },
@@ -106,7 +108,17 @@ const routes = [
                 name: 'QuanLyDuyetKhoa.Detail',
                 component: DetailClassKhoa
 
-            }
+            },
+            {
+                path: '/listFaculties',
+                name: 'ListFaculties',
+                component: ListFaculties
+            },
+            {
+                path: '/listFaculties/detail',
+                name: 'DetailFaculty',
+                component: DetailFaculty
+            },
         ],
 
     },
@@ -120,22 +132,22 @@ const router = new VueRouter({
     routes
 })
 
-router.beforeEach((to, from, next) => {
-    if (to.name === 'Login') {
-        return next();
-    }
-    localStorage.setItem('me','abc')
-    const account = localStorage.getItem('me');
-    if (!account) {
-        return next({
-            name: 'Login',
-            query: {
-                // eslint-disable-next-line no-restricted-globals
-                redirect: '/profile',
-            },
-        });
-    }
-    return next()
-})
+// router.beforeEach((to, from, next) => {
+//     if (to.name === 'Login') {
+//         return next();
+//     }
+//     localStorage.setItem('me','abc')
+//     const account = localStorage.getItem('me');
+//     if (!account) {
+//         return next({
+//             name: 'Login',
+//             query: {
+//                 // eslint-disable-next-line no-restricted-globals
+//                 redirect: '/profile',
+//             },
+//         });
+//     }
+//     return next()
+// })
 
 export default router
