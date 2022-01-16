@@ -92,7 +92,7 @@ export default {
             this.loading = false
             localStorage.setItem("token", res.data.token)
             localStorage.setItem("user", {})
-            this.$router.push('/profile')
+            this.$router.push('/homepage')
           })
           .catch(e => {
             this.loading = false

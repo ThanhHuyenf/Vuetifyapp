@@ -31,6 +31,7 @@
           <v-list-item
               v-for="(item, i) in items"
               :key="i"
+              @click.once="selectPage(item.link)"
           >
             <v-list-item-icon>
               <v-icon v-text="item.icon"></v-icon>
@@ -72,7 +73,17 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getMenu', 'getTag'])
+    ...mapActions(['getMenu', 'getTag']),
+    selectPage(link){
+      var listPath = ["/profile", "/homepage", "resultsHistory"]
+
+      if(listPath.includes(this.$route.fullPath) && link != this.$route.fullPath){
+          this.$router.push(link)
+      }else {
+        this.$router.push(link+ this.tag.role)
+      }
+      return
+    }
   }
 }
 </script>

@@ -6,23 +6,25 @@ import ForgotPassWord from "@/login/ForgotPassWord";
 import ResetPassword from "@/login/ResetPassword";
 import Sidebar from "@/pages/Sidebar";
 
+import Homepage from "@/pages/homepage/Homepage";
+
 //Sinh vien
 import Profile from "@/pages/profile/Profile";
 import ResultsHistory from "@/pages/resultsHistory/ResultsHistory";
 
 //Lop truong
-import ListMembers from "@/pages/listMembers/ListMembers"
-import FormDiemLT from "@/components/FormDiemLT";
+import ListMembersMonitor from "@/pages/listMembers/ListMembers"
+import FormDiemMonitor from "@/components/FormDiemLT";
 
 //Giang vien
-import ListMembersGV from "@/pages/listMembersGV/ListMembersGV";
-import ListClassGV from "@/pages/listClassesGV/ListClassGV";
+import ListMembersTeacher from "@/pages/listMembersTeacher/ListMembersTeacher";
+import ListClassTeacher from "@/pages/listClassesTeacher/ListClassTeacher";
 
 //Khoa
-import ListClassesKhoa from "@/pages/listClassesKhoa/ListClassesKhoa";
-import DetailClass from "@/pages/listClassesKhoa/DetailClass";
-import ListClassesManagementKhoa from "@/pages/quanLyDuyetKhoa/ListClassesManagementKhoa";
-import DetailClassKhoa from "@/pages/quanLyDuyetKhoa/DetailClassKhoa";
+import ListClassesDepartment from "@/pages/listClassesDepartment/ListClassesDepartment";
+import DetailClass from "@/pages/listClassesDepartment/DetailClass";
+import ListClassesManagementDepartment from "@/pages/quanLyDuyetDepartment/ListClassesManagementDepartment";
+import DetailClassDepartment from "@/pages/quanLyDuyetDepartment/DetailClassDepartment";
 
 //Nha truong
 import ManageTime from "@/pages/manageTime/ManageTime";
@@ -54,6 +56,11 @@ const routes = [
         redirect: '/profile',
         children: [
             {
+                path: '/homepage',
+                name: 'Homepage',
+                component: Homepage
+            },
+            {
                 path: '/profile',
                 name: 'Profile',
                 component: Profile
@@ -64,49 +71,44 @@ const routes = [
                 component: ResultsHistory
             },
             {
-                path: '/listMembers',
+                path: '/listMembersMonitor',
                 name: 'ListMembers',
-                component: ListMembers,
+                component: ListMembersMonitor,
             },
             {
-                path: '/listMembers/user_id=:id',
+                path: '/listMembersMonitor/user_id=:id',
                 name: 'ListMembers.FormDiemLT',
-                component: FormDiemLT,
+                component: FormDiemMonitor,
             },
             {
-                path: '/listMembersGV',
+                path: '/listMembersTeacher',
                 name: 'ListMembersGV',
-                component: ListMembersGV
+                component: ListMembersTeacher
             },
             {
-                path: '/listClassesGV',
+                path: '/listClassesTeacher',
                 name: 'ListMembersGV',
-                component: ListClassGV
+                component: ListClassTeacher
             },
             {
-                path: '/manageTime',
-                name: 'ManageTime',
-                component: ManageTime
-            },
-            {
-                path: '/listClassesKhoa',
+                path: '/listClassesDepartment',
                 name: 'ListClassKhoa',
-                component: ListClassesKhoa
+                component: ListClassesDepartment
             },
             {
-                path: '/listClassesKhoa/khoa=:khoa/class=:class',
+                path: '/listClassesDepartment/khoa=:khoa/class=:class',
                 name: 'DetailClass',
                 component: DetailClass
             },
             {
-                path: '/quanLyDuyetKhoa',
+                path: '/quanLyDuyetDepartment',
                 name: 'QuanLyDuyetKhoa',
-                component: ListClassesManagementKhoa
+                component: ListClassesManagementDepartment
             },
             {
-                path: '/quanLyDuyetKhoa/detail/class=:class/hocKy=:hocKy/namHoc=:namHoc',
+                path: '/quanLyDuyetDepartment/detail/class=:class/hocKy=:hocKy/namHoc=:namHoc',
                 name: 'QuanLyDuyetKhoa.Detail',
-                component: DetailClassKhoa
+                component: DetailClassDepartment
 
             },
             {
@@ -118,6 +120,11 @@ const routes = [
                 path: '/listFaculties/detail',
                 name: 'DetailFaculty',
                 component: DetailFaculty
+            },
+            {
+                path: '/manageTime',
+                name: 'ManageTime',
+                component: ManageTime
             },
         ],
 
