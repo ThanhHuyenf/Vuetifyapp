@@ -110,12 +110,21 @@
               >
                 mdi-pencil
               </v-icon>
+
+              <v-icon
+                  small
+                  class="mr-2"
+                  @click="editPostision(item)"
+              >
+                mdi-wrench
+              </v-icon>
             </template>
           </v-data-table>
         </v-item-group>
       </div>
     </Header>
     <!--    <FormDiemLT :dialog.sync="dialog"></FormDiemLT>-->
+    <DialogChangePosition ref="dialofChangePostision"></DialogChangePosition>
   </div>
 </template>
 
@@ -123,10 +132,12 @@
 import Header from "@/components/Header";
 import {eventbus} from "@/main";
 import Counter from "@/components/Counter";
+import DialogChangePosition from "@/components/DialogChangePosition";
 
 export default {
   name: "ListMembersGV",
   components: {
+    DialogChangePosition,
     Counter,
     Header,
   },
@@ -152,7 +163,7 @@ export default {
           text: 'Họ tên',
           align: 'start',
           value: 'hoTen',
-          width: '22%',
+          width: '20%',
           sort: (hoTen1, hoTen2) => {
 
             hoTen1 = hoTen1.trim()
@@ -184,7 +195,7 @@ export default {
           width: '12%'
         },
         {
-          text: 'GV nhân chấm',
+          text: 'CVHT chấm',
           align: 'start',
           value: 'diemGVNhanCham',
           width: '12%'
@@ -241,8 +252,12 @@ export default {
     editItem(item) {
       this.dialog = true
       eventbus.$emit('hello', item)
+    },
+    editPostision(item){
+      this.$refs.dialofChangePostision.openDialog(item)
     }
   }
+
 }
 </script>
 

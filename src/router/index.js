@@ -14,7 +14,7 @@ import ResultsHistory from "@/pages/resultsHistory/ResultsHistory";
 
 //Lop truong
 import ListMembersMonitor from "@/pages/listMembersMonitor/ListMembersMonitor"
-import FormDiemMonitor from "@/components/FormDiemLT";
+import FormDiemMonitor from "@/components/FormDiemMonitor";
 
 //Giang vien
 import ListMembersTeacher from "@/pages/listMembersTeacher/ListMembersTeacher";
@@ -87,7 +87,7 @@ const routes = [
                 component: ListMembersTeacher
             },
             {
-                path: '/listClassesTeacher',
+                path: '/listClassesReviewDepartment',
                 name: 'ListMembersGV',
                 component: ListClassTeacher
             },

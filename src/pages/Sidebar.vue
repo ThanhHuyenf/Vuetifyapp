@@ -85,19 +85,20 @@ export default {
         {text: 'Trang chủ', icon: 'mdi-home', to: "/homepage"},
         {text: 'Sơ yếu lý lịch', icon: 'mdi-account', to: "/profile"},
         {text: 'Danh sách sinh viên', icon: 'mdi-account-group', to: "/listMembersTeacher"},
-        {text: 'Danh sách lớp', icon: 'mdi-format-list-numbered', to: "/listClassesTeacher"},
+        // {text: 'Danh sách lớp', icon: 'mdi-format-list-numbered', to: "/listClassesTeacher"},
       ],
       departmentItems: [
         {text: 'Trang chủ', icon: 'mdi-home', to: "/homepage"},
         {text: 'Sơ yếu lý lịch', icon: 'mdi-account', to: "/profile"},
+        {text: 'Duyệt điểm', icon: 'mdi-check-bold', to: "/listClassesReviewDepartment"},
         {text: 'Danh sách lớp', icon: 'mdi-format-list-numbered', to: "/listClassesDepartment"},
         {text: 'Danh sách giảng viên', icon: 'mdi-account-multiple', to: "/listTeachersDepartment"},
       ],
       adminItems: [
         {text: 'Trang chủ', icon: 'mdi-home', to: "/homepage"},
         {text: 'Phiếu xét điểm rèn luyện', icon: 'mdi-file', to: "/"},
-        {text: 'Danh sách khoa', icon: 'mdi-format-list-bulleted', to: "/listFaculties"},
         {text: 'Quản lý thời gian', icon: 'mdi-clock', to: "/manageTime"},
+        {text: 'Danh sách khoa', icon: 'mdi-format-list-bulleted', to: "/listFaculties"},
       ]
     }
   },

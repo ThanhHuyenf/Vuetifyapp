@@ -51,6 +51,7 @@ thead tr:hover{
 /*Css cho ther router-link*/
 a {
     text-decoration: none !important;
+    /*color: black !important;*/
 }
 
 .v-date-picker-table table thead:first-child{
