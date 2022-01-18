@@ -19,7 +19,6 @@ export default new Vuex.Store({
         getTag({commit}) {
             var token = localStorage.getItem("token");
             var decoded = jwt_decode(token);
-
             commit('GET_TAG', decoded)
         },
     },

@@ -116,14 +116,14 @@ export default {
           text: 'Lớp',
           align: 'start',
           value: 'lop',
-          width: '20%'
+          width: '10%'
         },
         {
           text: 'Cố vấn học tập',
           align: 'start',
           value: 'coVan',
           sortable: false,
-          width: '25%'
+          width: '20%'
           // sort: (hoTen1, hoTen2) => {
           //
           //   hoTen1 = hoTen1.trim()
@@ -136,11 +136,18 @@ export default {
           // }
         },
         {
+          text: 'Cán bộ lớp',
+          align: 'start',
+          value: 'canBoLop',
+          sortable: false,
+          width: '20%'
+        },
+        {
           text: 'Số phiếu điểm rèn luyện',
           align: 'start',
           value: 'soPhieu',
           sortable: false,
-          width: '20%'
+          width: '18%'
         },
         {
           text: 'Trạng thái',
@@ -157,38 +164,7 @@ export default {
           width: '15%'
         }
       ],
-      items: [
-        {
-          lop: 'K67C',
-          coVan: 'Le Thanh Huyen',
-          trangThai: true
-        },
-        {
-          lop: 'K67A',
-          coVan: 'Nguyen Van A',
-          trangThai: false
-        },
-        {
-          lop: 'K67B',
-          coVan: 'Le Thanh Huyen',
-          trangThai: false
-        },
-        {
-          lop: 'K68A',
-          coVan: 'Nguyen Van A',
-          trangThai: false
-        },
-        {
-          lop: 'K68B',
-          coVan: 'Le Thanh Huyen',
-          trangThai: true
-        },
-        {
-          lop: 'K68C',
-          coVan: 'Le Thanh Huyen',
-          trangThai: false
-        }
-      ],
+      items: [],
       listCoVan: [
         {name: 'Le Thanh Huyen'},
         {name: 'Nguyen Van A'}
@@ -196,6 +172,9 @@ export default {
       filterCoVan: 'All',
       type: 'All'
     }
+  },
+  created() {
+    this.getData()
   },
   computed: {
     filteredItems() {
@@ -208,6 +187,12 @@ export default {
     }
   },
   methods: {
+    getData(){
+      this.$axios.get("http://localhost:3000/listClassTeacher")
+      .then(res => {
+        this.items = res.data
+      })
+    },
     edit(item) {
       return item
     }

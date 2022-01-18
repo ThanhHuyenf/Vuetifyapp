@@ -146,7 +146,7 @@ export default {
           align: 'start',
           sortable: false,
           value: 'maSinhVien',
-          width: '12%'
+          width: '10%'
         },
         {
           text: 'Họ tên',
@@ -172,23 +172,29 @@ export default {
           width: '10%'
         },
         {
-          text: 'Điểm cá nhân chấm',
+          text: 'Cá nhân chấm',
           align: 'start',
           value: 'diemCaNhanCham',
-          width: '14%'
+          width: '12%'
         },
         {
-          text: 'Điểm CBL nhân chấm',
+          text: 'CBL nhân chấm',
           align: 'start',
           value: 'diemCBLNhanCham',
-          width: '15%'
+          width: '12%'
+        },
+        {
+          text: 'GV nhân chấm',
+          align: 'start',
+          value: 'diemGVNhanCham',
+          width: '12%'
         },
         {
           text: 'Trạng thái',
           align: 'start',
           value: 'trangThai',
           sortable: false,
-          width: '13%',
+          width: '11%',
         },
         {
           text: 'Tác vụ',

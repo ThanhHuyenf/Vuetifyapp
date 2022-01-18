@@ -77,7 +77,7 @@
 
 <script>
 import Header from "@/components/Header";
-// import FormDiemLT from "@/pages/listMembers/FormDiemLT";
+// import FormDiemLT from "@/pages/listMembersMonitor/FormDiemLT";
 // import {eventbus} from "@/main"
 
 export default {
@@ -101,7 +101,7 @@ export default {
           align: 'start',
           sortable: false,
           value: 'maSinhVien',
-          width: '20%'
+          width: '15%'
         },
         {
           text: 'Họ tên',
@@ -123,7 +123,13 @@ export default {
           text: 'Điểm cá nhân chấm',
           align: 'start',
           value: 'diemCaNhanCham',
-          width: '20%'
+          width: '15%'
+        },
+        {
+          text: 'Điểm lớp trưởng chấm',
+          align: 'start',
+          value: 'diemLopTruongCham',
+          width: '15%'
         },
         {
           text: 'Trạng thái',

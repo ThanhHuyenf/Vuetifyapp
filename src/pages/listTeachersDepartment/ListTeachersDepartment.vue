@@ -3,17 +3,19 @@
     <Header :title="title">
       <div slot="data">
         <v-item-group class="mt-2 pa-4">
+          <v-subheader class="mb-n2">Tong so: {{items.length}}</v-subheader>
           <v-data-table
               :headers="headers"
               :items="filteredItems"
               item-key="text"
-              fixed-header
-              class="elevation-1 rounded-0 mt-4"
+              class="elevation-1 rounded-0"
           >
 
             <template #item.index="{ item }">
-              {{ filteredItems.indexOf(item) + 1 }}
+              {{ filteredItems.indexOf(item) +1}}
             </template>
+
+
 
             <template v-slot:item.tacVu="{item}">
               <v-menu
@@ -40,7 +42,7 @@
                                    tenKhoa: item.khoa,
                                  }
               }">
-                      <v-list-item-title>Xem chi tiết</v-list-item-title>
+                      <v-list-item-title>Thay đổi mật khẩu</v-list-item-title>
                     </router-link>
                   </v-list-item>
 
@@ -50,72 +52,71 @@
                 </v-list>
               </v-menu>
             </template>
+
           </v-data-table>
         </v-item-group>
       </div>
     </Header>
-    <!--    <FormDiemLT :dialog.sync="dialog"></FormDiemLT>-->
+    <DialogEditTeacher ref="dialogEditTeacher"></DialogEditTeacher>
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header";
-
+import DialogEditTeacher from "@/components/DialogEditTeacher";
 export default {
-  name: "ListFaculties",
-  components: {Header},
+  name: "ListTeachersDepartment",
+  components: {DialogEditTeacher, Header},
   created() {
     this.getData()
   },
-  data() {
-    return {
-      title: "Danh sách thành viên",
+  data(){
+    return{
+      title: "Danh sách cố vấn học tập",
       headers: [
         {
           text: '#',
           align: 'left',
           sortable: false,
           value: 'index',
-          width: '5%'
+          width: '7%'
         },
         {
-          text: 'Mã khoa',
+          text: 'Họ tên',
+          align: 'start',
+          value: 'hoTen',
+          width: '25%',
+          sort: (hoTen1, hoTen2) => {
+
+            hoTen1 = hoTen1.trim()
+            hoTen2 = hoTen2.trim()
+
+            let ten1 = hoTen1.substr(hoTen1.lastIndexOf(" ") + 1);
+            let ten2 = hoTen2.substr(hoTen2.lastIndexOf(" ") + 1);
+
+            return ten1.localeCompare(ten2);
+          }
+        },
+        {
+          text: 'Email',
           align: 'start',
           sortable: false,
-          value: 'maKhoa',
-          width: '12%'
+          value: 'email',
+          width: '20%'
         },
         {
-          text: 'Tên khoa',
+          text: 'Số điện thoai',
           align: 'start',
-          value: 'tenKhoa',
-          width: '20%',
-        },
-        {
-          text: 'Số lượng lớp',
-          align: 'start',
-          value: 'soLuongLop',
           sortable: false,
-          width: '12%'
+          value: 'soDienThoai',
+          width: '20%'
         },
         {
-          text: 'Số lượng SV',
+          text: 'Lớp đang QL',
           align: 'start',
-          value: 'soLuongSV',
-          width: '12%'
-        },
-        {
-          text: 'Số lượng giảng viên',
-          align: 'start',
-          value: 'soLuongGV',
-          width: '14%'
-        },
-        {
-          text: 'Giáo vụ',
-          align: 'start',
-          value: 'giaoVu',
           sortable: false,
-          width: '18%',
+          value: 'listClasses',
+          width: '20%'
         },
         {
           text: 'Tác vụ',
@@ -129,22 +130,22 @@ export default {
     }
   },
   computed: {
-    filteredItems() {
+    filteredItems(){
       return this.items
     }
   },
   methods: {
-    getData() {
-      this.$axios.get("http://localhost:3000/listFaculties")
-          .then(res => {
-            this.items = res.data
-          })
+    getData(){
+      this.$axios.get("http://localhost:3000/listTeachers")
+      .then(res => {
+        this.items = res.data
+      })
     },
-    edit(item) {
-      return item
+    edit(item){
+      this.$refs.dialogEditTeacher.openDialog(item)
     },
-    deleteItem(item) {
-      return item
+    deleteItem(){
+      return
     }
   }
 }

@@ -13,7 +13,7 @@ import Profile from "@/pages/profile/Profile";
 import ResultsHistory from "@/pages/resultsHistory/ResultsHistory";
 
 //Lop truong
-import ListMembersMonitor from "@/pages/listMembers/ListMembers"
+import ListMembersMonitor from "@/pages/listMembersMonitor/ListMembersMonitor"
 import FormDiemMonitor from "@/components/FormDiemLT";
 
 //Giang vien
@@ -25,6 +25,7 @@ import ListClassesDepartment from "@/pages/listClassesDepartment/ListClassesDepa
 import DetailClass from "@/pages/listClassesDepartment/DetailClass";
 import ListClassesManagementDepartment from "@/pages/quanLyDuyetDepartment/ListClassesManagementDepartment";
 import DetailClassDepartment from "@/pages/quanLyDuyetDepartment/DetailClassDepartment";
+import ListTeachersDepartment from "@/pages/listTeachersDepartment/ListTeachersDepartment";
 
 //Nha truong
 import ManageTime from "@/pages/manageTime/ManageTime";
@@ -72,7 +73,7 @@ const routes = [
             },
             {
                 path: '/listMembersMonitor',
-                name: 'ListMembers',
+                name: 'ListMembersMonitor',
                 component: ListMembersMonitor,
             },
             {
@@ -94,6 +95,11 @@ const routes = [
                 path: '/listClassesDepartment',
                 name: 'ListClassKhoa',
                 component: ListClassesDepartment
+            },
+            {
+                path: '/listTeachersDepartment',
+                name: 'ListTeachersKhoa',
+                component: ListTeachersDepartment
             },
             {
                 path: '/listClassesDepartment/khoa=:khoa/class=:class',
