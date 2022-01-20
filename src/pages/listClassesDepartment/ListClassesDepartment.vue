@@ -63,6 +63,7 @@
     </Header>
     <DialogEditClass ref="dialogEditItem"></DialogEditClass>
     <DialogDeleteItem ref="dialogDelete"></DialogDeleteItem>
+    <DialogAddClasses ref="dialogAddClasses"></DialogAddClasses>
 
   </div>
 </template>
@@ -71,10 +72,11 @@
 import Header from "@/components/Header";
 import DialogDeleteItem from "@/components/DialogDeleteItem";
 import DialogEditClass from "@/components/DialogEditClass";
+import DialogAddClasses from "@/components/DialogAddClasses";
 
 export default {
   name: "ListClassesKhoa",
-  components: {DialogEditClass, DialogDeleteItem, Header},
+  components: {DialogAddClasses, DialogEditClass, DialogDeleteItem, Header},
   created() {
     this.getData()
   },
@@ -156,7 +158,7 @@ export default {
           })
     },
     addNew(){
-
+      this.$refs.dialogAddClasses.openDialog()
     },
     edit(item) {
       this.$refs.dialogEditItem.openDialog(item)

@@ -18,14 +18,14 @@ import FormDiemMonitor from "@/components/FormDiemMonitor";
 
 //Giang vien
 import ListMembersTeacher from "@/pages/listMembersTeacher/ListMembersTeacher";
-import ListClassTeacher from "@/pages/listClassesTeacher/ListClassTeacher";
+// import ListClassesTeacher from "@/pages/listClassesTeacher/ListClassesTeacher";
 
 //Khoa
 import ListClassesDepartment from "@/pages/listClassesDepartment/ListClassesDepartment";
 import DetailClass from "@/pages/listClassesDepartment/DetailClass";
-import ListClassesManagementDepartment from "@/pages/quanLyDuyetDepartment/ListClassesManagementDepartment";
-import DetailClassDepartment from "@/pages/quanLyDuyetDepartment/DetailClassDepartment";
 import ListTeachersDepartment from "@/pages/listTeachersDepartment/ListTeachersDepartment";
+import ListClassesReviewDepartment from "@/pages/listClassesReviewDepartment/ListClassesReviewDepartment";
+import DetailClassReviewDepartment from "@/pages/listClassesReviewDepartment/DetailClassReviewDepartment";
 
 //Nha truong
 import ManageTime from "@/pages/manageTime/ManageTime";
@@ -87,11 +87,6 @@ const routes = [
                 component: ListMembersTeacher
             },
             {
-                path: '/listClassesReviewDepartment',
-                name: 'ListMembersGV',
-                component: ListClassTeacher
-            },
-            {
                 path: '/listClassesDepartment',
                 name: 'ListClassKhoa',
                 component: ListClassesDepartment
@@ -107,14 +102,14 @@ const routes = [
                 component: DetailClass
             },
             {
-                path: '/quanLyDuyetDepartment',
+                path: '/listClassesReviewDepartment',
                 name: 'QuanLyDuyetKhoa',
-                component: ListClassesManagementDepartment
+                component: ListClassesReviewDepartment
             },
             {
-                path: '/quanLyDuyetDepartment/detail/class=:class/hocKy=:hocKy/namHoc=:namHoc',
+                path: '/detailClassReviewDepartment/detail/class=:class/hocKy=:hocKy/namHoc=:namHoc',
                 name: 'QuanLyDuyetKhoa.Detail',
-                component: DetailClassDepartment
+                component: DetailClassReviewDepartment
 
             },
             {

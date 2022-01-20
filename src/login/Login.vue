@@ -19,7 +19,7 @@
                         dense
                         type="error"
                     >
-                      Tài khoản/ mật khẩu không chính xác
+                      {{message}}
                     </v-alert>
 
                     <v-text-field
@@ -73,7 +73,8 @@ export default {
       ],
       user_id: '',
       loading: false,
-      wrongAcc: false
+      wrongAcc: false,
+      message: ''
     }
   },
   methods: {
@@ -83,23 +84,30 @@ export default {
       this.password = ''
     },
     submit() {
-      this.loading = true
-      this.$services.LoginService.query({
-        id: this.user_id,
-        password: this.password
-      })
-          .then(res => {
-            this.loading = false
-            localStorage.setItem("token", res.data.token)
-            localStorage.setItem("user", {})
-            this.$router.push('/homepage')
-          })
-          .catch(e => {
-            this.loading = false
-            this.wrongAcc = true
-            this.clear()
-          })
+      if (this.user_id === '' || this.password === '') {
+        this.message = 'Vui lòng nhập đầy đủ thông tin'
+        this.wrongAcc = true
+      } else {
+        this.loading = true
+        this.$services.LoginService.query({
+          id: this.user_id,
+          password: this.password
+        })
+            .then(res => {
+              this.loading = false
+              localStorage.setItem("token", res.data.token)
+              localStorage.setItem("user", {})
+              this.$router.push('/homepage')
+            })
+            .catch(e => {
+              this.loading = false
+              this.wrongAcc = true
+              this.message = 'Tài khoản/ mật khẩu không chính xác'
+              this.clear()
+            })
+      }
     }
+
   },
 }
 </script>

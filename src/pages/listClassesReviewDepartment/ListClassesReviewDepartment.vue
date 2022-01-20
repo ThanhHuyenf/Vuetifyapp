@@ -82,9 +82,26 @@
               </div>
             </template>
 
+<!--            <template v-slot:item.tacVu="{ item }" @click="edit(item)">-->
+<!--              -->
+<!--              Xem chi tiết-->
+<!--            </template>-->
+
             <template v-slot:item.tacVu="{ item }" @click="edit(item)">
-              Xem chi tiết
+
+              <router-link :to="{
+                                 name: 'QuanLyDuyetKhoa.Detail',
+                                 params: {
+                                   class: item.lop,
+                                   hocKy: 1,
+                                   namHoc: '2020-2021'
+                                 }
+              }">
+                <div class="detail-class">Xem chi tiết</div>
+              </router-link>
+
             </template>
+
           </v-data-table>
         </v-item-group>
       </div>
@@ -201,5 +218,7 @@ export default {
 </script>
 
 <style scoped>
-
+a{
+  color: black !important;
+}
 </style>
