@@ -43,7 +43,7 @@
       </div>
     </Header>
 
-    <FormChangeImg ref="dialogChangeImg"></FormChangeImg>
+<!--    <FormChangeImg ref="dialogChangeImg"></FormChangeImg>-->
   </div>
 
 </template>
@@ -52,11 +52,10 @@
 import Header from "@/components/Header";
 import Info from "@/components/Info"
 import ChangePassword from "@/components/ChangePassword";
-import FormChangeImg from "@/components/FormChangeImg";
 
 export default {
   name: "Profile",
-  components: {FormChangeImg, ChangePassword, Header, Info},
+  components: {ChangePassword, Header, Info},
   data() {
     return {
       title: "Thông tin cá nhân",

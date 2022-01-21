@@ -128,12 +128,13 @@ export default {
   },
   methods: {
     getData(){
-      this.$axios.get('http://api.lethanhhuyen.nvcd.xyz/api/detail-users')
+      this.$services.ProfileService.query()
+      // this.$axios.get('http://api.lethanhhuyen.nvcd.xyz/api/detail-users')
           .then(res => {
-            this.info.user_id = res.data.user_id
+            this.info.user_id = res.data.id
             this.info.hoVaTen = res.data.name
-            this.info.email = res.data.email
-            this.info.chucVu = res.data.role
+            this.info.email = res.data.users.email
+            this.info.chucVu = res.data.users.role
           })
     },
     save() {
