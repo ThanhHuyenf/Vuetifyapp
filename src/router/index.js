@@ -97,7 +97,7 @@ const routes = [
                 component: ListTeachersDepartment
             },
             {
-                path: '/listClassesDepartment/khoa=:khoa/class=:class',
+                path: '/listClassesDepartment/:id',
                 name: 'DetailClass',
                 component: DetailClass
             },

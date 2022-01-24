@@ -43,8 +43,7 @@
                     <router-link :to="{
                                  name: 'DetailClass',
                                  params: {
-                                   khoa: item.khoa,
-                                   class: item.lop,
+                                   id: item.classId,
                                  }
               }">
                       <v-list-item-title>Xem chi tiết</v-list-item-title>
@@ -94,26 +93,26 @@ export default {
         {
           text: 'Khoá',
           align: 'start',
-          value: 'khoa',
+          value: 'courseName',
           width: '15%'
         },
         {
           text: 'Lớp',
           align: 'start',
           sortable: false,
-          value: 'lop',
+          value: 'className',
           width: '15%'
         },
         {
           text: 'Sĩ số',
           align: 'start',
-          value: 'siSo',
+          value: 'count',
           width: '15%'
         },
         {
           text: 'Cố vấn',
           align: 'start',
-          value: 'coVan',
+          value: 'headMasterName',
           width: '25%'
         },
         {
@@ -152,9 +151,13 @@ export default {
   },
   methods: {
     getData() {
-      this.$axios.get('http://localhost:3000/listLopCuaKhoa')
+      this.$services.DepartmentSevice.getClasses()
           .then(res => {
+            console.log(res.data)
             this.items = res.data
+            for(let i= 0; i< res.data.length; i++){
+              this.items[i].thoiGian = res.data[i].startYear + " - "+ res.data[i].endYear
+            }
           })
     },
     addNew(){

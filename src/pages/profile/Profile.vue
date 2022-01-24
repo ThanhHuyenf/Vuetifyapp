@@ -42,6 +42,7 @@
         </v-card>
       </div>
     </Header>
+    <ChangeImgProfile></ChangeImgProfile>
 
 <!--    <FormChangeImg ref="dialogChangeImg"></FormChangeImg>-->
   </div>
@@ -52,10 +53,11 @@
 import Header from "@/components/Header";
 import Info from "@/components/Info"
 import ChangePassword from "@/components/ChangePassword";
+import ChangeImgProfile from "@/components/ChangeImgProfile";
 
 export default {
   name: "Profile",
-  components: {ChangePassword, Header, Info},
+  components: {ChangeImgProfile, ChangePassword, Header, Info},
   data() {
     return {
       title: "Thông tin cá nhân",

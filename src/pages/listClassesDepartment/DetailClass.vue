@@ -47,21 +47,21 @@ export default {
           text: 'Học kỳ',
           align: 'left',
           sortable: false,
-          value: 'hocKy',
+          value: 'semester',
           width: '6%'
         },
         {
           text: 'Sĩ số',
           align: 'left',
           sortable: false,
-          value: 'siSo',
+          value: 'count',
           width: '5%'
         },
         {
           text: 'Giảng viên cô vấn',
           align: 'left',
           sortable: false,
-          value: 'coVan',
+          value: 'headMasterName',
           width: '15%'
         },
         {
@@ -128,9 +128,12 @@ export default {
   },
   methods: {
     getData() {
-      this.$axios.get('http://localhost:3000/detailClass')
+      this.$services.DepartmentSevice.getDetailClass({id: this.$route.params.id})
           .then(res => {
             this.items = res.data
+            for(let i=0; i<res.data.length; i++){
+              this.items[i].namHoc = res.data[i].startYear + " - "+ res.data[i].endYear
+            }
           })
     }
   }

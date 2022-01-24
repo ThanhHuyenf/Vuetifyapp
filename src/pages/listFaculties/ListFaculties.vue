@@ -69,7 +69,7 @@ export default {
   },
   data() {
     return {
-      title: "Danh sách thành viên",
+      title: "Danh sách khoa",
       headers: [
         {
           text: '#',
@@ -82,13 +82,13 @@ export default {
           text: 'Mã khoa',
           align: 'start',
           sortable: false,
-          value: 'maKhoa',
+          value: 'departmentId',
           width: '12%'
         },
         {
           text: 'Tên khoa',
           align: 'start',
-          value: 'tenKhoa',
+          value: 'departmentName',
           width: '20%',
         },
         {
@@ -135,7 +135,7 @@ export default {
   },
   methods: {
     getData() {
-      this.$axios.get("http://localhost:3000/listFaculties")
+      this.$services.AdminService.getDepartments()
           .then(res => {
             this.items = res.data
           })
