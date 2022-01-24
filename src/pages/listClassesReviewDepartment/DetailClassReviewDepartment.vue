@@ -23,14 +23,49 @@
         </div>
         <div class="pl-3 mb-8">
           <v-checkbox v-model="checkbox1" label="Tôi đồng ý với các dữ liệu như trên!"></v-checkbox>
-          <v-btn
-              depressed
-              color="primary"
-              :disabled="!checkbox1"
+
+          <v-dialog
+              v-model="dialog"
+              persistent
+              max-width="290"
           >
-            Đồng ý duyệt
-          </v-btn>
-          <!--        <v-btn>Đồng ý duyệt</v-btn>-->
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                  depressed
+                  color="primary"
+                  v-bind="attrs"
+                  v-on="on"
+                  :disabled="!checkbox1"
+              >
+                Đồng ý duyệt
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-title class="text-h5">
+                Use Google's location service?
+              </v-card-title>
+              <v-card-text>
+                Duyệt thành công, quay về Danh sách  chờ duyệt
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                    color="green darken-1"
+                    text
+                    @click="dialog = false"
+                >
+                  Huỷ
+                </v-btn>
+                <v-btn
+                    color="green darken-1"
+                    text
+                    @click="backToList"
+                >
+                  Đồng ý
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </div>
       </div>
 
@@ -150,7 +185,8 @@ export default {
       items: [],
       filterClass: "All",
       type: "All",
-      checkbox1: false
+      checkbox1: false,
+      dialog: false
     }
   },
   created() {
@@ -174,6 +210,9 @@ export default {
             console.log(res.data)
             this.items = res.data
           })
+    },
+    backToList(){
+      this.$router.push('/listClassesReviewDepartment')
     }
   }
 }

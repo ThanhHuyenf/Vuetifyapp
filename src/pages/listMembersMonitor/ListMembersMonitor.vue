@@ -100,13 +100,13 @@ export default {
           text: 'Mã sinh viên',
           align: 'start',
           sortable: false,
-          value: 'maSinhVien',
+          value: 'userID',
           width: '15%'
         },
         {
           text: 'Họ tên',
           align: 'start',
-          value: 'hoTen',
+          value: 'name',
           width: '25%',
           sort: (hoTen1, hoTen2) => {
 
@@ -167,8 +167,9 @@ export default {
   },
   methods: {
     getData(){
-      this.$axios.get('http://localhost:3000/listMembers')
+      this.$services.MonitorService.getMembers()
       .then(res => {
+        console.log(res.data)
         this.items= res.data
       })
     }

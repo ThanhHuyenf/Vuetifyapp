@@ -97,7 +97,7 @@
                                    namHoc: '2020-2021'
                                  }
               }">
-                <div class="detail-class">Xem chi tiết</div>
+                <div class="detail-class">Chi tiết</div>
               </router-link>
 
             </template>
@@ -127,58 +127,88 @@ export default {
           align: 'left',
           sortable: false,
           value: 'index',
-          width: '7%'
+          width: '3%'
         },
         {
           text: 'Lớp',
           align: 'start',
           value: 'lop',
-          width: '10%'
+          width: '5%'
         },
         {
           text: 'Cố vấn học tập',
           align: 'start',
           value: 'coVan',
           sortable: false,
-          width: '20%'
-          // sort: (hoTen1, hoTen2) => {
-          //
-          //   hoTen1 = hoTen1.trim()
-          //   hoTen2 = hoTen2.trim()
-          //
-          //   let ten1 = hoTen1.substr(hoTen1.lastIndexOf(" ") + 1);
-          //   let ten2 = hoTen2.substr(hoTen2.lastIndexOf(" ") + 1);
-          //
-          //   return ten1.localeCompare(ten2);
-          // }
+          width: '15%'
         },
         {
-          text: 'Cán bộ lớp',
-          align: 'start',
-          value: 'canBoLop',
+          text: 'Xuất sắc',
+          align: 'left',
           sortable: false,
-          width: '20%'
+          value: 'xuatSac',
+          width: '7%'
         },
         {
-          text: 'Số phiếu điểm rèn luyện',
+          text: 'Tốt',
+          align: 'left',
+          sortable: false,
+          value: 'tot',
+          width: '6%'
+        },
+        {
+          text: 'Khá',
+          align: 'left',
+          sortable: false,
+          value: 'kha',
+          width: '6%'
+        },
+        {
+          text: 'TB khá',
+          align: 'left',
+          sortable: false,
+          value: 'tbkha',
+          width: '6%'
+        },
+        {
+          text: 'TB',
+          align: 'left',
+          sortable: false,
+          value: 'tb',
+          width: '6%'
+        }, {
+          text: 'Yếu',
+          align: 'left',
+          sortable: false,
+          value: 'yeu',
+          width: '6%'
+        }, {
+          text: 'Kém',
+          align: 'left',
+          sortable: false,
+          value: 'kem',
+          width: '6%'
+        },
+        {
+          text: 'Tong so',
           align: 'start',
           value: 'soPhieu',
           sortable: false,
-          width: '18%'
+          width: '6%'
         },
         {
           text: 'Trạng thái',
           align: 'start',
           value: 'trangThai',
           sortable: false,
-          width: '15%'
+          width: '10%'
         },
         {
           text: 'Tác vụ',
           align: 'start',
           sortable: false,
           value: 'tacVu',
-          width: '15%'
+          width: '8%'
         }
       ],
       items: [],

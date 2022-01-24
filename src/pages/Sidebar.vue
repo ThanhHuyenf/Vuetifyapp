@@ -85,7 +85,7 @@ export default {
         {text: 'Trang chủ', icon: 'mdi-home', to: "/homepage"},
         {text: 'Sơ yếu lý lịch', icon: 'mdi-account', to: "/profile"},
         {text: 'Danh sách sinh viên', icon: 'mdi-account-group', to: "/listMembersTeacher"},
-        {text: 'Danh sách lớp', icon: 'mdi-format-list-numbered', to: "/listClassesTeacher"},
+        // {text: 'Danh sách lớp', icon: 'mdi-format-list-numbered', to: "/listClassesTeacher"},
         // {text: 'Danh sách lớp', icon: 'mdi-format-list-numbered', to: "/listClassesReviewDepartment"},
       ],
       departmentItems: [

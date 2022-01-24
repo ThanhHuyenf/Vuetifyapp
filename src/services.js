@@ -19,9 +19,19 @@ const ProfileService = Vue.resource('api/detail-users', {}, {
     query: {method: 'GET', url: 'api/detail-users'}
 })
 
+const MonitorService = Vue.resource('api/detail-users/monitor',{}, {
+    getMembers : {method: "GET", url: "api/detail-users/monitor/list-students"}
+})
+
+const TeacherService = Vue.resource('api/class', {}, {
+    getClasses : {method: "GET", url: "api/class/head-master"},
+    getMembers: {method: "GET", url: "api/detail-users/head-master/list-students/0"}
+})
+
 const DepartmentSevice = Vue.resource('api/class',{}, {
     getClasses : {method: 'GET', url:'api/class'},
     getDetailClass: {method: 'GET', url: 'api/class/{id}'},
+    getMembers: {method: 'GET', url:'api/class'},
 })
 
 const AdminService= Vue.resource('api/department', {}, {
@@ -31,6 +41,8 @@ const AdminService= Vue.resource('api/department', {}, {
 const services = {
     LoginService,
     ProfileService,
+    MonitorService,
+    TeacherService,
     DepartmentSevice,
     AdminService
 }
