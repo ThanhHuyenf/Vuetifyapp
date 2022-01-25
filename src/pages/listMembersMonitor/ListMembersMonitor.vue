@@ -169,7 +169,6 @@ export default {
     getData(){
       this.$services.MonitorService.getMembers()
       .then(res => {
-        console.log(res.data)
         this.items= res.data
       })
     }
