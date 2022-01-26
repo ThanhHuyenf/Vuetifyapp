@@ -13,7 +13,7 @@
                         fixed-header
           >
             <template #item.index="{ item }">
-              {{ filteredItems.indexOf(item) +1}}
+              {{ filteredItems.indexOf(item) + 1 }}
             </template>
 
             <template v-slot:item.tacVu="{item}">
@@ -37,21 +37,22 @@
         </v-item-group>
       </div>
     </Header>
-    <DialogTime ref="dialogTime" @done-edit="updated"></DialogTime>
+    <DialogEditTime ref="dialogTime" @done-edit="updated"></DialogEditTime>
 
-<!--    <DialogTimeNew ref="dialogTimeNew"></DialogTimeNew>-->
+    <!--    <DialogTimeNew ref="dialogTimeNew"></DialogTimeNew>-->
 
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header";
-import DialogTime from "@/components/DialogTime";
+import DialogEditTime from "@/components/DialogEditTime";
+import moment from "moment";
 // import DialogTimeNew from "@/components/DialogTimeNew";
 
 export default {
   name: "ManageTime",
-  components: { DialogTime, Header},
+  components: {DialogEditTime, Header},
   computed: {
     filteredItems() {
       return this.items
@@ -82,7 +83,7 @@ export default {
           text: 'Hoc ky',
           align: 'left',
           sortable: false,
-          value: 'hocKy',
+          value: 'semester',
           width: '7%'
         },
         {
@@ -120,45 +121,41 @@ export default {
           value: 'tacVu',
           width: '8%'
         },
-
       ],
-      items: [
-        {
-          namHoc: '2020-2021',
-          hocKy: 1,
-          tgSV: '12/12/2021 - 13/12/2021',
-          tgLT: '12/12/2021 - 13/12/2021',
-          tgGV: '12/12/2021 - 13/12/2021',
-          tgK: '12/12/2021 - 13/12/2021',
-        },
-        {
-          namHoc: '2020-2021',
-          hocKy: 2,
-          tgSV: 'huyfnn',
-          tgLT: '',
-          tgGV: '',
-          tgK: '',
-        }
-      ],
+      items: [],
     }
   },
   created() {
     this.getData()
   },
   methods: {
-    getData(){
-
+    getData() {
+      this.$services.AdminService.getTime()
+          .then(res => {
+            this.items = res.data
+            for (let i = 0; i < res.data.length; i++) {
+              this.items[i].namHoc = res.data[i].startYear + " - " + res.data[i].endYear
+              this.items[i].tgSV = this.formatTime(res.data[i].startTimeStudent, res.data[i].endTimeStudent)
+              this.items[i].tgLT = this.formatTime(res.data[i].startTimeMonitor, res.data[i].endTimeMonitor)
+              this.items[i].tgGV = this.formatTime(res.data[i].startTimeHeadMaster, res.data[i].endTimeHeadMaster)
+              this.items[i].tgK = this.formatTime(res.data[i].startTimeDepartment, res.data[i].endTimeDepartment)
+            }
+          })
+    },
+    formatTime(date1, date2) {
+      return moment(date1, 'YYYY-MM-DD').format('DD/MM/YYYY') + ' - '
+          + moment(date2, 'YYYY-MM-DD').format('DD/MM/YYYY')
     },
     editItem(item) {
-      this.$refs.dialogTime.openDialog( item)
+      this.$refs.dialogTime.openDialog(item)
     },
-    deleteItem(item){
+    deleteItem(item) {
       console.log(item)
     },
-    updated(){
-
+    updated(item) {
+      this.item = item
     },
-    addNew(){
+    addNew() {
       this.$refs.dialogTimeNew.openDialog()
     }
   }

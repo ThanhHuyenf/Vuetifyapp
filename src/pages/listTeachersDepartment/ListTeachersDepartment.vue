@@ -2,8 +2,19 @@
   <div>
     <Header :title="title">
       <div slot="data">
-        <v-item-group class="mt-2 pa-4">
-          <v-subheader class="mb-n2">Tong so: {{ items.length }}</v-subheader>
+        <v-item-group class="pa-4">
+          <div class="text-right d-flex justify-space-between">
+            <v-subheader class="mb-n2">Tong so: {{ items.length }}</v-subheader>
+
+            <v-btn outlined
+                color="primary"
+                   @click="addNew">
+              <!--              <v-icon>mdi-plus</v-icon>-->
+              Thêm
+
+            </v-btn>
+          </div>
+
           <v-data-table
               :headers="headers"
               :items="filteredItems"
@@ -76,13 +87,6 @@
                               ></v-text-field>
 
                               <v-item-group class="text-right d-flex justify-space-between">
-                                <v-btn class="reset-btn ml-auto"
-                                       text
-                                       color="green darken-1"
-                                       @click="clear">
-                                  Reset
-                                </v-btn>
-
                                 <v-btn class="mr-2"
                                        text>
                                   Huỷ
@@ -171,16 +175,18 @@
       </div>
     </Header>
     <DialogEditTeacher ref="dialogEditTeacher"></DialogEditTeacher>
+    <DialogAddTeacher ref="dialogAddTeacher"></DialogAddTeacher>
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header";
 import DialogEditTeacher from "@/components/DialogEditTeacher";
+import DialogAddTeacher from "@/components/DialogAddTeacher";
 
 export default {
   name: "ListTeachersDepartment",
-  components: {DialogEditTeacher, Header},
+  components: {DialogAddTeacher, DialogEditTeacher, Header},
   created() {
     this.getData()
   },
@@ -198,7 +204,7 @@ export default {
         {
           text: 'Họ tên',
           align: 'start',
-          value: 'hoTen',
+          value: 'teacherName',
           width: '25%',
           sort: (hoTen1, hoTen2) => {
 
@@ -222,7 +228,7 @@ export default {
           text: 'Số điện thoai',
           align: 'start',
           sortable: false,
-          value: 'soDienThoai',
+          value: 'teacherNumber',
           width: '20%'
         },
         {
@@ -264,8 +270,9 @@ export default {
   },
   methods: {
     getData() {
-      this.$axios.get("http://localhost:3000/listTeachers")
+      this.$services.DepartmentSevice.getTeachers()
           .then(res => {
+            console.log(res.data)
             this.items = res.data
           })
     },
@@ -275,18 +282,18 @@ export default {
     deleteItem() {
       return
     },
-    clear() {
-      this.$refs.form.resetValidation()
-      this.newPassword = ''
-      this.passwordConfirmation = ''
-    },
     changePassword() {
       return
+    },
+    addNew() {
+      this.$refs.dialogAddTeacher.openDialog()
     }
   }
 }
 </script>
 
 <style scoped>
-
+.v-btn--absolut v-icon {
+  left: 40%;
+}
 </style>

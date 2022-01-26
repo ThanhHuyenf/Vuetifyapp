@@ -99,7 +99,7 @@ export default {
         {text: 'Trang chủ', icon: 'mdi-home', to: "/homepage"},
         {text: 'Phiếu xét điểm rèn luyện', icon: 'mdi-file', to: "/"},
         {text: 'Quản lý thời gian', icon: 'mdi-clock', to: "/manageTime"},
-        {text: 'Danh sách khoa', icon: 'mdi-format-list-bulleted', to: "/listFaculties"},
+        {text: 'Danh sách khoa', icon: 'mdi-format-list-bulleted', to: "/listDepartments"},
       ]
     }
   },

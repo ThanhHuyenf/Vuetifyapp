@@ -3,12 +3,19 @@
     <Header :title="title">
       <div slot="data">
         <v-item-group class="mt-2 pa-4">
+          <div class="text-right">
+            <v-btn outlined
+                   color="primary"
+                   @click="addNew">
+              Thêm
+            </v-btn>
+          </div>
           <v-data-table
               :headers="headers"
               :items="filteredItems"
               item-key="text"
               fixed-header
-              class="elevation-1 rounded-0 mt-4"
+              class="elevation-1 rounded-0 mt-1"
           >
 
             <template #item.index="{ item }">
@@ -35,7 +42,7 @@
                   </v-list-item>
                   <v-list-item>
                     <router-link :to="{
-                                 name: 'DetailFaculty',
+                                 name: 'DetailDepartment',
                                  params: {
                                    tenKhoa: item.khoa,
                                  }
@@ -94,26 +101,26 @@ export default {
         {
           text: 'Số lượng lớp',
           align: 'start',
-          value: 'soLuongLop',
+          value: 'countClasses',
           sortable: false,
           width: '12%'
         },
         {
           text: 'Số lượng SV',
           align: 'start',
-          value: 'soLuongSV',
+          value: 'countStudent',
           width: '12%'
         },
         {
           text: 'Số lượng giảng viên',
           align: 'start',
-          value: 'soLuongGV',
+          value: 'countTeachers',
           width: '14%'
         },
         {
           text: 'Giáo vụ',
           align: 'start',
-          value: 'giaoVu',
+          value: 'departmentAdminName',
           sortable: false,
           width: '18%',
         },
@@ -137,6 +144,7 @@ export default {
     getData() {
       this.$services.AdminService.getDepartments()
           .then(res => {
+            console.log(res.data)
             this.items = res.data
           })
     },
@@ -145,6 +153,9 @@ export default {
     },
     deleteItem(item) {
       return item
+    },
+    addNew(){
+      return
     }
   }
 }

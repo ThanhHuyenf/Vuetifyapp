@@ -29,8 +29,8 @@ import DetailClassReviewDepartment from "@/pages/listClassesReviewDepartment/Det
 
 //Nha truong
 import ManageTime from "@/pages/manageTime/ManageTime";
-import ListFaculties from "@/pages/listFaculties/ListFaculties";
-import DetailFaculty from "@/pages/listFaculties/DetailFaculty";
+import ListDepartments from "@/pages/listDepartments/ListDepartments";
+import DetailDepartment from "@/pages/listDepartments/DetailDepartment";
 
 Vue.use(VueRouter)
 
@@ -113,14 +113,14 @@ const routes = [
 
             },
             {
-                path: '/listFaculties',
-                name: 'ListFaculties',
-                component: ListFaculties
+                path: '/listDepartments',
+                name: 'ListDepartment',
+                component: ListDepartments
             },
             {
-                path: '/listFaculties/detail',
-                name: 'DetailFaculty',
-                component: DetailFaculty
+                path: '/listDepartments/detail',
+                name: 'DetailDepartment',
+                component: DetailDepartment
             },
             {
                 path: '/manageTime',

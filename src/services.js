@@ -32,10 +32,13 @@ const DepartmentSevice = Vue.resource('api/class',{}, {
     getClasses : {method: 'GET', url:'api/class'},
     getDetailClass: {method: 'GET', url: 'api/class/{id}'},
     getMembers: {method: 'GET', url:'api/class'},
+    getTeachers: {method: "GET", url : "api/department/list-teachers"}
 })
 
 const AdminService= Vue.resource('api/department', {}, {
-    getDepartments : {method: 'GET', url: 'api/department'}
+    getDepartments : {method: 'GET', url: 'api/department'},
+    getTime: {method: "GET", url: "api/time"},
+    fixTime: {method: "PUT", url:"api/time/{id}" }
 })
 
 const services = {

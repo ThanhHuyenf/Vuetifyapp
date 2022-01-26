@@ -15,7 +15,7 @@
             </v-col>
             <v-col cols="6">
               <v-autocomplete label="Học kỳ"
-                              value="timeDetail.hocKy"
+                              value="timeDetail.semester"
                               :items="hocKy">
               </v-autocomplete>
             </v-col>
@@ -31,7 +31,7 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                  v-model="dateSVRangeText"
+                  v-model="timeDetail.tgSV"
                   label="Thời gian sinh viên chấm điểm"
                   :return-value.sync="dateSV"
                   append-icon="mdi-calendar"
@@ -57,7 +57,7 @@
               <v-btn
                   text
                   color="primary"
-                  @click="$refs.menuSV.save(dateSV)"
+                  @click="saveDateSV(dateSV)"
               >
                 OK
               </v-btn>
@@ -74,7 +74,7 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                  v-model="dateLTRangeText"
+                  v-model="timeDetail.tgLT"
                   label="Thời gian lớp trưởng chấm điểm"
                   :return-value.sync="dateLT"
                   append-icon="mdi-calendar"
@@ -100,7 +100,7 @@
               <v-btn
                   text
                   color="primary"
-                  @click="$refs.menuLT.save(dateLT)"
+                  @click="saveDateLT(dateLT)"
               >
                 OK
               </v-btn>
@@ -117,7 +117,7 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                  v-model="dateGVRangeText"
+                  v-model="timeDetail.tgGV"
                   label="Thời gian giảng viên chấm điểm"
                   :return-value.sync="dateGV"
                   append-icon="mdi-calendar"
@@ -143,7 +143,7 @@
               <v-btn
                   text
                   color="primary"
-                  @click="$refs.menuGV.save(dateGV)"
+                  @click="saveDateGV(dateGV)"
               >
                 OK
               </v-btn>
@@ -160,7 +160,7 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                  v-model="dateKRangeText"
+                  v-model="timeDetail.tgK"
                   label="Thời gian khoa duyệt"
                   :return-value.sync="dateK"
                   append-icon="mdi-calendar"
@@ -186,7 +186,7 @@
               <v-btn
                   text
                   color="primary"
-                  @click="$refs.menuK.save(dateK)"
+                  @click="saveDateK(dateK)"
               >
                 OK
               </v-btn>
@@ -222,50 +222,22 @@ export default {
     return {
       dialog: false,
       hocKy: ['1', '2'],
+      timeDetail: [],
       menuSV: false,
       menuLT: false,
       menuGV: false,
       menuK: false,
-      timeDetail: {
-        stt: null,
-        namHoc: '',
-        hocKy: null,
-        tgSV: '',
-        tgLT: '',
-        tgGV: '',
-        tgK: '',
-      },
       dateSV: [],
       dateLT: [],
       dateGV: [],
-      dateK: []
+      dateK: [],
+      temp: []
     }
-  },
-  computed: {
-    dateSVRangeText() {
-      return this.formatDate(this.dateSV[0], this.dateSV[1])
-    },
-    dateLTRangeText() {
-      return this.formatDate(this.dateLT[0], this.dateLT[1])
-    },
-    dateGVRangeText() {
-      return this.formatDate(this.dateGV[0], this.dateGV[1])
-    },
-    dateKRangeText() {
-      return this.formatDate(this.dateK[0], this.dateK[1])
-    },
   },
   methods: {
     openDialog(item) {
-      if (this.type === "update") {
-        this.timeDetail = this.$lodash.clone(item)
-
-        this.dateSV = this.timeDetail.tgSV.split(' - ').map(item => this.formatDate1(item))
-        this.dateLT = this.timeDetail.tgLT.split(' - ').map(item => this.formatDate1(item))
-        this.dateGV = this.timeDetail.tgGV.split(' - ').map(item => this.formatDate1(item))
-        this.dateK = this.timeDetail.tgK.split(' - ').map(item => this.formatDate1(item))
-
-      }
+      this.timeDetail = item
+      console.log(item)
       this.dialog = true
     },
 
@@ -273,19 +245,49 @@ export default {
       return moment(date1, 'YYYY-MM-DD').format('DD/MM/YYYY') + ' - '
           + moment(date2, 'YYYY-MM-DD').format('DD/MM/YYYY')
     },
-    formatDate1(date) {
-      return moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD')
+    saveTime() {
+      this.$services.AdminService.fixTime({id: this.timeDetail.id}, {
+        startYear: "2021",
+        endYear: "2022",
+        semester: "1",
+        startTimeStudent : moment().format(this.temp.startTimeStudent),
+        endTimeStudent : moment().format(this.temp.endTimeStudent),
+        startTimeMonitor : moment().format(this.temp.startTimeMonitor),
+        endTimeMonitor : moment().format(this.temp.endTimeMonitor),
+        startTimeHeadMaster : moment().format(this.temp.startTimeHeadMaster),
+        endTimeHeadMaster : moment().format(this.temp.endTimeHeadMaster),
+        startTimeDepartment : moment().format(this.temp.startTimeDepartment),
+        endTimeDepartment : moment().format(this.temp.endTimeDepartment),
+        status: this.timeDetail.status
+      })
+      .then( () => {
+        this.$emit('done-edit', this.timeDetail)
+        this.dialog = false
+        // console.log("Thanh cong hihih")
+      })
+
 
     },
-    saveTime() {
-      this.timeDetail.tgSV = this.dateSVRangeText
-      this.timeDetail.tgLT = this.dateLTRangeText
-      this.timeDetail.tgGV = this.dateGVRangeText
-      this.timeDetail.tgK = this.dateKRangeText
-
-      this.$emit('done-edit', this.timeDetail)
-      this.dialog = false
-    }
+    saveDateSV(date){
+      this.temp.startTimeStudent = date[0]
+      this.temp.endTimeStudent = date[1]
+      this.$refs.menuSV.save(date)
+    },
+    saveDateLT(date){
+      this.temp.startTimeMonitor = date[0]
+      this.temp.endTimeMonitor = date[1]
+      this.$refs.menuLT.save(date)
+    },
+    saveDateGV(date){
+      this.temp.startTimeHeadMaster = date[0]
+      this.temp.endTimeHeadMaster = date[1]
+      this.$refs.menuGV.save(date)
+    },
+    saveDateK(date){
+      this.temp.startTimeDepartment = date[0]
+      this.temp.endTimeDepartment = date[1]
+      this.$refs.menuK.save(date)
+    },
   }
 }
 </script>

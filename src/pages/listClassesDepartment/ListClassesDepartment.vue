@@ -4,8 +4,10 @@
       <div slot="data">
         <v-item-group class="pa-4">
 
-          <div class="text-center red--text mb-4">
-            <v-btn @click="addNew">
+          <div class="text-right">
+            <v-btn outlined
+                   color="primary"
+                   @click="addNew">
               Thêm
             </v-btn>
           </div>
@@ -14,7 +16,7 @@
               :headers="headers"
               :items="filteredItems"
               item-key="text"
-              class="elevation-1 rounded-0 mt-4"
+              class="elevation-1 rounded-0 mt-1"
           >
 
             <template #item.index="{ item }">
@@ -36,7 +38,7 @@
 
                 <v-list>
                   <v-list-item>
-<!--                    <v-icon>mdi-facebook</v-icon>-->
+                    <!--                    <v-icon>mdi-facebook</v-icon>-->
                     <v-list-item-title @click="edit(item)">Chỉnh sửa</v-list-item-title>
                   </v-list-item>
                   <v-list-item>
@@ -155,12 +157,12 @@ export default {
           .then(res => {
             console.log(res.data)
             this.items = res.data
-            for(let i= 0; i< res.data.length; i++){
-              this.items[i].thoiGian = res.data[i].startYear + " - "+ res.data[i].endYear
+            for (let i = 0; i < res.data.length; i++) {
+              this.items[i].thoiGian = res.data[i].startYear + " - " + res.data[i].endYear
             }
           })
     },
-    addNew(){
+    addNew() {
       this.$refs.dialogAddClasses.openDialog()
     },
     edit(item) {
@@ -174,7 +176,7 @@ export default {
 </script>
 
 <style scoped>
-a{
+a {
   color: black !important;
 }
 </style>
