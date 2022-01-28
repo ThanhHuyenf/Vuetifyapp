@@ -31,7 +31,7 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                  v-model="timeDetail.tgSV"
+                  v-model="rangeSV"
                   label="Thời gian sinh viên chấm điểm"
                   :return-value.sync="dateSV"
                   append-icon="mdi-calendar"
@@ -41,7 +41,7 @@
               ></v-text-field>
             </template>
             <v-date-picker
-                v-model="dateSV"
+                v-model="tempDateSV"
                 no-title
                 scrollable
                 range
@@ -234,10 +234,40 @@ export default {
       temp: []
     }
   },
+  computed: {
+    rangeSV(){
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+      this.dateSV =this.dateSV.map(item => {
+        return moment(item, 'YYYY-MM-DD').format('DD/MM/YYYY')
+      })
+      return this.dateSV.join(' - ')
+    },
+    tempDateSV(){
+      return this.timeDetail.tgSV.split(" - ").map(item => {
+        return moment(item, 'DD/MM/YYYY').format('YYYY-MM-DD')
+      })
+    }
+  },
   methods: {
     openDialog(item) {
       this.timeDetail = item
-      console.log(item)
+
+      // this.dateSV = this.timeDetail.tgSV.split(" - ").map(item => {
+      //   return moment(item, 'DD/MM/YYYY').format('YYYY-MM-DD')
+      // })
+
+      this.dateLT = this.timeDetail.tgLT.split(" - ").map(item => {
+        return moment(item, 'DD/MM/YYYY').format('YYYY-MM-DD')
+      })
+
+      this.dateGV = this.timeDetail.tgGV.split(" - ").map(item => {
+        return moment(item, 'DD/MM/YYYY').format('YYYY-MM-DD')
+      })
+
+      this.dateK = this.timeDetail.tgK.split(" - ").map(item => {
+        return moment(item, 'DD/MM/YYYY').format('YYYY-MM-DD')
+      })
+
       this.dialog = true
     },
 
@@ -263,7 +293,6 @@ export default {
       .then( () => {
         this.$emit('done-edit', this.timeDetail)
         this.dialog = false
-        // console.log("Thanh cong hihih")
       })
 
 
