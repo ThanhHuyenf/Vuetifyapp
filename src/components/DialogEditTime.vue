@@ -326,5 +326,6 @@ export default {
 
 <!--Khi nhận được tín hiệu từ component cha thì sẽ gán item vào timeDetail-->
 <!--Nếu không gán thì khi thay đổi ở component con, chưa click đồng ý thì hệ thống
- đã emit và thay đổi thông tin ở component cha rồi-->
+ đã emit và thay đổi thông tin
+ ở component cha rồi-->
 
