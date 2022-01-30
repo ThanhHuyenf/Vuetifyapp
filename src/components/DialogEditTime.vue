@@ -31,7 +31,7 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                  v-model="rangeSV"
+                  v-model="timeDetail.tgSV"
                   label="Thời gian sinh viên chấm điểm"
                   :return-value.sync="dateSV"
                   append-icon="mdi-calendar"
@@ -41,7 +41,7 @@
               ></v-text-field>
             </template>
             <v-date-picker
-                v-model="tempDateSV"
+                v-model="dateSV"
                 no-title
                 scrollable
                 range
@@ -234,40 +234,24 @@ export default {
       temp: []
     }
   },
-  computed: {
-    rangeSV(){
-      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      this.dateSV =this.dateSV.map(item => {
-        return moment(item, 'YYYY-MM-DD').format('DD/MM/YYYY')
-      })
-      return this.dateSV.join(' - ')
-    },
-    tempDateSV(){
-      return this.timeDetail.tgSV.split(" - ").map(item => {
-        return moment(item, 'DD/MM/YYYY').format('YYYY-MM-DD')
-      })
-    }
-  },
   methods: {
     openDialog(item) {
+      //Nhận item từ component cha
       this.timeDetail = item
-
-      // this.dateSV = this.timeDetail.tgSV.split(" - ").map(item => {
-      //   return moment(item, 'DD/MM/YYYY').format('YYYY-MM-DD')
-      // })
-
+      //Format cho đúng định dạng để truyền vào datepicker
+      this.dateSV = this.timeDetail.tgSV.split(" - ").map(item => {
+        return moment(item, 'DD/MM/YYYY').format('YYYY-MM-DD')
+      })
       this.dateLT = this.timeDetail.tgLT.split(" - ").map(item => {
         return moment(item, 'DD/MM/YYYY').format('YYYY-MM-DD')
       })
-
       this.dateGV = this.timeDetail.tgGV.split(" - ").map(item => {
         return moment(item, 'DD/MM/YYYY').format('YYYY-MM-DD')
       })
-
       this.dateK = this.timeDetail.tgK.split(" - ").map(item => {
         return moment(item, 'DD/MM/YYYY').format('YYYY-MM-DD')
       })
-
+      //Mở dialog
       this.dialog = true
     },
 
@@ -294,25 +278,27 @@ export default {
         this.$emit('done-edit', this.timeDetail)
         this.dialog = false
       })
-
-
     },
     saveDateSV(date){
+      this.timeDetail.tgSV =this.formatDate(date[0], date[1])
       this.temp.startTimeStudent = date[0]
       this.temp.endTimeStudent = date[1]
       this.$refs.menuSV.save(date)
     },
     saveDateLT(date){
+      this.timeDetail.tgLT =this.formatDate(date[0], date[1])
       this.temp.startTimeMonitor = date[0]
       this.temp.endTimeMonitor = date[1]
       this.$refs.menuLT.save(date)
     },
     saveDateGV(date){
+      this.timeDetail.tgGV =this.formatDate(date[0], date[1])
       this.temp.startTimeHeadMaster = date[0]
       this.temp.endTimeHeadMaster = date[1]
       this.$refs.menuGV.save(date)
     },
     saveDateK(date){
+      this.timeDetail.tgK =this.formatDate(date[0], date[1])
       this.temp.startTimeDepartment = date[0]
       this.temp.endTimeDepartment = date[1]
       this.$refs.menuK.save(date)

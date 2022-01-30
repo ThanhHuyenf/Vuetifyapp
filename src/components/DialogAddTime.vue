@@ -215,13 +215,22 @@
 
 <script>
 export default {
-  name: "DialogTimeNew",
+  name: "DialogAddTime",
   data(){
     return {
       dialog: false,
-      newTime: [
-
-      ]
+      newTime: [],
+      hocKy: ['1', '2'],
+      timeDetail: [],
+      menuSV: false,
+      menuLT: false,
+      menuGV: false,
+      menuK: false,
+      dateSV: [],
+      dateLT: [],
+      dateGV: [],
+      dateK: [],
+      temp: []
     }
   },
   methods: {

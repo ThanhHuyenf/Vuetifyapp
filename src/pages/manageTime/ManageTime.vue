@@ -3,14 +3,17 @@
     <Header :title="title">
       <div slot="data">
         <v-item-group class="mt-2 pa-4">
-          <div class="text-center red--text mb-4">
-            <v-btn @click="addNew">
-              Them
+          <div class="text-right">
+            <v-btn outlined
+                   color="primary"
+                   @click="addNew">
+              Thêm
             </v-btn>
           </div>
           <v-data-table :headers="headers"
                         :items="filteredItems"
                         fixed-header
+                        class="elevation-1 rounded-0 mt-1"
           >
             <template #item.index="{ item }">
               {{ filteredItems.indexOf(item) + 1 }}
@@ -38,6 +41,7 @@
       </div>
     </Header>
     <DialogEditTime ref="dialogTime" @done-edit="updated"></DialogEditTime>
+    <DialogAddTime ref="dialogAddTime"></DialogAddTime>
 
     <!--    <DialogTimeNew ref="dialogTimeNew"></DialogTimeNew>-->
 
@@ -48,11 +52,11 @@
 import Header from "@/components/Header";
 import DialogEditTime from "@/components/DialogEditTime";
 import moment from "moment";
-// import DialogTimeNew from "@/components/DialogTimeNew";
+import DialogAddTime from "@/components/DialogAddTime";
 
 export default {
   name: "ManageTime",
-  components: {DialogEditTime, Header},
+  components: {DialogAddTime, DialogEditTime, Header},
   computed: {
     filteredItems() {
       return this.items
@@ -153,10 +157,15 @@ export default {
       console.log(item)
     },
     updated(item) {
-      this.item = item
+      this.items= this.items.map(x => {
+        if( x.id == item.id){
+          x = item
+        }
+        return x
+      })
     },
     addNew() {
-      this.$refs.dialogTimeNew.openDialog()
+      this.$refs.dialogAddTime.openDialog()
     }
   }
 }
