@@ -42,9 +42,7 @@
     </Header>
     <DialogEditTime ref="dialogTime" @done-edit="updated"></DialogEditTime>
     <DialogAddTime ref="dialogAddTime"></DialogAddTime>
-
-    <!--    <DialogTimeNew ref="dialogTimeNew"></DialogTimeNew>-->
-
+    <DialogDeleteItem ref="dialogDeleteItem"></DialogDeleteItem>
   </div>
 </template>
 
@@ -53,10 +51,11 @@ import Header from "@/components/Header";
 import DialogEditTime from "@/components/DialogEditTime";
 import moment from "moment";
 import DialogAddTime from "@/components/DialogAddTime";
+import DialogDeleteItem from "@/components/DialogDeleteItem";
 
 export default {
   name: "ManageTime",
-  components: {DialogAddTime, DialogEditTime, Header},
+  components: {DialogAddTime, DialogEditTime, Header, DialogDeleteItem},
   computed: {
     filteredItems() {
       return this.items
@@ -77,49 +76,49 @@ export default {
 
         },
         {
-          text: 'Nam hoc',
+          text: 'Năm học',
           align: 'left',
           sortable: false,
           value: 'namHoc',
           width: '10%'
         },
         {
-          text: 'Hoc ky',
+          text: 'Học kỳ',
           align: 'left',
           sortable: false,
           value: 'semester',
           width: '7%'
         },
         {
-          text: 'Thoi gian cho SV',
+          text: 'Thời gian cho SV',
           align: 'left',
           sortable: false,
           value: 'tgSV',
           width: '18%'
         },
         {
-          text: 'Thoi gian cho LT',
+          text: 'Thời gian cho LT',
           align: 'left',
           sortable: false,
           value: 'tgLT',
           width: '18%'
         },
         {
-          text: 'Thoi gian cho GV',
+          text: 'Thời gian cho GV',
           align: 'left',
           sortable: false,
           value: 'tgGV',
           width: '18%'
         },
         {
-          text: 'Thoi gian cho Khoa',
+          text: 'Thời gian cho Khoa',
           align: 'left',
           sortable: false,
           value: 'tgK',
           width: '18%'
         },
         {
-          text: 'Tac vu',
+          text: 'Tác vụ',
           align: 'left',
           sortable: false,
           value: 'tacVu',
@@ -154,6 +153,7 @@ export default {
       this.$refs.dialogTime.openDialog(item)
     },
     deleteItem(item) {
+      this.$refs.dialogDeleteItem.openDialog()
       console.log(item)
     },
     updated(item) {

@@ -47,7 +47,7 @@
                depressed
                outlined
                color="primary"
-               @click="clear">
+               @click="clearAll">
           Reset
         </v-btn>
         <v-btn
@@ -85,7 +85,7 @@ export default {
       ],
       noti: false,
       loading: false,
-      message: ""
+      message: "",
     }
   },
   methods: {
@@ -93,34 +93,38 @@ export default {
     // Khi submit mà mk cũ sai thì phải thêm phần xoá mk cũ
     clear() {
       this.$refs.form.resetValidation()
+      this.oldPassword = ''
       this.newPassword = ''
       this.passwordConfirmation = ''
     },
+    clearAll(){
+      this.clear()
+      this.noti = false
+    },
     changePassword() {
-      if (this.newPassword != this.passwordConfirmation) {
+      if (this.oldPassword == '' || this.newPassword == '' || this.passwordConfirmation == '') {
+        this.noti = true
+        this.message = "Vui lòng điền đầy đủ thông tin!"
+
+      } else if (this.newPassword != this.passwordConfirmation) {
         this.noti = true
         this.message = "Mật khẩu không trùng khớp. Vui lòng nhập lại!"
         this.clear()
-      } else if(this.oldPassword == '' || this.newPassword == '' || this.passwordConfirmation == ''){
-        this.noti = true
-        this.message = "Vui lòng điền đầy đủ thông tin!"
       } else {
         this.loading = true
-        this.$axios.post('http://api.lethanhhuyen.nvcd.xyz/api/users/change-password', {
+        this.$services.ChangePassword.changePassword({
           oldPassword: this.oldPassword,
           newPassword: this.newPassword
+        }).then(() => {
+          this.loading = false
+          this.$emit('successful')
+        }).catch(() => {
+          this.noti = true
+          this.loading = false
+          this.message = 'Mật khẩu không chính xác. Vui lòng nhập lại!'
+          this.oldPassword = ''
+          this.clear()
         })
-            .then(() => {
-              this.loading = false
-              location.reload()
-            })
-            .catch(() => {
-              this.noti = true
-              this.loading = false
-              this.message = 'Mật khẩu không chính xác. Vui lòng nhập lại!'
-              this.oldPassword = ''
-              this.clear()
-            })
       }
     }
   }

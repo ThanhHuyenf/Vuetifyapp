@@ -36,15 +36,15 @@
 
           <!--          Giao dien thay doi mat khau-->
           <v-form ref="form" v-if="!isProfile">
-            <ChangePassword></ChangePassword>
+            <ChangePassword @successful = "changePasswordSuccess"></ChangePassword>
           </v-form>
 
         </v-card>
       </div>
     </Header>
-    <ChangeImgProfile></ChangeImgProfile>
-
-<!--    <FormChangeImg ref="dialogChangeImg"></FormChangeImg>-->
+    <v-snackbar v-model="notiSuccess" color="blue" top>
+      Thay đổi mật khẩu thành công
+    </v-snackbar>
   </div>
 
 </template>
@@ -53,21 +53,30 @@
 import Header from "@/components/Header";
 import Info from "@/components/Info"
 import ChangePassword from "@/components/ChangePassword";
-import ChangeImgProfile from "@/components/ChangeImgProfile";
+// import ChangeImgProfile from "@/components/ChangeImgProfile";
 
 export default {
   name: "Profile",
-  components: {ChangeImgProfile, ChangePassword, Header, Info},
+  components: {ChangePassword, Header, Info},
   data() {
     return {
       title: "Thông tin cá nhân",
       isProfile: true,
+      notiSuccess: false
     }
+  },
+  created() {
   },
   methods: {
     changeImg() {
       this.$refs.dialogChangeImg.openDialog()
     },
+    changePasswordSuccess(){
+      this.notiSuccess = true
+      setInterval(()=>{
+        location.reload()
+      },3000)
+    }
   }
 
 }

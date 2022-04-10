@@ -83,7 +83,7 @@ export default {
   },
   data() {
     return {
-      title: 'Danh sach lop',
+      title: 'Danh sách lớp',
       headers: [
         {
           text: '#',

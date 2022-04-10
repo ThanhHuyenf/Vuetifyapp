@@ -1,16 +1,9 @@
 <template>
   <div>
   <v-app-bar app color="grey lighten-3">
+    <v-app-bar-nav-icon @click="controlDrawer"></v-app-bar-nav-icon>
 
     <v-toolbar-title>{{ title }}</v-toolbar-title>
-<!--    <v-responsive max-width="156" class="float-right">-->
-<!--    <v-text-field-->
-<!--        dense-->
-<!--        flat-->
-<!--        hide-details-->
-<!--        solo-inverted-->
-<!--    ></v-text-field>-->
-<!--    </v-responsive>-->
   </v-app-bar>
     <div class="test">
       <slot name="data"></slot>
@@ -19,6 +12,7 @@
 </template>
 
 <script>
+
 export default {
   name: "Header",
   props: [
@@ -27,7 +21,12 @@ export default {
   data(){
     return {
       // title: 'hahaa',
-      // drawer: []
+      drawer: false
+    }
+  },
+  methods: {
+    controlDrawer(){
+      this.$store.commit('SET_DRAWER')
     }
   }
 }

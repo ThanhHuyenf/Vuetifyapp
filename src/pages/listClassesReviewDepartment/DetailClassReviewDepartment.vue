@@ -84,7 +84,7 @@ export default {
       title: "",
       option: {
         title: {
-          text: "Tổng quan",
+          text: "Kết quả thử nghiệm Hệ thống đánh giá điểm RL",
           left: "center"
         },
         tooltip: {
@@ -104,9 +104,9 @@ export default {
             radius: "55%",
             center: ["50%", "60%"],
             data: [
-              {value: 12, name: "Xuất sắc"},
-              {value: 12, name: "Tốt"},
-              {value: 8, name: "Khá"},
+              {value: 8, name: "Xuất sắc"},
+              {value: 20, name: "Tốt"},
+              {value: 4, name: "Khá"},
             ],
             emphasis: {
               itemStyle: {
@@ -186,22 +186,70 @@ export default {
       filterClass: "All",
       type: "All",
       checkbox1: false,
-      dialog: false
+      dialog: false,
+      filteredItems: []
     }
   },
   created() {
     this.title = "Chi tiết điểm rèn luyện lớp " + this.$route.params.class
-    this.getData()
+    // this.getData()
+    this.filteredItems = [
+      {
+        maSinhVien: 675105002,
+        hoTen: 'Lê Thị Ngọc Anh',
+        diemCaNhanCham: 77,
+        diemCBLNhanCham: 78,
+        diemGVNhanCham: 79,
+        diemTB: 78,
+        xepLoai: 'Khá'
+      },
+      {
+        maSinhVien: 675105005,
+        hoTen: 'Nguyễn Quỳnh Anh',
+        diemCaNhanCham: 80,
+        diemCBLNhanCham: 78,
+        diemGVNhanCham: 79,
+        diemTB: 79,
+        xepLoai: 'Khá'
+      },
+      {
+        maSinhVien: 675105002,
+        hoTen: 'Vũ Văn Dũng',
+        diemCaNhanCham: 80,
+        diemCBLNhanCham: 82,
+        diemGVNhanCham: 84,
+        diemTB: 82,
+        xepLoai: 'Giỏi'
+      },
+      {
+        maSinhVien: 675105002,
+        hoTen: 'Lê Thị Ngọc Anh',
+        diemCaNhanCham: 77,
+        diemCBLNhanCham: 78,
+        diemGVNhanCham: 79,
+        diemTB: 78,
+        xepLoai: 'Khá'
+      },
+      {
+        maSinhVien: 675105002,
+        hoTen: 'Lê Thị Ngọc Anh',
+        diemCaNhanCham: 77,
+        diemCBLNhanCham: 78,
+        diemGVNhanCham: 79,
+        diemTB: 78,
+        xepLoai: 'Khá'
+      }
+    ]
   },
   computed: {
-    filteredItems() {
-      if (this.filterClass == "All" && this.type == "All") return this.items
-      else if (this.filterClass !== "All" && this.type !== "All") {
-        return this.items.filter(item => item.lop == this.filterClass && item.trangThai == this.type)
-      } else {
-        return this.items.filter(item => item.lop == this.filterClass || item.trangThai == this.type)
-      }
-    }
+    // filteredItems() {
+    //   if (this.filterClass == "All" && this.type == "All") return this.items
+    //   else if (this.filterClass !== "All" && this.type !== "All") {
+    //     return this.items.filter(item => item.lop == this.filterClass && item.trangThai == this.type)
+    //   } else {
+    //     return this.items.filter(item => item.lop == this.filterClass || item.trangThai == this.type)
+    //   }
+    // }
   },
   methods: {
     getData() {

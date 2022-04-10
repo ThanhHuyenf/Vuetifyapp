@@ -7,12 +7,12 @@
     >
       <v-card>
         <v-card-title class="text-h5 grey lighten-2">
-          Thêm cố vấn học tập mới
+          Thêm lớp mới
         </v-card-title>
 
         <v-card-text class="mt-8 mb-2">
 
-          <v-row class="justify-center align-center">np
+          <v-row class="justify-center align-center">
             <v-btn color="blue lighten-2"
                    class="ma-2 white--text"
                    @click="option = 'upload'"
@@ -44,20 +44,16 @@
 
         <v-card-text v-if="option=='manual'"
                      class="mt-5 mb-2">
-          <v-text-field label="Họ tên"
-                        v-model="item.hoTen">
+          <v-text-field label="Mã khoa"
+                        v-model="item.maKhoa">
           </v-text-field>
 
-          <v-text-field label="Email"
-                        v-model="item.email">
+          <v-text-field label="Tên khoa"
+                        v-model="item.tenKhoa">
           </v-text-field>
 
-          <v-text-field label="Số điện thoại"
-                        v-model="item.soDienThoai">
-          </v-text-field>
-
-          <v-text-field label="Lớp quản lý"
-                        v-model="item.lopQuanLy">
+          <v-text-field label="Mô tả"
+                        v-model="item.moTa">
           </v-text-field>
 
         </v-card-text>
@@ -89,13 +85,19 @@
 
 <script>
 export default {
-  name: "DialogAddTeacher",
-  data(){
+  name: "DialogAddDepartment",
+  data() {
     return {
       dialog: false,
       option: "",
       item: {}
     }
+  },
+  computed: {
+    // eslint-disable-next-line vue/return-in-computed-property
+    // choice(){
+    //   this.option === "" ? true : false
+    // }
   },
   methods: {
     openDialog() {
@@ -106,12 +108,23 @@ export default {
       this.option = null
     },
     ok(){
-
+      if(this.option === 'manual'){
+        return
+      }
     }
   }
 }
 </script>
 
 <style scoped>
+a {
+  color: black !important;
+  font-size: 16px;
+  font-weight: 500 !important;
+  text-decoration: underline !important;
+}
+.v-application .rounded{
+  border: 1px dashed lightskyblue;
+}
 
 </style>

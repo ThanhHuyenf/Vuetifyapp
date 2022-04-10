@@ -38,7 +38,7 @@
 
                 <v-list>
                   <v-list-item>
-                    <v-list-item-title @click="edit(item)">Chỉnh sửa</v-list-item-title>
+                    <v-list-item-title  class="actions" @click="edit(item)">Chỉnh sửa</v-list-item-title>
                   </v-list-item>
                   <v-list-item>
                     <router-link :to="{
@@ -52,7 +52,7 @@
                   </v-list-item>
 
                   <v-list-item>
-                    <v-list-item-title @click="deleteItem(item)">Xoá</v-list-item-title>
+                    <v-list-item-title class="actions" @click="deleteItem()">Xoá</v-list-item-title>
                   </v-list-item>
                 </v-list>
               </v-menu>
@@ -61,16 +61,22 @@
         </v-item-group>
       </div>
     </Header>
-    <!--    <FormDiemLT :dialog.sync="dialog"></FormDiemLT>-->
+
+    <DialogAddDepartment ref="dialogAddDepartment"></DialogAddDepartment>
+    <DialogEditDepartment ref="dialogEditDepartment"></DialogEditDepartment>
+    <DialogDeleteItem ref="dialogDeleteItem"></DialogDeleteItem>
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header";
+import DialogAddDepartment from "@/components/DialogAddDepartment";
+import DialogEditDepartment from "@/components/DialogEditDepartment";
+import DialogDeleteItem from "@/components/DialogDeleteItem";
 
 export default {
   name: "ListFaculties",
-  components: {Header},
+  components: {DialogDeleteItem, DialogEditDepartment, DialogAddDepartment, Header},
   created() {
     this.getData()
   },
@@ -149,13 +155,14 @@ export default {
           })
     },
     edit(item) {
-      return item
+      this.$refs.dialogEditDepartment.openDialog(item)
+      console.log("item : ", item)
     },
-    deleteItem(item) {
-      return item
+    deleteItem() {
+      this.$refs.dialogDeleteItem.openDialog()
     },
     addNew(){
-      return
+      this.$refs.dialogAddDepartment.openDialog()
     }
   }
 }
@@ -164,5 +171,8 @@ export default {
 <style scoped>
 a{
   color: black !important;
+}
+.actions:hover {
+  cursor: pointer;
 }
 </style>

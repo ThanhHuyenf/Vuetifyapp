@@ -3,8 +3,13 @@
     background: white !important;
     border-bottom: 2px solid #f1f1f1 !important;
 }
+@media screen and (max-width: 1440px) {
+    /*header{*/
+    /*    width: 256px !important;*/
+    /*}*/
+}
 
-/*CSS cho table*/
+    /*CSS cho table*/
 .v-table-data{
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
                 rgba(60, 64, 67, 0.15) 0px 2px 6px 2px !important;

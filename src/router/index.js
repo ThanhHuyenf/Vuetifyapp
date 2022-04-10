@@ -14,7 +14,7 @@ import ResultsHistory from "@/pages/resultsHistory/ResultsHistory";
 
 //Lop truong
 import ListMembersMonitor from "@/pages/listMembersMonitor/ListMembersMonitor"
-import FormDiemMonitor from "@/components/FormDiemMonitor";
+// import FormDiemMonitor from "@/components/FormDiemMonitor";
 
 //Giang vien
 import ListMembersTeacher from "@/pages/listMembersTeacher/ListMembersTeacher";
@@ -31,6 +31,10 @@ import DetailClassReviewDepartment from "@/pages/listClassesReviewDepartment/Det
 import ManageTime from "@/pages/manageTime/ManageTime";
 import ListDepartments from "@/pages/listDepartments/ListDepartments";
 import DetailDepartment from "@/pages/listDepartments/DetailDepartment";
+
+//Cham diem
+import FormPoint from "@/pages/form/FormPoint";
+
 
 Vue.use(VueRouter)
 
@@ -75,11 +79,6 @@ const routes = [
                 path: '/listMembersMonitor',
                 name: 'ListMembersMonitor',
                 component: ListMembersMonitor,
-            },
-            {
-                path: '/listMembersMonitor/user_id=:id',
-                name: 'ListMembers.FormDiemLT',
-                component: FormDiemMonitor,
             },
             {
                 path: '/listMembersTeacher',
@@ -127,6 +126,16 @@ const routes = [
                 name: 'ManageTime',
                 component: ManageTime
             },
+            {
+                path: '/listMembersMonitor/grading/id=:id',
+                name: 'ListMembersMonitor.FormPoint',
+                component: FormPoint
+            },
+            {
+                path: '/grading',
+                name: 'Grading',
+                component: FormPoint
+            }
         ],
 
     },

@@ -56,8 +56,8 @@
 
             <template v-slot:item.tacVu="{item}">
               <router-link :to="{
-                                 name: 'ListMembers.FormDiemLT',
-                                 params: {id: item.maSinhVien}
+                                 name: 'ListMembersMonitor.FormPoint',
+                                 params: {id: item.userID}
               }">
                 <v-icon
                     small
@@ -71,14 +71,11 @@
         </v-item-group>
       </div>
     </Header>
-    <!--    <FormDiemLT :dialog.sync="dialog"></FormDiemLT>-->
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header";
-// import FormDiemLT from "@/pages/listMembersMonitor/FormDiemLT";
-// import {eventbus} from "@/main"
 
 export default {
   name: "ListMembers",
@@ -153,8 +150,38 @@ export default {
     }
   },
   created() {
-    this.getData()
+    // this.getData()
     this.daCham = this.items.filter(item => item.trangThai == true).length
+    this.items = [{
+      name: "Nguyễn Vũ Chí Dũng",
+      userID: 675105027,
+      diemCaNhanCham: 79
+    }, {
+      name: "Lê Thanh Hoa",
+      userID: 675105029,
+      diemCaNhanCham: 82
+
+    },{
+      name: "Nguyễn Thị Thanh Huyền",
+      userID: 675105037,
+      diemCaNhanCham: 77
+    },{
+      name: "Mai Hồng Ngọc",
+      userID: 675105038,
+      diemCaNhanCham: 80
+
+    },{
+      name: "Vũ Ngọc Lâm",
+      userID: 675105040,
+      diemCaNhanCham: 81
+
+    },{
+      name: "Đặng Hoàng Quang",
+      userID: 675105041,
+      diemCaNhanCham: 78
+
+    },
+    ]
 
   },
   computed: {
@@ -169,6 +196,7 @@ export default {
     getData(){
       this.$services.MonitorService.getMembers()
       .then(res => {
+        console.log(res.data)
         this.items= res.data
       })
     }

@@ -3,6 +3,7 @@
     <v-navigation-drawer
         app
         color="grey lighten-3"
+        v-model="drawer1"
     >
         <v-list dense>
           <v-row justify="space-around" class="mt-10">
@@ -68,16 +69,17 @@ export default {
     return {
       selectedItem: 0,
       menuItems: [],
+      drawer: true,
       studentItems: [
         {text: 'Trang chủ', icon: 'mdi-home', to: "/homepage"},
         {text: 'Sơ yếu lý lịch', icon: 'mdi-account', to: "/profile"},
-        {text: 'Tự đánh giá KQRL', icon: 'mdi-pen', to: "/"},
+        {text: 'Tự đánh giá KQRL', icon: 'mdi-pen', to: "/grading"},
         {text: 'Xem điểm rèn luyện', icon: 'mdi-heart', to: "/resultsHistory"},
       ],
       monitorItems: [
         {text: 'Trang chủ', icon: 'mdi-home', to: "/homepage"},
         {text: 'Sơ yếu lý lịch', icon: 'mdi-account', to: "/profile"},
-        {text: 'Tự đánh giá KQRL', icon: 'mdi-pen', to: "/"},
+        {text: 'Tự đánh giá KQRL', icon: 'mdi-pen', to: "/grading"},
         {text: 'Xem điểm rèn luyện', icon: 'mdi-heart', to: "/resultsHistory"},
         {text: 'Đánh giá thành viên', icon: 'mdi-account-group', to: "/listMembersMonitor"},
       ],
@@ -97,7 +99,7 @@ export default {
       ],
       adminItems: [
         {text: 'Trang chủ', icon: 'mdi-home', to: "/homepage"},
-        {text: 'Phiếu xét điểm rèn luyện', icon: 'mdi-file', to: "/"},
+        // {text: 'Phiếu xét điểm rèn luyện', icon: 'mdi-file', to: "/pointTraining"},
         {text: 'Quản lý thời gian', icon: 'mdi-clock', to: "/manageTime"},
         {text: 'Danh sách khoa', icon: 'mdi-format-list-bulleted', to: "/listDepartments"},
       ]
@@ -110,6 +112,9 @@ export default {
   computed: {
     tag() {
       return this.$store.state.tag
+    },
+    drawer1(){
+      return this.$store.state.drawer
     }
   },
   methods: {

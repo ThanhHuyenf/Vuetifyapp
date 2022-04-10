@@ -5,22 +5,23 @@
               width="500">
       <v-card>
         <v-card-title class="text-h5 grey lighten-2">
-          Them thoi gian cham diem ren luyen
+          Cài đặt thời gian chấm điểm rèn luyện
         </v-card-title>
 
         <v-card-text class="mt-5 mb-2">
           <v-row>
             <v-col cols="6">
-              <v-text-field label="Năm học" v-model="timeDetail.namHoc"></v-text-field>
+              <v-text-field label="Năm học" v-model="newTime.namHoc"></v-text-field>
             </v-col>
             <v-col cols="6">
               <v-autocomplete label="Học kỳ"
-                              value="timeDetail.hocKy"
+                              v-model="newTime.semester"
                               :items="hocKy">
               </v-autocomplete>
             </v-col>
           </v-row>
-          <!--          menuSV: quản lý datepicker của sv-->
+          <!--
+               menuSV: quản lý datepicker của sv-->
           <v-menu
               ref="menuSV"
               v-model="menuSV"
@@ -31,7 +32,7 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                  v-model="dateSVRangeText"
+                  v-model="newTime.tgSV"
                   label="Thời gian sinh viên chấm điểm"
                   :return-value.sync="dateSV"
                   append-icon="mdi-calendar"
@@ -57,7 +58,7 @@
               <v-btn
                   text
                   color="primary"
-                  @click="$refs.menuSV.save(dateSV)"
+                  @click="saveDateSV(dateSV)"
               >
                 OK
               </v-btn>
@@ -74,7 +75,7 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                  v-model="dateLTRangeText"
+                  v-model="newTime.tgLT"
                   label="Thời gian lớp trưởng chấm điểm"
                   :return-value.sync="dateLT"
                   append-icon="mdi-calendar"
@@ -100,7 +101,7 @@
               <v-btn
                   text
                   color="primary"
-                  @click="$refs.menuLT.save(dateLT)"
+                  @click="saveDateLT(dateLT)"
               >
                 OK
               </v-btn>
@@ -117,7 +118,7 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                  v-model="dateGVRangeText"
+                  v-model="newTime.tgGV"
                   label="Thời gian giảng viên chấm điểm"
                   :return-value.sync="dateGV"
                   append-icon="mdi-calendar"
@@ -143,7 +144,7 @@
               <v-btn
                   text
                   color="primary"
-                  @click="$refs.menuGV.save(dateGV)"
+                  @click="saveDateGV(dateGV)"
               >
                 OK
               </v-btn>
@@ -160,7 +161,7 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                  v-model="dateKRangeText"
+                  v-model="newTime.tgK"
                   label="Thời gian khoa duyệt"
                   :return-value.sync="dateK"
                   append-icon="mdi-calendar"
@@ -179,14 +180,14 @@
               <v-btn
                   text
                   color="primary"
-                  @click="menuK = false"
+                  @click="cancel"
               >
                 Cancel
               </v-btn>
               <v-btn
                   text
                   color="primary"
-                  @click="$refs.menuK.save(dateK)"
+                  @click="saveDateK(dateK)"
               >
                 OK
               </v-btn>
@@ -194,11 +195,17 @@
           </v-menu>
 
         </v-card-text>
-
         <v-divider></v-divider>
 
         <v-card-actions>
           <v-spacer></v-spacer>
+          <v-btn
+              color="primary"
+              text
+              @click="dialog = false"
+          >
+            Huỷ
+          </v-btn>
           <v-btn
               color="primary"
               text
@@ -214,6 +221,8 @@
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
   name: "DialogAddTime",
   data(){
@@ -234,8 +243,38 @@ export default {
     }
   },
   methods: {
+    formatDate(date1, date2) {
+      return moment(date1, 'YYYY-MM-DD').format('DD/MM/YYYY') + ' - '
+          + moment(date2, 'YYYY-MM-DD').format('DD/MM/YYYY')
+    },
     openDialog(){
       this.dialog= true
+    },
+    cancel(){
+      this.dialog = false
+    },
+    saveDateSV(date){
+      this.newTime.tgSV =this.formatDate(date[0], date[1])
+      this.dateSV= false
+      this.$refs.menuSV.save(date)
+    },
+    saveDateLT(date){
+      this.newTime.tgLT =this.formatDate(date[0], date[1])
+      this.dateLT = false
+      this.$refs.menuLT.save(date)
+    },
+    saveDateGV(date){
+      this.newTime.tgGV =this.formatDate(date[0], date[1])
+      this.dateGV= false
+      this.$refs.menuGV.save(date)
+    },
+    saveDateK(date){
+      this.newTime.tgK =this.formatDate(date[0], date[1])
+      this.dateK= false
+      this.$refs.menuK.save(date)
+    },
+    saveTime(){
+      return
     }
   }
 }

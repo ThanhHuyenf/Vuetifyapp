@@ -202,6 +202,13 @@
           <v-btn
               color="primary"
               text
+              @click="dialog = false"
+          >
+            Huỷ
+          </v-btn>
+          <v-btn
+              color="primary"
+              text
               @click="saveTime()"
           >
             Đồng ý

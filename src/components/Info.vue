@@ -129,7 +129,6 @@ export default {
   methods: {
     getData(){
       this.$services.ProfileService.query()
-      // this.$axios.get('http://api.lethanhhuyen.nvcd.xyz/api/detail-users')
           .then(res => {
             this.info.user_id = res.data.id
             this.info.hoVaTen = res.data.name

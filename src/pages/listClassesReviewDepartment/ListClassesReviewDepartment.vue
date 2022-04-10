@@ -133,7 +133,7 @@ export default {
           text: 'Lớp',
           align: 'start',
           value: 'lop',
-          width: '5%'
+          width: '6%'
         },
         {
           text: 'Cố vấn học tập',
@@ -192,7 +192,7 @@ export default {
         {
           text: 'Tong so',
           align: 'start',
-          value: 'soPhieu',
+          value: 'tongSo',
           sortable: false,
           width: '6%'
         },
@@ -222,6 +222,102 @@ export default {
   },
   created() {
     this.getData()
+    this.items = [{
+      lop: '67A',
+      coVan: 'Nguyễn Thanh Huyền',
+      xuatSac : 5,
+      tot: 20,
+      kha: 8,
+      tbkha: 0,
+      tb: 0,
+      yeu: 0,
+      kem: 0,
+      tongSo: 33
+    },
+      {
+        lop: '67B',
+        coVan: 'Nguyễn Thị Hạnh',
+        xuatSac : 2,
+        tot: 22,
+        kha: 5,
+        tbkha: 0,
+        tb: 0,
+        yeu: 0,
+        kem: 0,
+        tongSo: 29
+      },
+      {
+        lop: '67C',
+        coVan: 'Đoàn Thị Quế',
+        xuatSac : 1,
+        tot: 25,
+        kha: 3,
+        tbkha: 0,
+        tb: 0,
+        yeu: 0,
+        kem: 0,
+        tongSo: 28
+      },
+      {
+        lop: '67D',
+        coVan: 'Nguyễn Thị Hạnh',
+        xuatSac : 4,
+        tot: 20,
+        kha: 6,
+        tbkha: 0,
+        tb: 0,
+        yeu: 0,
+        kem: 0,
+        tongSo: 30
+      },
+      {
+        lop: '68A',
+        coVan: 'Nguyễn Thị Quỳnh Hoa',
+        xuatSac : 5,
+        tot: 20,
+        kha: 8,
+        tbkha: 0,
+        tb: 0,
+        yeu: 0,
+        kem: 0,
+        tongSo: 33
+      },
+      {
+        lop: '68B',
+        coVan: 'Nguyễn Thị Quỳnh Hoa',
+        xuatSac : 2,
+        tot: 22,
+        kha: 5,
+        tbkha: 0,
+        tb: 0,
+        yeu: 0,
+        kem: 0,
+        tongSo: 29
+      },
+      {
+        lop: '68C',
+        coVan: 'Đinh Hải Long',
+        xuatSac : 1,
+        tot: 25,
+        kha: 3,
+        tbkha: 0,
+        tb: 0,
+        yeu: 0,
+        kem: 0,
+        tongSo: 28
+      },
+      {
+        lop: '68D',
+        coVan: 'Nguyễn Thị Hạnh',
+        xuatSac : 4,
+        tot: 20,
+        kha: 6,
+        tbkha: 0,
+        tb: 0,
+        yeu: 0,
+        kem: 0,
+        tongSo: 30
+      }]
   },
   computed: {
     filteredItems() {

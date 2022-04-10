@@ -8,12 +8,20 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         tag: [],
+        drawer: true
     },
     mutations: {
         GET_TAG(state, decoded) {
             state.tag = decoded
             return state.tag
         },
+        SET_DRAWER(state){
+            state.drawer = !state.drawer
+        },
+        GET_DRAWER(state){
+            return state.drawer
+        }
+
     },
     actions: {
         getTag({commit}) {
@@ -21,6 +29,9 @@ export default new Vuex.Store({
             var decoded = jwt_decode(token);
             commit('GET_TAG', decoded)
         },
+        getDrawer({commit}){
+            commit('GET_DRAWER')
+        }
     },
     modules: {}
 })
