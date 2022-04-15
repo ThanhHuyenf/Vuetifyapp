@@ -132,7 +132,7 @@ const routes = [
                 component: FormPoint
             },
             {
-                path: '/grading',
+                path: '/grading/',
                 name: 'Grading',
                 component: FormPoint
             }

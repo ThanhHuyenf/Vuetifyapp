@@ -14,7 +14,7 @@
       </div>
 
       <div class="text-right pr-6 font-italic mt-4">
-        <p>Hà Nội, ngày 26 tháng 2 năm 2022</p>
+        <p>Hà Nội, ngày {{dayNow}} tháng {{monthNow}} năm {{ yearNow }}</p>
       </div>
 
       <div class="text-center mt-10">
@@ -25,15 +25,15 @@
 
     <div class="info-student mt-10 mb-4">
       <div class="row">
-        <div class="col-5">Họ và tên : Nguyễn Thị Thanh Huyền</div>
-        <div class="col-3">Ngày sinh: 31/03/1999</div>
-        <div class="col-4">Mã sinh viên : 675105050</div>
+        <div class="col-5">Họ và tên : {{ infor.name }}</div>
+        <div class="col-3">Ngày sinh: {{ infor.birthDate }}</div>
+        <div class="col-4">Mã sinh viên : {{ infor.studentId }}</div>
       </div>
 
       <div class="row">
-        <div class="col-5">Học kỳ : 2</div>
-        <div class="col-3">Năm học : 2021-2022</div>
-        <div class="col-4">Lớp : 67C</div>
+        <div class="col-5">Học kỳ : {{ infor.semester }}</div>
+        <div class="col-3">Năm học : {{ infor.year }}</div>
+        <div class="col-4">Lớp : {{ infor.className }}</div>
       </div>
     </div>
 
@@ -695,9 +695,9 @@
             </td>
             <td class="text-center">2</td>
             <td><input type="number" max="2" min="0" step="0.5" :disabled="!student"
-                       v-model="pointList[4].subType[0].subTypeScore[0].teacherScore"></td>
+                       v-model="pointList[4].subType[0].subTypeScore[0].studentScore"></td>
             <td><input type="number" max="2" min="0" step="0.5" :disabled="!monitor"
-                       v-model="pointList[4].subType[0].subTypeScore[0].teacherScore"></td>
+                       v-model="pointList[4].subType[0].subTypeScore[0].monitorScore"></td>
             <td><input type="number" max="2" min="0" step="0.5" :disabled="!department"
                        v-model="pointList[4].subType[0].subTypeScore[0].teacherScore"></td>
           </tr>
@@ -707,9 +707,9 @@
             </td>
             <td class="text-center">2</td>
             <td><input type="number" max="2" min="0" step="0.5" :disabled="!student"
-                       v-model="pointList[4].subType[0].subTypeScore[1].teacherScore"></td>
+                       v-model="pointList[4].subType[0].subTypeScore[1].studentScore"></td>
             <td><input type="number" max="2" min="0" step="0.5" :disabled="!monitor"
-                       v-model="pointList[4].subType[0].subTypeScore[1].teacherScore"></td>
+                       v-model="pointList[4].subType[0].subTypeScore[1].monitorScore"></td>
             <td><input type="number" max="2" min="0" step="0.5" :disabled="!department"
                        v-model="pointList[4].subType[0].subTypeScore[1].teacherScore"></td>
           </tr>
@@ -725,9 +725,9 @@
             </td>
             <td class="text-center">1</td>
             <td><input type="number" max="1" min="0" step="0.5" :disabled="!student"
-                       v-model="pointList[4].subType[1].subTypeScore[0].teacherScore"></td>
+                       v-model="pointList[4].subType[1].subTypeScore[0].studentScore"></td>
             <td><input type="number" max="1" min="0" step="0.5" :disabled="!monitor"
-                       v-model="pointList[4].subType[1].subTypeScore[0].teacherScore"></td>
+                       v-model="pointList[4].subType[1].subTypeScore[0].monitorScore"></td>
             <td><input type="number" max="1" min="0" step="0.5" :disabled="!department"
                        v-model="pointList[4].subType[1].subTypeScore[0].teacherScore"></td>
           </tr>
@@ -736,9 +736,9 @@
             </td>
             <td class="text-center">1</td>
             <td><input type="number" max="1" min="0" step="0.5" :disabled="!student"
-                       v-model="pointList[4].subType[1].subTypeScore[1].teacherScore"></td>
+                       v-model="pointList[4].subType[1].subTypeScore[1].studentScore"></td>
             <td><input type="number" max="1" min="0" step="0.5" :disabled="!monitor"
-                       v-model="pointList[4].subType[1].subTypeScore[1].teacherScore"></td>
+                       v-model="pointList[4].subType[1].subTypeScore[1].monitorScore"></td>
             <td><input type="number" max="1" min="0" step="0.5" :disabled="!department"
                        v-model="pointList[4].subType[1].subTypeScore[1].teacherScore"></td>
           </tr>
@@ -752,9 +752,9 @@
             </td>
             <td class="text-center">1</td>
             <td><input type="number" max="1" min="0" step="0.5" :disabled="!student"
-                       v-model="pointList[4].subType[2].subTypeScore[0].teacherScore"></td>
+                       v-model="pointList[4].subType[2].subTypeScore[0].studentScore"></td>
             <td><input type="number" max="1" min="0" step="0.5" :disabled="!monitor"
-                       v-model="pointList[4].subType[2].subTypeScore[0].teacherScore"></td>
+                       v-model="pointList[4].subType[2].subTypeScore[0].monitorScore"></td>
             <td><input type="number" max="1" min="0" step="0.5" :disabled="!department"
                        v-model="pointList[4].subType[2].subTypeScore[0].teacherScore"></td>
           </tr>
@@ -764,9 +764,9 @@
             </td>
             <td class="text-center">2</td>
             <td><input type="number" max="2" min="0" step="0.5" :disabled="!student"
-                       v-model="pointList[4].subType[2].subTypeScore[1].teacherScore"></td>
+                       v-model="pointList[4].subType[2].subTypeScore[1].studentScore"></td>
             <td><input type="number" max="2" min="0" step="0.5" :disabled="!monitor"
-                       v-model="pointList[4].subType[2].subTypeScore[1].teacherScore"></td>
+                       v-model="pointList[4].subType[2].subTypeScore[1].monitorScore"></td>
             <td><input type="number" max="2" min="0" step="0.5" :disabled="!department"
                        v-model="pointList[4].subType[2].subTypeScore[1].teacherScore"></td>
           </tr>
@@ -781,24 +781,24 @@
             </td>
             <td class="text-center">1</td>
             <td><input type="number" max="1" min="0" step="0.5" :disabled="!student"
-                       v-model="pointList[4].subType[3].subTypeScore[0].teacherScore"></td>
+                       v-model="pointList[4].subType[3].subTypeScore[0].studentScore"></td>
             <td><input type="number" max="1" min="0" step="0.5" :disabled="!monitor"
-                       v-model="pointList[4].subType[3].subTypeScore[0].teacherScore"></td>
+                       v-model="pointList[4].subType[3].subTypeScore[0].monitorScore"></td>
             <td><input type="number" max="1" min="0" step="0.5" :disabled="!department"
                        v-model="pointList[4].subType[3].subTypeScore[0].teacherScore"></td>
           </tr>
 
           <tr class="pt-4" style="height: 50px">
             <td colspan="2"><b>Tổng điểm sinh viên đạt được = Tổng điểm các phần I +II+III+IV+V</b></td>
-            <td class="text-center"><b>77</b></td>
-            <td class="text-center"><b>77</b></td>
-            <td class="text-center"><b>77</b></td>
+            <td class="text-center"><b>{{ averageStudent }}</b></td>
+            <td class="text-center"><b>{{ averageMonitor }}</b></td>
+            <td class="text-center"><b>{{ averageTeacher }}</b></td>
           </tr>
           <tr class="pt-4" style="height: 50px">
             <td colspan="3" class="font-weight-bold">Điểm trung bình= (điểm Sinh viên + điểm Lớp + điểm Khoa)/3</td>
-            <td class="text-center font-weight-bold red--text">77</td>
+            <td class="text-center font-weight-bold red--text">{{ average }}</td>
             <td class="text-center">
-              <v-btn outlined class="reset-btn">Reset</v-btn>
+              <v-btn outlined class="reset-btn" @click="resetForm">Reset</v-btn>
             </td>
           </tr>
         </table>
@@ -854,6 +854,7 @@
 
 <script>
 import {mapActions} from "vuex";
+import moment from "moment";
 
 export default {
   name: "FormPointTraining",
@@ -867,8 +868,19 @@ export default {
       monitor: false,
       department: false,
       dialogComplete: false,
+      dayNow: '',
+      monthNow: '',
+      yearNow: '',
       message: '',
       submitLoading: false,
+      infor: {
+        name: '',
+        birthDate: '',
+        semester: '',
+        studentId: '',
+        year: '',
+        className: ''
+      },
       pointList: [
         {
           idType: 1,
@@ -1006,7 +1018,7 @@ export default {
           idType: 2,
           subType: [
             {
-              idSubType: 6,
+              idSubType: 1,
               subTypeScore: [
                 {
                   idSubTypeScore: 1,
@@ -1047,7 +1059,7 @@ export default {
               ]
             },
             {
-              idSubType: 7,
+              idSubType: 2,
               subTypeScore: [
                 {
                   idSubTypeScore: 1,
@@ -1075,7 +1087,7 @@ export default {
           idType: 3,
           subType: [
             {
-              idSubType: 9,
+              idSubType: 1,
               subTypeScore: [
                 {
                   idSubTypeScore: 1,
@@ -1104,7 +1116,7 @@ export default {
               ]
             },
             {
-              idSubType: 10,
+              idSubType: 2,
               subTypeScore: [
                 {
                   idSubTypeScore: 1,
@@ -1133,7 +1145,7 @@ export default {
               ]
             },
             {
-              idSubType: 11,
+              idSubType: 3,
               subTypeScore: [
                 {
                   idSubTypeScore: 1,
@@ -1155,7 +1167,7 @@ export default {
           idType: 4,
           subType: [
             {
-              idSubType: 12,
+              idSubType: 1,
               subTypeScore: [
                 {
                   idSubTypeScore: 1,
@@ -1196,7 +1208,7 @@ export default {
               ]
             },
             {
-              idSubType: 13,
+              idSubType: 2,
               subTypeScore: [
                 {
                   idSubTypeScore: 1,
@@ -1213,7 +1225,7 @@ export default {
               ]
             },
             {
-              idSubType: 14,
+              idSubType: 3,
               subTypeScore: [
                 {
                   idSubTypeScore: 1,
@@ -1247,7 +1259,7 @@ export default {
           idType: 5,
           subType: [
             {
-              idSubType: 15,
+              idSubType: 1,
               subTypeScore: [
                 {
                   idSubTypeScore: 1,
@@ -1264,7 +1276,7 @@ export default {
               ]
             },
             {
-              idSubType: 16,
+              idSubType: 2,
               subTypeScore: [
                 {
                   idSubTypeScore: 1,
@@ -1281,7 +1293,7 @@ export default {
               ]
             },
             {
-              idSubType: 17,
+              idSubType: 3,
               subTypeScore: [
                 {
                   idSubTypeScore: 1,
@@ -1298,7 +1310,7 @@ export default {
               ]
             },
             {
-              idSubType: 18,
+              idSubType: 4,
               subTypeScore: [
                 {
                   idSubTypeScore: 1,
@@ -1316,27 +1328,93 @@ export default {
   created() {
     this.getTag()
     this.getData()
+
     if (this.tag.role === 'Student') {
       this.message = 'Điểm số của bạn đã được lưu! Quay về trang chủ!'
     } else {
       this.message = 'Điểm số đã được lưu! Quay về danh sách thành viên'
     }
+
+    let d = new Date()
+    this.dayNow = d.getDay()
+    this.monthNow = d.getMonth()
+    this.yearNow = d.getFullYear()
+
+
+    // this.pointList.map(item => {
+    //   item.subType.map(x => {
+    //     x.subTypeScore.map(y => {
+    //       y.studentScore = 1
+    //       return y
+    //     })
+    //   })
+    // })
   },
   computed: {
     tag() {
       return this.$store.state.tag
+    },
+    averageStudent() {
+      var averageStu = 0
+      this.pointList.map(item => {
+        item.subType.map(x => {
+          x.subTypeScore.map(y => {
+            averageStu += parseFloat(y.studentScore)
+          })
+        })
+      })
+      return averageStu
+    },
+    averageMonitor() {
+      var averageMoni = 0
+      this.pointList.map(item => {
+        item.subType.map(x => {
+          x.subTypeScore.map(y => {
+            averageMoni += parseFloat(y.monitorScore)
+          })
+        })
+      })
+      return averageMoni
+    },
+    averageTeacher() {
+      var averageTeach = 0
+      this.pointList.map(item => {
+        item.subType.map(x => {
+          x.subTypeScore.map(y => {
+            averageTeach += parseFloat(y.teacherScore)
+          })
+        })
+      })
+      return averageTeach
+    },
+
+    average() {
+      return Math.round((this.averageStudent + this.averageMonitor + this.averageTeacher) / 3 * 100) / 100
     }
   },
   methods: {
     ...mapActions(['getTag']),
     getData() {
+      //Do ko thêm id vào router được nên khi đăng nhập nếu role là student thì sẽ lưu ID vào local
+      //Khi gọi chấm điểm, nếu role là student thì lấy userid ở local, ko thì lấy ở router
+      var USER_ID = ''
+      !this.$route.params.id ? USER_ID = localStorage.getItem('userID') : USER_ID = this.$route.params.id
+
+      this.$services.PointingService.getPoint({id: USER_ID})
+          .then(res => {
+            this.infor.name = res.body.name
+            this.infor.birthDate = moment(res.body.birthDate, 'YYYY-MM-DD').format('DD/MM/YYYY')
+            this.infor.semester = res.body.semester
+            this.infor.studentId = res.body.studentId
+            this.infor.year = res.body.year
+            this.infor.className = res.body.className
+          })
       switch (this.tag.role) {
         case 'Student':
           this.student = true
           break;
         case 'Monitor':
-          this.monitor = true
-          this.student = true
+          !this.$route.params.id ? this.student = true : this.monitor = true
           break;
         case 'Department':
           this.department = true
@@ -1346,10 +1424,10 @@ export default {
     },
     submitPoint() {
       this.submitLoading = true
-      console.log('this.pointList', this.pointList)
+      // console.log('this.pointList', this.pointList)
       switch (this.tag.role) {
         case 'Student':
-          this.$services.StudentService.submitPoint(
+          this.$services.PointingService.submitPoint(
               {
                 pointList: this.pointList
               })
@@ -1359,11 +1437,46 @@ export default {
               })
           break;
         case 'Monitor':
+
           break;
         case 'Department':
           break;
       }
 
+    },
+    resetForm() {
+      switch (this.tag.role) {
+        case 'Student':
+          this.pointList.map(item => {
+            item.subType.map(x => {
+              x.subTypeScore.map(y => {
+                y.studentScore = 0
+                return y
+              })
+            })
+          })
+          break;
+        case 'Monitor':
+          this.pointList.map(item => {
+            item.subType.map(x => {
+              x.subTypeScore.map(y => {
+                y.monitorScore = 0
+                return y
+              })
+            })
+          })
+          break;
+        case 'Teacher':
+          this.pointList.map(item => {
+            item.subType.map(x => {
+              x.subTypeScore.map(y => {
+                y.teacherScore = 0
+                return y
+              })
+            })
+          })
+          break;
+      }
     },
     completed() {
       this.dialogComplete = false

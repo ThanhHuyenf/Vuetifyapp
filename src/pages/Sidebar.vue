@@ -3,7 +3,7 @@
     <v-navigation-drawer
         app
         color="grey lighten-3"
-        v-model="drawer1"
+        :value="drawer1"
     >
         <v-list dense>
           <v-row justify="space-around" class="mt-10">
@@ -79,7 +79,7 @@ export default {
       monitorItems: [
         {text: 'Trang chủ', icon: 'mdi-home', to: "/homepage"},
         {text: 'Sơ yếu lý lịch', icon: 'mdi-account', to: "/profile"},
-        {text: 'Tự đánh giá KQRL', icon: 'mdi-pen', to: "/grading"},
+        {text: 'Tự đánh giá KQRL', icon: 'mdi-pen', to: "/grading/"},
         {text: 'Xem điểm rèn luyện', icon: 'mdi-heart', to: "/resultsHistory"},
         {text: 'Đánh giá thành viên', icon: 'mdi-account-group', to: "/listMembersMonitor"},
       ],
@@ -120,8 +120,14 @@ export default {
   methods: {
     ...mapActions(['getTag']),
     getData() {
-      if (this.tag.role == "Student") this.menuItems = this.studentItems
-      if (this.tag.role == "Monitor") this.menuItems = this.monitorItems
+      if (this.tag.role == "Student") {
+        this.menuItems = this.studentItems
+        localStorage.setItem("userID", this.tag.userID)
+      }
+      if (this.tag.role == "Monitor") {
+        this.menuItems = this.monitorItems
+        localStorage.setItem("userID", this.tag.userID)
+      }
       if (this.tag.role == "Teacher") this.menuItems = this.teacherItems
       if (this.tag.role == "Department") this.menuItems = this.departmentItems
       if (this.tag.role == "Admin") this.menuItems = this.adminItems

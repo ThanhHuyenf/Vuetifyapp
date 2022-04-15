@@ -18,7 +18,6 @@
         ref="menu"
         v-model="menu"
         :close-on-content-click="false"
-        :return-value.sync="info.ngaySinh"
         transition="scale-transition"
         offset-y
         min-width="auto"
@@ -28,7 +27,7 @@
             :disabled="!isEditing"
             color="primary"
             label="Ngày sinh"
-            v-model="info.ngaySinh"
+            v-model="dob"
             readonly
             v-bind="attrs"
             v-on="on"
@@ -50,7 +49,7 @@
         <v-btn
             text
             color="primary"
-            @click="$refs.menu.save(ngaySinh)"
+            @click="saveDob(info.ngaySinh)"
         >
           OK
         </v-btn>
@@ -98,15 +97,17 @@
         bottom
         left
     >
-      Your profile has been updated
+      Cập nhật thông tin thành công
     </v-snackbar>
   </v-card-text>
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
   name: "Profile",
-  data(){
+  data() {
     return {
       isEditing: false,
       hasSaved: false,
@@ -114,10 +115,11 @@ export default {
         v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail chưa đúng định dạng'
       ],
       menu: false,
+      dob: '',
       info: {
         user_id: '',
         hoVaTen: '',
-        ngaySinh: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+        ngaySinh: '',
         email: '',
         chucVu: '',
       },
@@ -127,25 +129,29 @@ export default {
     this.getData()
   },
   methods: {
-    getData(){
+    getData() {
       this.$services.ProfileService.query()
           .then(res => {
             this.info.user_id = res.data.id
             this.info.hoVaTen = res.data.name
+            this.dob = moment(res.data.birthDate, 'YYYY-MM-DD').format('DD/MM/YYYY')
+            this.info.ngaySinh = res.data.birthDate
             this.info.email = res.data.users.email
             this.info.chucVu = res.data.users.role
           })
     },
+    saveDob(dob) {
+      this.dob = moment(dob, 'YYYY-MM-DD').format('DD/MM/YYYY')
+      this.menu= false
+      this.$refs.menu.save(dob)
+    },
     save() {
       this.isEditing = !this.isEditing
-      this.$axios.put('http://localhost:3001/api/users', {
-        // ngaySinh = e[0],
-        email: this.info.email
+      this.$services.ProfileService.updateProfile({
+        birthDate: this.info.ngaySinh
       })
-      .then(res=> {
-        if(res.status == 200){
-          this.hasSaved = true
-        }
+      .then(() => {
+        this.hasSaved = true
       })
     },
   }

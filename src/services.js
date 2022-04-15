@@ -18,10 +18,20 @@ const ChangePassword = Vue.resource('api/training/users/change-password', {}, {
     changePassword : { method: 'POST', url: 'api/training/users/change-password'},
 })
 const ProfileService = Vue.resource('api/training/detail-users', {}, {
-    query: {method: 'GET', url: 'api/training/detail-users'}
+    query: {method: 'GET', url: 'api/training/detail-users'},
+    updateProfile: {method: 'PUT', url: 'api/training/detail-users/update'},
+
 })
-const StudentService = Vue.resource('api/rating/mark', {}, {
-    submitPoint : {method: 'POST', url: 'api/rating/mark'}
+const ImgService = Vue.resource('api/training/common/avatar', {}, {
+    changeAvatar: {method : 'POST', url: 'api/training/common/avatar',headers: {
+            'Content-Type': 'multipart/form-data'
+    }}
+})
+
+const PointingService = Vue.resource('api/rating/mark', {}, {
+    getPoint: {method: 'GET', url: 'api/rating/mark/{id}'},
+    submitPoint : {method: 'POST', url: 'api/rating/mark'},
+
 })
 
 const MonitorService = Vue.resource('api/training/detail-users/monitor',{}, {
@@ -51,7 +61,8 @@ const services = {
     LoginService,
     ChangePassword,
     ProfileService,
-    StudentService,
+    ImgService,
+    PointingService,
     MonitorService,
     TeacherService,
     DepartmentSevice,

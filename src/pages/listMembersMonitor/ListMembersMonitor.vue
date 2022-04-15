@@ -45,8 +45,17 @@
               </v-menu>
             </template>
 
+            <template v-slot:item.monitorScore="{item}">
+              <div v-if="item.monitorScore > 0">
+                {{item.monitorScore}}
+              </div>
+              <div v-else>
+                -
+              </div>
+            </template>
+
             <template v-slot:item.trangThai="{item}">
-              <div v-if=item.trangThai>
+              <div v-if="item.monitorScore > 0">
                 Đã chấm
               </div>
               <div v-else>
@@ -119,13 +128,13 @@ export default {
         {
           text: 'Điểm cá nhân chấm',
           align: 'start',
-          value: 'diemCaNhanCham',
+          value: 'studentScore',
           width: '15%'
         },
         {
           text: 'Điểm lớp trưởng chấm',
           align: 'start',
-          value: 'diemLopTruongCham',
+          value: 'monitorScore',
           width: '15%'
         },
         {
@@ -150,39 +159,8 @@ export default {
     }
   },
   created() {
-    // this.getData()
+    this.getData()
     this.daCham = this.items.filter(item => item.trangThai == true).length
-    this.items = [{
-      name: "Nguyễn Vũ Chí Dũng",
-      userID: 675105027,
-      diemCaNhanCham: 79
-    }, {
-      name: "Lê Thanh Hoa",
-      userID: 675105029,
-      diemCaNhanCham: 82
-
-    },{
-      name: "Nguyễn Thị Thanh Huyền",
-      userID: 675105037,
-      diemCaNhanCham: 77
-    },{
-      name: "Mai Hồng Ngọc",
-      userID: 675105038,
-      diemCaNhanCham: 80
-
-    },{
-      name: "Vũ Ngọc Lâm",
-      userID: 675105040,
-      diemCaNhanCham: 81
-
-    },{
-      name: "Đặng Hoàng Quang",
-      userID: 675105041,
-      diemCaNhanCham: 78
-
-    },
-    ]
-
   },
   computed: {
     // eslint-disable-next-line vue/return-in-computed-property
@@ -196,7 +174,6 @@ export default {
     getData(){
       this.$services.MonitorService.getMembers()
       .then(res => {
-        console.log(res.data)
         this.items= res.data
       })
     }

@@ -5,15 +5,11 @@
         Chỉnh sửa ảnh đại diện
       </v-card-title>
       <v-card-text>
-        <v-file-input label="Upload image"
+        <v-file-input label="Upload ảnh"
                       accept="image/png, image/jpeg, image/bmp"
-                      @change="Preview_image"
-                      v-model="image">
+                      @change="onFileUpload">
 
         </v-file-input>
-        <div :class="!image ? hidden : ''">
-          <v-img :src="url" ></v-img>
-        </div>
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions>
@@ -30,7 +26,7 @@
               color="success"
               @click="changeImg"
               :loading="loading"
-              :disabled="!image"
+              :disabled="!url"
           >
             Lưu
           </v-btn>
@@ -45,9 +41,10 @@ export default {
   name: "ChangeImgProfile",
   data() {
     return {
-      dialog: true,
-      image: null,
+      dialog: false,
       url: null,
+      name: '',
+      loading: false
     }
   },
   methods: {
@@ -59,11 +56,23 @@ export default {
       this.url = null
       this.dialog = false
     },
-    Preview_image() {
-      this.url = URL.createObjectURL(this.image)
+    onFileUpload(){
+      this.url = event.target.files[0]
+      console.log("url", this.url)
     },
     changeImg(){
-      return
+      const formData = new FormData()
+      formData.append('file', this.url)
+      // this.$services.ImgService.changeAvatar(formData)
+      this.$axios({
+        method: "post",
+        url: "http://api.lethanhhuyen.nvcd.xyz/api/training/common/avatar",
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then(() => {
+        console.log("thanh cong")
+      })
     }
   },
 

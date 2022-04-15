@@ -23,10 +23,8 @@
               </v-img>
             </v-item>
             <v-item>
-              <v-card-text class="text-center
-               text-decoration-underline
-               row-pointer "
-                           @click="changeImg()">Thay đổi ảnh đại diện
+              <v-card-text class="text-center text-decoration-underline row-pointer "
+                           @click="changeAvatar()">Thay đổi ảnh đại diện
               </v-card-text>
             </v-item>
           </v-item-group>
@@ -36,15 +34,16 @@
 
           <!--          Giao dien thay doi mat khau-->
           <v-form ref="form" v-if="!isProfile">
-            <ChangePassword @successful = "changePasswordSuccess"></ChangePassword>
+            <ChangePassword @successful="changePasswordSuccess"></ChangePassword>
           </v-form>
 
         </v-card>
       </div>
     </Header>
     <v-snackbar v-model="notiSuccess" color="blue" top>
-      Thay đổi mật khẩu thành công
+      {{ message }}
     </v-snackbar>
+    <ChangeImgProfile ref="changeImgProfile"></ChangeImgProfile>
   </div>
 
 </template>
@@ -53,30 +52,33 @@
 import Header from "@/components/Header";
 import Info from "@/components/Info"
 import ChangePassword from "@/components/ChangePassword";
+import ChangeImgProfile from "@/components/ChangeImgProfile";
 // import ChangeImgProfile from "@/components/ChangeImgProfile";
 
 export default {
   name: "Profile",
-  components: {ChangePassword, Header, Info},
+  components: {ChangeImgProfile, ChangePassword, Header, Info},
   data() {
     return {
       title: "Thông tin cá nhân",
       isProfile: true,
-      notiSuccess: false
+      notiSuccess: false,
+      message: ''
     }
   },
   created() {
   },
   methods: {
-    changeImg() {
-      this.$refs.dialogChangeImg.openDialog()
+    changeAvatar() {
+      this.$refs.changeImgProfile.openDialog()
     },
-    changePasswordSuccess(){
+    changePasswordSuccess() {
       this.notiSuccess = true
-      setInterval(()=>{
+      this.message = 'Thay đổi mật khẩu thành công'
+      setInterval(() => {
         location.reload()
-      },3000)
-    }
+      }, 3000)
+    },
   }
 
 }
