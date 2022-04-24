@@ -84,7 +84,7 @@ export default {
       title: "",
       option: {
         title: {
-          text: "Kết quả thử nghiệm Hệ thống đánh giá điểm RL",
+          text: "Tổng quan kết quả đánh giá rèn luyện",
           left: "center"
         },
         tooltip: {

@@ -16,7 +16,7 @@
           <!--          Giao dien cua trang ca nhan-->
           <v-item-group v-if="isProfile" class="mt-4">
             <v-item>
-              <v-img src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+              <v-img src="https://i.imgur.com/KAi3pm9.jpg"
                      height="180px"
                      width="180px"
                      class="mx-auto rounded-circle">
@@ -40,10 +40,16 @@
         </v-card>
       </div>
     </Header>
-    <v-snackbar v-model="notiSuccess" color="blue" top>
+    <v-snackbar v-model="notiSuccess"
+                color="blue"
+                :timeout="3000"
+                absolute
+                top
+                centered>
       {{ message }}
     </v-snackbar>
-    <ChangeImgProfile ref="changeImgProfile"></ChangeImgProfile>
+    <ChangeImgProfile ref="changeImgProfile"
+                      @done-edit="doneChangeImg"></ChangeImgProfile>
   </div>
 
 </template>
@@ -63,12 +69,34 @@ export default {
       title: "Thông tin cá nhân",
       isProfile: true,
       notiSuccess: false,
-      message: ''
+      message: '',
+      imageUrls: ''
     }
   },
   created() {
+    this.fetchAvatar()
   },
   methods: {
+    fetchAvatar() {
+      this.$services.ProfileService.query()
+          .then(res => {
+            const fileId = res.body.imageUrls.split('/',8)[7]
+            this.$axios({
+              method: 'get',
+              url: `http://api.lethanhhuyen.nvcd.xyz/api/training/common/avatars/${fileId}`,
+              headers: {'Content-Type': 'application/x-www-form-urlencoded' },
+              responseType: 'arraybuffer',
+            })
+            .then(res1 => {
+              const image = ('data:image/jpeg;base64,' + btoa(
+                  new Uint8Array(res1.data).reduce((data, byte) => data +
+                      String.fromCharCode(byte), '')
+              ));
+              this.imageUrls = image
+            })
+          })
+
+    },
     changeAvatar() {
       this.$refs.changeImgProfile.openDialog()
     },
@@ -79,6 +107,15 @@ export default {
         location.reload()
       }, 3000)
     },
+    doneChangeImg() {
+      this.fetchAvatar()
+      this.message = 'Thay đổi ảnh đại diện thành công'
+      this.notiSuccess = true
+
+      setTimeout(() => {
+        location.reload()
+      }, 3000)
+    }
   }
 
 }

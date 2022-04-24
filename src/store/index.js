@@ -8,7 +8,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         tag: [],
-        drawer: true
+        drawer: true,
+        availableForMark: false
     },
     mutations: {
         GET_TAG(state, decoded) {
@@ -20,6 +21,15 @@ export default new Vuex.Store({
         },
         GET_DRAWER(state){
             return state.drawer
+        },
+        GET_AVAILABLEFORMARK(state){
+            return state.availableForMark
+        },
+        SET_AVAILABLEFORMARK(state){
+            state.availableForMark = true
+        },
+        SET_UNAVAILABLEFORMARK(state){
+            state.availableForMark = false
         }
 
     },

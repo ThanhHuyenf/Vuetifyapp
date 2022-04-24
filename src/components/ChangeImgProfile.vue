@@ -63,15 +63,20 @@ export default {
     changeImg(){
       const formData = new FormData()
       formData.append('file', this.url)
-      // this.$services.ImgService.changeAvatar(formData)
       this.$axios({
         method: "post",
         url: "http://api.lethanhhuyen.nvcd.xyz/api/training/common/avatar",
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
       })
-      .then(() => {
-        console.log("thanh cong")
+      .then((res) => {
+        this.$services.ProfileService.updateProfile({
+          imageUrls: res.data
+        })
+        .then(() => {
+          this.closeDialog()
+          this.$emit('done-edit')
+        })
       })
     }
   },

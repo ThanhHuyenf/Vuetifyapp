@@ -129,12 +129,13 @@ export default {
     }
   },
   created() {
-    this.getData()
+    // this.getData()
   },
   methods: {
     getData() {
       this.$services.AdminService.getTime()
           .then(res => {
+            console.log("res time", res)
             this.items = res.data
             for (let i = 0; i < res.data.length; i++) {
               this.items[i].namHoc = res.data[i].startYear + " - " + res.data[i].endYear
@@ -167,6 +168,9 @@ export default {
     addNew() {
       this.$refs.dialogAddTime.openDialog()
     }
+  },
+  mounted() {
+    this.getData()
   }
 }
 </script>

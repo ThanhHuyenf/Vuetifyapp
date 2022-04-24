@@ -14,7 +14,7 @@
       </div>
 
       <div class="text-right pr-6 font-italic mt-4">
-        <p>Hà Nội, ngày {{dayNow}} tháng {{monthNow}} năm {{ yearNow }}</p>
+        <p>Hà Nội, ngày {{ dayNow }} tháng {{ monthNow }} năm {{ yearNow }}</p>
       </div>
 
       <div class="text-center mt-10">
@@ -1336,23 +1336,17 @@ export default {
     }
 
     let d = new Date()
-    this.dayNow = d.getDay()
-    this.monthNow = d.getMonth()
+    this.dayNow = d.getDate()
+    this.monthNow = d.getMonth() + 1
     this.yearNow = d.getFullYear()
 
-
-    // this.pointList.map(item => {
-    //   item.subType.map(x => {
-    //     x.subTypeScore.map(y => {
-    //       y.studentScore = 1
-    //       return y
-    //     })
-    //   })
-    // })
   },
   computed: {
     tag() {
       return this.$store.state.tag
+    },
+    availableForMark() {
+      return this.$store.state.availableForMark
     },
     averageStudent() {
       var averageStu = 0
@@ -1398,10 +1392,14 @@ export default {
       //Do ko thêm id vào router được nên khi đăng nhập nếu role là student thì sẽ lưu ID vào local
       //Khi gọi chấm điểm, nếu role là student thì lấy userid ở local, ko thì lấy ở router
       var USER_ID = ''
-      !this.$route.params.id ? USER_ID = localStorage.getItem('userID') : USER_ID = this.$route.params.id
 
+      !this.$route.params.id ? USER_ID = localStorage.getItem('userID') : USER_ID = this.$route.params.id
       this.$services.PointingService.getPoint({id: USER_ID})
           .then(res => {
+            console.log("res.body.pointList", res.body.pointList)
+            res.body.pointList ? this.pointList = res.body.pointList : ""
+            console.log("res.body.pointList", this.pointList)
+
             this.infor.name = res.body.name
             this.infor.birthDate = moment(res.body.birthDate, 'YYYY-MM-DD').format('DD/MM/YYYY')
             this.infor.semester = res.body.semester
@@ -1409,17 +1407,20 @@ export default {
             this.infor.year = res.body.year
             this.infor.className = res.body.className
           })
-      switch (this.tag.role) {
-        case 'Student':
-          this.student = true
-          break;
-        case 'Monitor':
-          !this.$route.params.id ? this.student = true : this.monitor = true
-          break;
-        case 'Department':
-          this.department = true
-          break;
+      if(this.availableForMark){
+        switch (this.tag.role) {
+          case 'Student':
+            this.student = true
+            break;
+          case 'Monitor':
+            !this.$route.params.id ? this.student = true : this.monitor = true
 
+            break;
+          case 'Department':
+            this.department = true
+            break;
+
+        }
       }
     },
     submitPoint() {

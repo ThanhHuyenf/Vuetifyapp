@@ -148,7 +148,8 @@ export default {
     save() {
       this.isEditing = !this.isEditing
       this.$services.ProfileService.updateProfile({
-        birthDate: this.info.ngaySinh
+        birthDate: this.info.ngaySinh,
+        email: this.info.email
       })
       .then(() => {
         this.hasSaved = true

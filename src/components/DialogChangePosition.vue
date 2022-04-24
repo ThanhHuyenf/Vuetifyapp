@@ -13,14 +13,14 @@
         <v-card-text class="mt-5 mb-2">
           <v-text-field label="Họ tên"
                         disabled
-                        v-model="item.hoTen">
+                        v-model="item.name">
           </v-text-field>
 
-          <v-select
-              :items="items"
-              label="Chức vụ"
-              v-model="position"
-          ></v-select>
+          <v-switch
+              v-model="switchRole"
+              inset
+              label="Cán bộ lớp"
+          ></v-switch>
 
         </v-card-text>
         <v-item class="mt-5">
@@ -59,22 +59,27 @@ export default {
     return {
       dialog: false,
       loading: false,
-      position: null,
       item: {},
-      items: ['Sinh viên', 'Cán bộ lớp']
+      switchRole: true
     }
   },
   methods: {
     openDialog(item) {
       this.dialog = true
-      this.item = item
+      this.item = {...item}
+      this.item.role == "Student" ? this.switchRole = false : this.switchRole = true
     },
     closeDialog() {
-      this.position = ''
       this.dialog = false
     },
     changePosition() {
       this.loading = true
+      this.$services.TeacherService.assignMonitor({id: this.item.userID})
+      .then(res => {
+        this.loading = false
+        this.dialog = false
+        this.$emit("done-change")
+      })
     }
   }
 }

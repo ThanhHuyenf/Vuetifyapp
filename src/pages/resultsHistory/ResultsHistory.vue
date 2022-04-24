@@ -29,7 +29,7 @@ export default {
       headers: [
         {
           text: "Học kỳ",
-          value: "hocKy",
+          value: "semester",
           sortable: false,
           width: "10%"
         },
@@ -60,9 +60,13 @@ export default {
   },
   methods: {
     getData() {
-      this.$axios.get("http://localhost:3000/resultHistory")
+      this.$services.PointingService.getHistory()
           .then(res => {
-            this.items = res.data
+            this.items = [...res.body]
+            this.items.forEach((element, index) => {
+              element.namHoc = res.body[index].startYear + " - " + res.body[index].endYear
+              element.tongDiem = Math.round(((res.body[index].totalStudentPoint ? res.body[index].totalStudentPoint : 0) + (res.body[index].totalMonitorPoint ? res.body[index].totalMonitorPoint : 0) + (res.body[index].totalTeacherPoint ? res.body[index].totalTeacherPoint : 0)) / 3 * 100) / 100
+            })
           })
     }
   }

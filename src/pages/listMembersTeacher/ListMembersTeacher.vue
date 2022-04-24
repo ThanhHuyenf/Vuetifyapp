@@ -4,7 +4,7 @@
       <div slot="data">
         <v-item-group class="mt-2 pa-4">
           <div>
-            <Counter :year="2021"
+            <Counter :year="2022"
                      :month="11"
                      :date="9"
                      :hours="16"
@@ -24,106 +24,107 @@
             </v-col>
           </v-row>
 
-            <v-data-table
-                :headers="headers"
-                :items="filteredItems"
-                item-key="text"
-                fixed-header
-                class="elevation-1 rounded-0 mt-4"
-            >
+          <v-data-table
+              :headers="headers"
+              :items="filteredItems"
+              item-key="text"
+              fixed-header
+              class="elevation-1 rounded-0 mt-4"
+          >
 
-              <template #item.index="{ item }">
-                {{ filteredItems.indexOf(item) + 1 }}
-              </template>
+            <template #item.index="{ item }">
+              {{ filteredItems.indexOf(item) + 1 }}
+            </template>
 
-              <template v-slot:header.className="{header}">
-                {{ header.text }}
-                <v-menu offset-y>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn icon v-bind="attrs" v-on="on">
-                      <v-icon class="ml-n4" small color="white">
-                        mdi-filter
-                      </v-icon>
-                    </v-btn>
-                  </template>
-                  <v-card class="pa-4 py-0" style="cursor: pointer">
-                    <v-list>
+            <template v-slot:header.className="{header}">
+              {{ header.text }}
+              <v-menu offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn icon v-bind="attrs" v-on="on">
+                    <v-icon class="ml-n4" small color="white">
+                      mdi-filter
+                    </v-icon>
+                  </v-btn>
+                </template>
+                <v-card class="pa-4 py-0" style="cursor: pointer">
+                  <v-list>
 
-                      <v-list-item-content>
-                        <v-list-item-title @click="filterClass= 'All' ">Tất cả</v-list-item-title>
-                      </v-list-item-content>
+                    <v-list-item-content>
+                      <v-list-item-title @click="filterClass= 'All' ">Tất cả</v-list-item-title>
+                    </v-list-item-content>
 
-                      <v-list-item-content v-for="(item, index) in classes"
-                                           :key="index"
-                                           @click="filterClass= item.className">
-                        <v-list-item-title>{{ item.className }}</v-list-item-title>
-                      </v-list-item-content>
+                    <v-list-item-content v-for="(item, index) in classes"
+                                         :key="index"
+                                         @click="filterClass= item.className">
+                      <v-list-item-title>{{ item.className }}</v-list-item-title>
+                    </v-list-item-content>
 
-                    </v-list>
-                  </v-card>
-                </v-menu>
-              </template>
+                  </v-list>
+                </v-card>
+              </v-menu>
+            </template>
 
-              <template v-slot:header.trangThai="{ header }">
-                {{ header.text }}
-                <v-menu offset-y>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn icon v-bind="attrs" v-on="on">
-                      <v-icon class="ml-n4" small color="white">
-                        mdi-filter
-                      </v-icon>
-                    </v-btn>
-                  </template>
-                  <v-card class="pa-4 py-0" style="cursor: pointer">
-                    <v-list>
+            <template v-slot:header.trangThai="{ header }">
+              {{ header.text }}
+              <v-menu offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn icon v-bind="attrs" v-on="on">
+                    <v-icon class="ml-n4" small color="white">
+                      mdi-filter
+                    </v-icon>
+                  </v-btn>
+                </template>
+                <v-card class="pa-4 py-0" style="cursor: pointer">
+                  <v-list>
 
-                      <v-list-item-content @click="type= 'All' ">
-                        <v-list-item-title>Tất cả</v-list-item-title>
-                      </v-list-item-content>
+                    <v-list-item-content @click="type= 'All' ">
+                      <v-list-item-title>Tất cả</v-list-item-title>
+                    </v-list-item-content>
 
-                      <v-list-item-content>
-                        <v-list-item-title @click="type= true ">Đã chấm</v-list-item-title>
-                      </v-list-item-content>
+                    <v-list-item-content>
+                      <v-list-item-title @click="type= true ">Đã chấm</v-list-item-title>
+                    </v-list-item-content>
 
-                      <v-list-item-content @click="type= false ">
-                        <v-list-item-title>Chưa chấm</v-list-item-title>
-                      </v-list-item-content>
-                    </v-list>
-                  </v-card>
-                </v-menu>
-              </template>
+                    <v-list-item-content @click="type= false ">
+                      <v-list-item-title>Chưa chấm</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list>
+                </v-card>
+              </v-menu>
+            </template>
 
-              <template v-slot:item.trangThai="{item}">
-                <div v-if=item.trangThai>
-                  Đã chấm
-                </div>
-                <div v-else>
-                  Chưa chấm
-                </div>
-              </template>
+            <template v-slot:item.trangThai="{item}">
+              <div v-if=item.trangThai>
+                Đã chấm
+              </div>
+              <div v-else>
+                Chưa chấm
+              </div>
+            </template>
 
-              <template v-slot:item.tacVu="{ item }">
-                <v-icon
-                    small
-                    class="mr-2"
-                    @click="editItem(item)"
-                >
-                  mdi-pencil
-                </v-icon>
+            <template v-slot:item.tacVu="{ item }">
+              <v-icon
+                  small
+                  class="mr-2"
+                  @click="editItem(item)"
+              >
+                mdi-pencil
+              </v-icon>
 
-                <v-icon
-                    small
-                    class="mr-2"
-                    @click="editPostision(item)"
-                >
-                  mdi-wrench
-                </v-icon>
-              </template>
-            </v-data-table>
+              <v-icon
+                  small
+                  class="mr-2"
+                  @click="editPostision(item)"
+              >
+                mdi-wrench
+              </v-icon>
+            </template>
+          </v-data-table>
         </v-item-group>
       </div>
     </Header>
-    <DialogChangePosition ref="dialofChangePostision"></DialogChangePosition>
+    <DialogChangePosition ref="dialofChangePostision"
+                          @done-change="changeSuccess"></DialogChangePosition>
   </div>
 </template>
 
@@ -183,19 +184,19 @@ export default {
         {
           text: 'Cá nhân chấm',
           align: 'start',
-          value: 'diemCaNhanCham',
+          value: 'studentScore',
           width: '12%'
         },
         {
           text: 'CBL nhân chấm',
           align: 'start',
-          value: 'diemCBLNhanCham',
+          value: 'monitorScore',
           width: '12%'
         },
         {
           text: 'CVHT chấm',
           align: 'start',
-          value: 'diemGVNhanCham',
+          value: 'teacherScore',
           width: '12%'
         },
         {
@@ -256,6 +257,10 @@ export default {
     },
     editPostision(item) {
       this.$refs.dialofChangePostision.openDialog(item)
+    }
+    ,
+    changeSuccess(){
+      this.getData()
     }
   }
 

@@ -12,7 +12,7 @@
 
         <v-card-text class="mt-5 mb-2">
           <v-text-field label="Họ tên"
-                        v-model="item.hoTen">
+                        v-model="item.teacherName">
           </v-text-field>
 
           <v-text-field label="Email"
@@ -20,7 +20,7 @@
           </v-text-field>
 
           <v-text-field label="Số điện thoại"
-                        v-model="item.soDienThoai">
+                        v-model="item.teacherNumber">
           </v-text-field>
 
           <v-text-field label="Danh sách lớp quản lý"
@@ -41,7 +41,6 @@
             Huỷ
           </v-btn>
           <v-btn
-              text
               depressed
               color="primary"
               @click="dialog = false"
@@ -59,14 +58,14 @@ export default {
   name: "DialogEditTeacher",
   data() {
     return {
-      dialog: false,
+      dialog: true,
       item: {}
     }
   },
   methods: {
     openDialog(item) {
       this.dialog = true
-      this.item = item
+      this.item = {...item}
     }
   }
 }

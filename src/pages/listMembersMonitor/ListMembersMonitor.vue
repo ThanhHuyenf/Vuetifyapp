@@ -3,7 +3,7 @@
     <Header :title="title">
       <div slot="data">
         <v-item-group class="mt-2 pa-4">
-          <div class="text-center red--text">Ban con 3 ngay 2 gio de cham diem</div>
+          <Counter></Counter>
           <v-subheader class="mb-n2">Da cham: {{ daCham }}/{{ items.length }}</v-subheader>
           <v-data-table
               :headers="headers"
@@ -85,10 +85,12 @@
 
 <script>
 import Header from "@/components/Header";
+import Counter from "@/components/Counter";
 
 export default {
   name: "ListMembers",
   components: {
+    Counter,
     Header
   },
   data() {
@@ -155,19 +157,21 @@ export default {
       items: [],
       daCham: 0,
       dialog: false,
-      type: 'All'
+      type: 'All',
+      timer: []
     }
   },
   created() {
     this.getData()
     this.daCham = this.items.filter(item => item.trangThai == true).length
+
   },
   computed: {
     // eslint-disable-next-line vue/return-in-computed-property
     filteredItems() {
       if (this.type === "All") return this.items
       if (this.type === "Done") return this.items.filter(item => item.trangThai == true)
-      if (this.type === "NotDone") return this.items.filter(item => item.trangThai == false)
+      if (this.type === "NotDone") return this.items.filter(item => item.trangThai !== true)
     }
   },
   methods: {

@@ -4,14 +4,12 @@
       <div slot="data">
         <v-item-group class="pa-4">
           <div class="text-right d-flex justify-space-between">
-            <v-subheader class="mb-n2">Tong so: {{ items.length }}</v-subheader>
+            <v-subheader class="mb-n2">Tổng số: {{ items.length }}</v-subheader>
 
             <v-btn outlined
                 color="primary"
                    @click="addNew">
-              <!--              <v-icon>mdi-plus</v-icon>-->
               Thêm
-
             </v-btn>
           </div>
 
@@ -86,15 +84,16 @@
                                   :rules="passwordCofirmationRules"
                               ></v-text-field>
 
-                              <v-item-group class="text-right d-flex justify-space-between">
-                                <v-btn class="mr-2"
-                                       text>
+                              <v-item-group class="text-right">
+                                <v-btn text class="mr-2"
+                                       outlined
+                                       color="primary"
+                                       @click="dialogChangePassword = false">
                                   Huỷ
                                 </v-btn>
 
                                 <v-btn
                                     color="primary"
-                                    outlined
                                     @click="changePassword"
                                     :loading="loading"
                                 >
@@ -104,24 +103,6 @@
                             </v-form>
                           </v-card-text>
                         </v-card>
-                        <!--                        <v-divider></v-divider>-->
-                        <!--                        <v-card-actions>-->
-                        <!--                          <v-spacer></v-spacer>-->
-                        <!--                          <v-btn-->
-                        <!--                              color="primary"-->
-                        <!--                              outlined-->
-                        <!--                              @click="dialogDeleteItem = false"-->
-                        <!--                          >-->
-                        <!--                            Huỷ-->
-                        <!--                          </v-btn>-->
-                        <!--                          <v-btn-->
-                        <!--                              color="primary"-->
-                        <!--                              depressed-->
-                        <!--                              @click="deleteItem(item)"-->
-                        <!--                          >-->
-                        <!--                            Đồng ý-->
-                        <!--                          </v-btn>-->
-                        <!--                        </v-card-actions>-->
                       </v-card>
 
                     </v-dialog>
@@ -131,7 +112,7 @@
                     <v-dialog
                         v-model="dialogDeleteItem"
                         persistent
-                        max-width="290"
+                        max-width="500"
                     >
                       <template v-slot:activator="{ on, attrs }">
                         <v-list-item-title v-bind="attrs"
@@ -150,7 +131,7 @@
                           <v-spacer></v-spacer>
                           <v-btn
                               color="primary"
-                              outlined
+                              text
                               @click="dialogDeleteItem = false"
                           >
                             Huỷ
@@ -247,7 +228,7 @@ export default {
         }
       ],
       items: [],
-      dialogChangePassword: true,
+      dialogChangePassword: false,
       dialogDeleteItem: false,
       newPassword: '',
       passwordConfirmation: '',
@@ -274,10 +255,15 @@ export default {
           .then(res => {
             console.log(res.data)
             this.items = res.data
+            this.items.forEach(element => {
+              element.email = "huyenntt@hnue.edu.vn"
+              element.listClasses = ["67A", "67B"]
+            })
           })
     },
     edit(item) {
       this.$refs.dialogEditTeacher.openDialog(item)
+      return item
     },
     deleteItem() {
       return
@@ -286,7 +272,7 @@ export default {
       return
     },
     addNew() {
-      this.$refs.dialogAddTeacher.openDialog()
+      // this.$refs.dialogAddTeacher.openDialog()
     }
   }
 }

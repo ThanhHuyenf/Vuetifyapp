@@ -31,6 +31,7 @@ import DetailClassReviewDepartment from "@/pages/listClassesReviewDepartment/Det
 import ManageTime from "@/pages/manageTime/ManageTime";
 import ListDepartments from "@/pages/listDepartments/ListDepartments";
 import DetailDepartment from "@/pages/listDepartments/DetailDepartment";
+import PointFrame from "@/pages/pointFrame/PointFrame";
 
 //Cham diem
 import FormPoint from "@/pages/form/FormPoint";
@@ -125,6 +126,11 @@ const routes = [
                 path: '/manageTime',
                 name: 'ManageTime',
                 component: ManageTime
+            },
+            {
+                path: '/pointFrame',
+                name: 'PointFrame',
+                component: PointFrame
             },
             {
                 path: '/listMembersMonitor/grading/id=:id',
