@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+    vue-service:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: thl-khoaluan-vue
+        environment:
+          apiEndpoint: http://api.lethanhhuyen.nvcd.xyz/
+        ports:
+            - 8080:80
+        volumes:
+            - service:/front
+        networks:
+            - thl_network
+volumes: 
+    service:
+networks:
+    thl_network:
+        name: thl-network
