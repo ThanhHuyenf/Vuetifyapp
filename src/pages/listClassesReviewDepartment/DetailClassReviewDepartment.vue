@@ -11,7 +11,6 @@
                 :headers="headers"
                 :items="filteredItems"
                 hide-default-footer
-                items-per-page="200"
                 item-key="text"
                 class="elevation-1 rounded-0 mt-4"
             >
@@ -27,7 +26,7 @@
           <v-dialog
               v-model="dialog"
               persistent
-              max-width="290"
+              max-width="500"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-btn
@@ -42,23 +41,23 @@
             </template>
             <v-card>
               <v-card-title class="text-h5">
-                Use Google's location service?
+                Xác nhận duyệt
               </v-card-title>
               <v-card-text>
-                Duyệt thành công, quay về Danh sách  chờ duyệt
+                Bạn chỉ được duyệt duy nhất một lần. Vui lòng kiểm tra kỹ trước khi duyệt.
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn
-                    color="green darken-1"
-                    text
+                    outlined
+                    color="primary"
                     @click="dialog = false"
                 >
                   Huỷ
                 </v-btn>
                 <v-btn
-                    color="green darken-1"
-                    text
+                    depressed
+                    color="primary"
                     @click="backToList"
                 >
                   Đồng ý
@@ -67,6 +66,14 @@
             </v-card>
           </v-dialog>
         </div>
+        <v-snackbar v-model="snackbar"
+                    :color="color"
+                    :timeout="3000"
+                    absolute
+                    top
+                    centered>
+          {{ message }}
+        </v-snackbar>
       </div>
 
     </Header>
@@ -104,9 +111,7 @@ export default {
             radius: "55%",
             center: ["50%", "60%"],
             data: [
-              {value: 8, name: "Xuất sắc"},
-              {value: 20, name: "Tốt"},
-              {value: 4, name: "Khá"},
+              {value: 3, name: "Yếu"},
             ],
             emphasis: {
               itemStyle: {
@@ -130,13 +135,13 @@ export default {
           text: 'Mã sinh viên',
           align: 'start',
           sortable: false,
-          value: 'maSinhVien',
+          value: 'userID',
           width: '10%'
         },
         {
           text: 'Họ tên',
           align: 'start',
-          value: 'hoTen',
+          value: 'name',
           width: '18%',
           sort: (hoTen1, hoTen2) => {
 
@@ -152,19 +157,19 @@ export default {
         {
           text: 'Cá nhân chấm',
           align: 'start',
-          value: 'diemCaNhanCham',
+          value: 'totalStudentScore',
           width: '12%'
         },
         {
           text: 'CBL nhân chấm',
           align: 'start',
-          value: 'diemCBLNhanCham',
+          value: 'totalMonitorScore',
           width: '12%'
         },
         {
           text: 'CVHT chấm',
           align: 'start',
-          value: 'diemGVNhanCham',
+          value: 'totalTeacherScore',
           width: '12%'
         },
         {
@@ -187,80 +192,54 @@ export default {
       type: "All",
       checkbox1: false,
       dialog: false,
-      filteredItems: []
+      pointFrame: [],
+      snackbar: false,
+      color: 'blue',
+      message:''
     }
   },
   created() {
-    this.title = "Chi tiết điểm rèn luyện lớp " + this.$route.params.class
-    // this.getData()
-    this.filteredItems = [
-      {
-        maSinhVien: 675105002,
-        hoTen: 'Lê Thị Ngọc Anh',
-        diemCaNhanCham: 77,
-        diemCBLNhanCham: 78,
-        diemGVNhanCham: 79,
-        diemTB: 78,
-        xepLoai: 'Khá'
-      },
-      {
-        maSinhVien: 675105005,
-        hoTen: 'Nguyễn Quỳnh Anh',
-        diemCaNhanCham: 80,
-        diemCBLNhanCham: 78,
-        diemGVNhanCham: 79,
-        diemTB: 79,
-        xepLoai: 'Khá'
-      },
-      {
-        maSinhVien: 675105002,
-        hoTen: 'Vũ Văn Dũng',
-        diemCaNhanCham: 80,
-        diemCBLNhanCham: 82,
-        diemGVNhanCham: 84,
-        diemTB: 82,
-        xepLoai: 'Giỏi'
-      },
-      {
-        maSinhVien: 675105002,
-        hoTen: 'Lê Thị Ngọc Anh',
-        diemCaNhanCham: 77,
-        diemCBLNhanCham: 78,
-        diemGVNhanCham: 79,
-        diemTB: 78,
-        xepLoai: 'Khá'
-      },
-      {
-        maSinhVien: 675105002,
-        hoTen: 'Lê Thị Ngọc Anh',
-        diemCaNhanCham: 77,
-        diemCBLNhanCham: 78,
-        diemGVNhanCham: 79,
-        diemTB: 78,
-        xepLoai: 'Khá'
-      }
-    ]
+    this.getData()
   },
   computed: {
-    // filteredItems() {
-    //   if (this.filterClass == "All" && this.type == "All") return this.items
-    //   else if (this.filterClass !== "All" && this.type !== "All") {
-    //     return this.items.filter(item => item.lop == this.filterClass && item.trangThai == this.type)
-    //   } else {
-    //     return this.items.filter(item => item.lop == this.filterClass || item.trangThai == this.type)
-    //   }
-    // }
+    filteredItems() {
+      return this.items
+    }
   },
   methods: {
     getData() {
-      this.$axios.get('http://localhost:3000/listMembersGV')
+      this.$services.PointingService.getPointFrame()
+          .then(res => {
+            this.pointFrame = res.body
+          })
+      this.$services.DepartmentSevice.listBrowseMark({markId: this.$route.params.markId})
           .then(res => {
             console.log(res.data)
             this.items = res.data
+            for (let i = 0; i < this.items.length; i++) {
+              this.items[i].diemTB = Math.round((this.items[i].totalStudentScore + this.items[i].totalMonitorScore + this.items[i].totalTeacherScore) / 3 * 100) / 100
+              this.pointFrame.forEach(item => {
+                if (this.items[i].diemTB <= item.maxPoint && this.items[i].diemTB >= item.minPoint) {
+                  this.items[i].xepLoai = item.stringPoint
+                }
+              })
+            }
           })
     },
-    backToList(){
-      this.$router.push('/listClassesReviewDepartment')
+    backToList() {
+      this.$services.DepartmentSevice.browseMark({markId: this.$route.params.markId})
+      .then(() => {
+        this.snackbar = true
+        this.message = 'Duyệt thành công'
+        this.dialog = false
+        this.$router.push('/listClassesReviewDepartment')
+      })
+      .catch( ()=>{
+        this.snackbar = true
+        this.message= 'Có lỗi xảy ra. Vui lòng thử lại sau!'
+        this.color = 'red'
+        this.dialog = false
+      })
     }
   }
 }

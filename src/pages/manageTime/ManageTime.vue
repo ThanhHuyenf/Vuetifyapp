@@ -38,11 +38,21 @@
             </template>
           </v-data-table>
         </v-item-group>
+        <v-snackbar
+            v-model="snackbar"
+            :timeout="2000"
+            absolute
+            bottom
+            center
+            color="blue"
+        >
+          {{ message }}
+        </v-snackbar>
       </div>
     </Header>
     <DialogEditTime ref="dialogTime" @done-edit="updated"></DialogEditTime>
-    <DialogAddTime ref="dialogAddTime"></DialogAddTime>
-    <DialogDeleteItem ref="dialogDeleteItem"></DialogDeleteItem>
+    <!--    <DialogAddTime ref="dialogAddTime"></DialogAddTime>-->
+    <DialogDeleteItem ref="dialogDeleteItem" @accept = "onDeleting"></DialogDeleteItem>
   </div>
 </template>
 
@@ -50,12 +60,12 @@
 import Header from "@/components/Header";
 import DialogEditTime from "@/components/DialogEditTime";
 import moment from "moment";
-import DialogAddTime from "@/components/DialogAddTime";
+// import DialogAddTime from "@/components/DialogAddTime";
 import DialogDeleteItem from "@/components/DialogDeleteItem";
 
 export default {
   name: "ManageTime",
-  components: {DialogAddTime, DialogEditTime, Header, DialogDeleteItem},
+  components: {DialogEditTime, Header, DialogDeleteItem},
   computed: {
     filteredItems() {
       return this.items
@@ -126,6 +136,8 @@ export default {
         },
       ],
       items: [],
+      snackbar: false,
+      message: ''
     }
   },
   created() {
@@ -151,22 +163,30 @@ export default {
           + moment(date2, 'YYYY-MM-DD').format('DD/MM/YYYY')
     },
     editItem(item) {
-      this.$refs.dialogTime.openDialog(item)
+      this.$refs.dialogTime.openDialog('update', item)
     },
     deleteItem(item) {
-      this.$refs.dialogDeleteItem.openDialog()
-      console.log(item)
+      this.$refs.dialogDeleteItem.openDialog(item)
+      // console.log(item)
     },
     updated(item) {
-      this.items= this.items.map(x => {
-        if( x.id == item.id){
-          x = item
-        }
-        return x
-      })
+      this.snackbar = true
+      this.message = 'Cập nhật thời gian thành công'
+      this.getData()
+      return item
     },
     addNew() {
-      this.$refs.dialogAddTime.openDialog()
+      this.$refs.dialogTime.openDialog('addnew')
+    },
+    onDeleting(item){
+      // console.log('item item', item)
+      this.$services.AdminService.deleteTime({id: item.id})
+      .then(()=>{
+        this.snackbar = true
+        this.message = 'Xóa thời gian thành công'
+        this.getData()
+        this.$refs.dialogDeleteItem.closeDialog()
+      })
     }
   },
   mounted() {

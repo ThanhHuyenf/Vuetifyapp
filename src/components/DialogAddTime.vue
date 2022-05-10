@@ -14,10 +14,9 @@
               <v-text-field label="Năm học" v-model="newTime.namHoc"></v-text-field>
             </v-col>
             <v-col cols="6">
-              <v-autocomplete label="Học kỳ"
-                              v-model="newTime.semester"
-                              :items="hocKy">
-              </v-autocomplete>
+              <v-text-field label="Học kỳ"
+                            v-model="timeDetail.semester">
+              </v-text-field>
             </v-col>
           </v-row>
           <!--

@@ -93,23 +93,27 @@
               </v-menu>
             </template>
 
-            <template v-slot:item.trangThai="{item}">
-              <div v-if=item.trangThai>
-                Đã chấm
-              </div>
-              <div v-else>
-                Chưa chấm
-              </div>
-            </template>
+<!--            <template v-slot:item.trangThai="{item}">-->
+<!--              <div v-if=item.trangThai>-->
+<!--                Đã chấm-->
+<!--              </div>-->
+<!--              <div v-else>-->
+<!--                Chưa chấm-->
+<!--              </div>-->
+<!--            </template>-->
 
             <template v-slot:item.tacVu="{ item }">
-              <v-icon
-                  small
-                  class="mr-2"
-                  @click="editItem(item)"
-              >
-                mdi-pencil
-              </v-icon>
+              <router-link :to="{
+                                 name: 'ListMembersTeacher.FormPoint',
+                                 params: {id: item.userID}
+              }">
+                <v-icon
+                    small
+                    class="mr-2"
+                >
+                  mdi-pencil
+                </v-icon>
+              </router-link>
 
               <v-icon
                   small
@@ -185,26 +189,19 @@ export default {
           text: 'Cá nhân chấm',
           align: 'start',
           value: 'studentScore',
-          width: '12%'
+          width: '15%'
         },
         {
           text: 'CBL nhân chấm',
           align: 'start',
           value: 'monitorScore',
-          width: '12%'
+          width: '15%'
         },
         {
           text: 'CVHT chấm',
           align: 'start',
           value: 'teacherScore',
-          width: '12%'
-        },
-        {
-          text: 'Trạng thái',
-          align: 'start',
-          value: 'trangThai',
-          sortable: false,
-          width: '11%',
+          width: '15%'
         },
         {
           text: 'Tác vụ',

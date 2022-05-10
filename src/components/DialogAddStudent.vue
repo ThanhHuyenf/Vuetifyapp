@@ -7,11 +7,10 @@
     >
       <v-card>
         <v-card-title class="text-h5 grey lighten-2">
-          Thêm cố vấn học tập mới
+          Thêm sinh viên
         </v-card-title>
 
         <v-card-text class="mt-8 mb-2">
-
           <v-row class="justify-center align-center">
             <v-btn color="blue lighten-2"
                    class="ma-2 white--text"
@@ -35,30 +34,27 @@
           <v-card elevation="0" outlined rounded>
             <v-card-text>
               <v-file-input
-                  accept="xlsx/*"
+                  accept="xlsx"
                   placeholder="Chọn file"
                   @change="onchange"
-              ></v-file-input>
+              >
+
+              </v-file-input>
             </v-card-text>
           </v-card>
         </v-card-text>
 
         <v-card-text v-if="option=='manual'"
                      class="mt-5 mb-2">
+          <v-text-field label="Mã sinh viên"
+                        v-model="item.userID">
+          </v-text-field>
           <v-text-field label="Họ tên"
-                        v-model="item.hoTen">
+                        v-model="item.name">
           </v-text-field>
 
           <v-text-field label="Email"
                         v-model="item.email">
-          </v-text-field>
-
-          <v-text-field label="Số điện thoại"
-                        v-model="item.soDienThoai">
-          </v-text-field>
-
-          <v-text-field label="Lớp quản lý"
-                        v-model="item.lopQuanLy">
           </v-text-field>
 
         </v-card-text>
@@ -88,15 +84,15 @@
   </div>
 </template>
 
+
 <script>
 export default {
-  name: "DialogAddTeacher",
+  name: "DialogAddStudent",
   data(){
     return {
       dialog: false,
       option: "",
-      item: {},
-      url: ''
+      item: {}
     }
   },
   methods: {
@@ -112,22 +108,24 @@ export default {
       formData.append('file', this.url)
       this.$axios({
         method: "post",
-        url: "http://api.lethanhhuyen.nvcd.xyz/api/training/teachers/upload",
+        url: "http://api.lethanhhuyen.nvcd.xyz/api/training/detail-users/upload",
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
       })
           .then(() => {
+            console.log("thanh cong nha")
             this.$emit("success")
             this.cancel()
 
           })
-          .catch(()=>{
-            this.$emit("fail")
-            this.cancel()
-          })
+      .catch(()=>{
+        this.$emit("fail")
+        this.cancel()
+      })
     },
     onchange(){
       this.url = event.target.files[0]
+      console.log("url", this.url)
     }
   }
 }

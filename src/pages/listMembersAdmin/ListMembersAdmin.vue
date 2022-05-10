@@ -3,8 +3,14 @@
     <Header :title="title">
       <div slot="data">
         <v-item-group class="mt-2 pa-4">
-          <Counter></Counter>
-          <v-subheader class="mb-n2">Da cham: {{ daCham }}/{{ items.length }}</v-subheader>
+          <div class="text-right mb-2">
+            <v-btn outlined
+                   color="primary"
+                   @click="addNew">
+              Thêm
+            </v-btn>
+          </div>
+
           <v-data-table
               :headers="headers"
               :items="filteredItems"
@@ -28,7 +34,6 @@
                 </template>
                 <v-card class="pa-4 py-0" style="cursor: pointer">
                   <v-list>
-
                     <v-list-item-content @click="type= 'All' ">
                       <v-list-item-title>Tất cả</v-list-item-title>
                     </v-list-item-content>
@@ -54,21 +59,43 @@
               </div>
             </template>
 
+            <template v-slot:item.trangThai="{item}">
+              <div v-if="item.monitorScore > 0">
+                Đã chấm
+              </div>
+              <div v-else>
+                Chưa chấm
+              </div>
+            </template>
+
             <template v-slot:item.tacVu="{item}">
-              <router-link :to="{
-                                 name: 'ListMembersMonitor.FormPoint',
-                                 params: {id: item.userID}
-              }">
                 <v-icon
                     small
                     class="mr-2"
                 >
                   mdi-pencil
                 </v-icon>
-              </router-link>
+
+              <v-icon
+                  small
+                  class="mr-2"
+                  @click="dialogDeleteItem(item)"
+              >
+                mdi-delete
+              </v-icon>
             </template>
           </v-data-table>
         </v-item-group>
+        <v-snackbar v-model="snackbar"
+                    :color="color"
+                    :timeout="3000"
+                    absolute
+                    top
+                    centered>
+          {{ message }}
+        </v-snackbar>
+        <DialogAddStudent ref="dialogAddStudent" @success="updating" @fail="cantUpdate"></DialogAddStudent>
+        <DialogDeleteItem ref="dialogDeleteItem" @accept = "ondeleting"></DialogDeleteItem>
       </div>
     </Header>
   </div>
@@ -76,12 +103,15 @@
 
 <script>
 import Header from "@/components/Header";
-import Counter from "@/components/Counter";
+import moment from "moment";
+import DialogAddStudent from "@/components/DialogAddStudent";
+import DialogDeleteItem from "@/components/DialogDeleteItem";
 
 export default {
-  name: "ListMembers",
+  name: "ListMembersAdmin",
   components: {
-    Counter,
+    DialogDeleteItem,
+    DialogAddStudent,
     Header
   },
   data() {
@@ -106,7 +136,7 @@ export default {
           text: 'Họ tên',
           align: 'start',
           value: 'name',
-          width: '30%',
+          width: '25%',
           sort: (hoTen1, hoTen2) => {
 
             hoTen1 = hoTen1.trim()
@@ -119,16 +149,23 @@ export default {
           }
         },
         {
-          text: 'Điểm cá nhân chấm',
+          text: 'Email',
           align: 'start',
-          value: 'studentScore',
-          width: '20%'
+          value: 'email',
+          width: '15%'
         },
         {
-          text: 'Điểm lớp trưởng chấm',
+          text: 'Thời gian tạo',
           align: 'start',
-          value: 'monitorScore',
-          width: '20%'
+          value: 'createdAt',
+          width: '15%'
+        },
+        {
+          text: 'Update lần cuối',
+          align: 'start',
+          value: 'updatedAt',
+          sortable: false,
+          width: '15%',
         },
         {
           text: 'Tác vụ',
@@ -142,7 +179,10 @@ export default {
       daCham: 0,
       dialog: false,
       type: 'All',
-      timer: []
+      timer: [],
+      snackbar: false,
+      message: '',
+      color: 'blue'
     }
   },
   created() {
@@ -160,10 +200,34 @@ export default {
   },
   methods: {
     getData(){
-      this.$services.MonitorService.getMembers()
-      .then(res => {
-        this.items= res.data
-      })
+      this.$services.AdminService.getListStudent()
+          .then(res => {
+            console.log("ré", res)
+            this.items = res.body
+            this.items.map(x => {
+              x.createdAt =  moment(x.createdAt, 'YYYY-MM-DD').format('DD/MM/YYYY')
+              x.updatedAt =  moment(x.createdAt, 'YYYY-MM-DD').format('DD/MM/YYYY')
+            })
+          })
+    },
+    addNew(){
+      this.$refs.dialogAddStudent.openDialog()
+    },
+    dialogDeleteItem(item){
+      this.$refs.dialogDeleteItem.openDialog(item)
+    },
+    ondeleting(item){
+      console.log("item la", item)
+    },
+    updating(){
+      this.getData()
+      this.snackbar = true
+      this.message= 'Upload file thành công'
+    },
+    cantUpdate(){
+      this.snackbar = true
+      this.message= 'Upload file không thành công thành công. Vui lòng kiểm tra lại!'
+      this.color = 'red'
     }
   }
 }

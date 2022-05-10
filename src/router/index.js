@@ -32,7 +32,9 @@ import ManageTime from "@/pages/manageTime/ManageTime";
 import ListDepartments from "@/pages/listDepartments/ListDepartments";
 import DetailDepartment from "@/pages/listDepartments/DetailDepartment";
 import PointFrame from "@/pages/pointFrame/PointFrame";
-
+import Statistic from "@/pages/statistic/Statistic";
+import ListTeacherAdmin from "@/pages/listTecherAdmin/ListTeacherAdmin";
+import ListMembersAdmin from "@/pages/listMembersAdmin/ListMembersAdmin";
 //Cham diem
 import FormPoint from "@/pages/form/FormPoint";
 
@@ -107,7 +109,7 @@ const routes = [
                 component: ListClassesReviewDepartment
             },
             {
-                path: '/detailClassReviewDepartment/detail/class=:class/hocKy=:hocKy/namHoc=:namHoc',
+                path: '/detailClassReviewDepartment/detail/markId=:markId',
                 name: 'QuanLyDuyetKhoa.Detail',
                 component: DetailClassReviewDepartment
 
@@ -138,10 +140,30 @@ const routes = [
                 component: FormPoint
             },
             {
+                path: '/listMembersTeacher/grading/id=:id',
+                name: 'ListMembersTeacher.FormPoint',
+                component: FormPoint
+            },
+            {
                 path: '/grading/',
                 name: 'Grading',
                 component: FormPoint
-            }
+            },
+            {
+                path: '/statistic',
+                name: 'Statistic',
+                component: Statistic
+            },
+            {
+                path: '/listTeacherAdmin',
+                name: 'ListTeacherAdmin',
+                component: ListTeacherAdmin
+            },
+            {
+                path: '/listMembersAdmin',
+                name: 'ListMembersAdmin',
+                component: ListMembersAdmin
+            },
         ],
 
     },

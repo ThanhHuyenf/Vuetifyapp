@@ -118,7 +118,7 @@ export default {
           width: '12%'
         },
         {
-          text: 'Số lượng giảng viên',
+          text: 'Số lượng CVHT',
           align: 'start',
           value: 'countTeachers',
           width: '14%'

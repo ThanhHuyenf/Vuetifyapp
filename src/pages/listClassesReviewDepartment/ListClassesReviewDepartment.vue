@@ -92,9 +92,7 @@
               <router-link :to="{
                                  name: 'QuanLyDuyetKhoa.Detail',
                                  params: {
-                                   class: item.lop,
-                                   hocKy: 1,
-                                   namHoc: '2020-2021'
+                                   markId: item.markId
                                  }
               }">
                 <div class="detail-class">Chi tiết</div>
@@ -132,76 +130,29 @@ export default {
         {
           text: 'Lớp',
           align: 'start',
-          value: 'lop',
+          value: 'className',
           width: '6%'
         },
         {
           text: 'Cố vấn học tập',
           align: 'start',
-          value: 'coVan',
+          value: 'teacherName',
           sortable: false,
           width: '15%'
         },
         {
-          text: 'Xuất sắc',
+          text: 'Năm học',
           align: 'left',
           sortable: false,
-          value: 'xuatSac',
+          value: 'namHoc',
           width: '7%'
         },
         {
-          text: 'Tốt',
+          text: 'Học kỳ',
           align: 'left',
           sortable: false,
-          value: 'tot',
+          value: 'semester',
           width: '6%'
-        },
-        {
-          text: 'Khá',
-          align: 'left',
-          sortable: false,
-          value: 'kha',
-          width: '6%'
-        },
-        {
-          text: 'TB khá',
-          align: 'left',
-          sortable: false,
-          value: 'tbkha',
-          width: '6%'
-        },
-        {
-          text: 'TB',
-          align: 'left',
-          sortable: false,
-          value: 'tb',
-          width: '6%'
-        }, {
-          text: 'Yếu',
-          align: 'left',
-          sortable: false,
-          value: 'yeu',
-          width: '6%'
-        }, {
-          text: 'Kém',
-          align: 'left',
-          sortable: false,
-          value: 'kem',
-          width: '6%'
-        },
-        {
-          text: 'Tong so',
-          align: 'start',
-          value: 'tongSo',
-          sortable: false,
-          width: '6%'
-        },
-        {
-          text: 'Trạng thái',
-          align: 'start',
-          value: 'trangThai',
-          sortable: false,
-          width: '10%'
         },
         {
           text: 'Tác vụ',
@@ -222,102 +173,6 @@ export default {
   },
   created() {
     this.getData()
-    this.items = [{
-      lop: '67A',
-      coVan: 'Nguyễn Thanh Huyền',
-      xuatSac : 5,
-      tot: 20,
-      kha: 8,
-      tbkha: 0,
-      tb: 0,
-      yeu: 0,
-      kem: 0,
-      tongSo: 33
-    },
-      {
-        lop: '67B',
-        coVan: 'Nguyễn Thị Hạnh',
-        xuatSac : 2,
-        tot: 22,
-        kha: 5,
-        tbkha: 0,
-        tb: 0,
-        yeu: 0,
-        kem: 0,
-        tongSo: 29
-      },
-      {
-        lop: '67C',
-        coVan: 'Đoàn Thị Quế',
-        xuatSac : 1,
-        tot: 25,
-        kha: 3,
-        tbkha: 0,
-        tb: 0,
-        yeu: 0,
-        kem: 0,
-        tongSo: 28
-      },
-      {
-        lop: '67D',
-        coVan: 'Nguyễn Thị Hạnh',
-        xuatSac : 4,
-        tot: 20,
-        kha: 6,
-        tbkha: 0,
-        tb: 0,
-        yeu: 0,
-        kem: 0,
-        tongSo: 30
-      },
-      {
-        lop: '68A',
-        coVan: 'Nguyễn Thị Quỳnh Hoa',
-        xuatSac : 5,
-        tot: 20,
-        kha: 8,
-        tbkha: 0,
-        tb: 0,
-        yeu: 0,
-        kem: 0,
-        tongSo: 33
-      },
-      {
-        lop: '68B',
-        coVan: 'Nguyễn Thị Quỳnh Hoa',
-        xuatSac : 2,
-        tot: 22,
-        kha: 5,
-        tbkha: 0,
-        tb: 0,
-        yeu: 0,
-        kem: 0,
-        tongSo: 29
-      },
-      {
-        lop: '68C',
-        coVan: 'Đinh Hải Long',
-        xuatSac : 1,
-        tot: 25,
-        kha: 3,
-        tbkha: 0,
-        tb: 0,
-        yeu: 0,
-        kem: 0,
-        tongSo: 28
-      },
-      {
-        lop: '68D',
-        coVan: 'Nguyễn Thị Hạnh',
-        xuatSac : 4,
-        tot: 20,
-        kha: 6,
-        tbkha: 0,
-        tb: 0,
-        yeu: 0,
-        kem: 0,
-        tongSo: 30
-      }]
   },
   computed: {
     filteredItems() {
@@ -331,9 +186,14 @@ export default {
   },
   methods: {
     getData(){
-      this.$axios.get("http://localhost:3000/listClassTeacher")
+
+      this.$services.TeacherService.getListClass()
       .then(res => {
-        this.items = res.data
+        console.log("item class", res)
+        this.items = res.body
+        for(let i =0; i< this.items.length; i++){
+          this.items[i].namHoc = res.body[i].startYear + ' - ' +res.body[i].endYear
+        }
       })
     },
     edit(item) {

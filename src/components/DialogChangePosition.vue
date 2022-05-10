@@ -75,7 +75,7 @@ export default {
     changePosition() {
       this.loading = true
       this.$services.TeacherService.assignMonitor({id: this.item.userID})
-      .then(res => {
+      .then(() => {
         this.loading = false
         this.dialog = false
         this.$emit("done-change")

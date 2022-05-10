@@ -20,7 +20,7 @@
           </v-text-field>
 
           <v-text-field label="Mô tả"
-                        v-model="item.moTa">
+                        v-model="item.information">
           </v-text-field>
 
         </v-card-text>
@@ -59,15 +59,9 @@ export default {
       item: {}
     }
   },
-  computed: {
-    // eslint-disable-next-line vue/return-in-computed-property
-    // choice(){
-    //   this.option === "" ? true : false
-    // }
-  },
   methods: {
     openDialog(item) {
-      this.item = item
+      this.item = {...item}
       this.dialog = true
     },
     cancel() {

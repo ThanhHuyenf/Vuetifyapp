@@ -92,7 +92,6 @@ export default {
       ],
       departmentItems: [
         {text: 'Trang chủ', icon: 'mdi-home', to: "/homepage"},
-        {text: 'Sơ yếu lý lịch', icon: 'mdi-account', to: "/profile"},
         {text: 'Duyệt điểm', icon: 'mdi-check-bold', to: "/listClassesReviewDepartment"},
         {text: 'Danh sách lớp', icon: 'mdi-format-list-numbered', to: "/listClassesDepartment"},
         {text: 'Danh sách cố vấn học tập', icon: 'mdi-account-multiple', to: "/listTeachersDepartment"},
@@ -102,8 +101,10 @@ export default {
         // {text: 'Phiếu xét điểm rèn luyện', icon: 'mdi-file', to: "/pointTraining"},
         {text: 'Quản lý thời gian', icon: 'mdi-clock', to: "/manageTime"},
         {text: 'Quản lý khung điểm', icon: 'mdi-application-edit', to: "/pointFrame"},
+        {text: 'Báo cáo, thống kê', icon: 'mdi-file-document', to: "/statistic"},
         {text: 'Danh sách khoa', icon: 'mdi-format-list-bulleted', to: "/listDepartments"},
-        {text: 'Báo cáo, thống kê', icon: 'mdi-file-document', to: "/listDepartments"},
+        {text: 'Danh sách cố vấn học tập', icon: 'mdi-account-multiple', to: "/listTeacherAdmin"},
+        {text: 'Danh sách sinh viên', icon: 'mdi-account-group', to: "/listMembersAdmin"},
 
       ]
     }

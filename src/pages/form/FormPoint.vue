@@ -36,7 +36,11 @@ export default {
   data() {
     return {
       title: 'Chấm điểm rèn luyện',
-      message: ''
+      message: '',
+      dayNow: '',
+      monthNow: '',
+      yearNow: '',
+      name: "Huyền"
     }
   },
   created() {
@@ -47,8 +51,15 @@ export default {
       JSZipUtils.getBinaryContent(url, callback)
     },
     createDOC() {
+      let d = new Date()
+      this.dayNow = d.getDate()
+      this.monthNow = d.getMonth() + 1
+      this.yearNow = d.getFullYear()
+
       let prev = this.getLoadedPrev
       this.loadFile('/template/abcd.docx', function (error, content) {
+        let d = new Date()
+
         if (error) {
           throw error
         }
@@ -58,14 +69,19 @@ export default {
 
         try {
           doc.render({
+            ngay: 28,
+            thang: 4,
+            nam: d.getFullYear(),
             hocKy: 1,
             namHoc: '2021-2022',
-            hoTen: 'Le Thanh Huyen',
+            hoTen: "Lê Thanh Huyền",
             ngaySinh: '31/03/1999',
             msv: '675105050',
             lop: 'C',
             khoas: '67',
             khoa: 'CNTT',
+            sv1: '2',
+            sv2 : '4'
 
           })
         } catch (error) {
@@ -84,7 +100,7 @@ export default {
           type: "blob",
           mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         })
-        saveAs(out, "output.docx")
+        saveAs(out, "phieurenluyen.docx")
       })
     }
   }

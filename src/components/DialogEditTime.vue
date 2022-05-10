@@ -14,10 +14,9 @@
               <v-text-field label="Năm học" v-model="timeDetail.namHoc"></v-text-field>
             </v-col>
             <v-col cols="6">
-              <v-autocomplete label="Học kỳ"
-                              value="timeDetail.semester"
-                              :items="hocKy">
-              </v-autocomplete>
+              <v-text-field label="Học kỳ"
+                            v-model="timeDetail.semester">
+              </v-text-field>
             </v-col>
           </v-row>
           <!--          menuSV: quản lý datepicker của sv-->
@@ -228,7 +227,6 @@ export default {
   data() {
     return {
       dialog: false,
-      hocKy: ['1', '2'],
       timeDetail: [],
       menuSV: false,
       menuLT: false,
@@ -238,26 +236,32 @@ export default {
       dateLT: [],
       dateGV: [],
       dateK: [],
-      temp: []
+      temp: [],
+      type: ''
     }
   },
   methods: {
-    openDialog(item) {
+    openDialog(type, item) {
       //Nhận item từ component cha
-      this.timeDetail = item
-      //Format cho đúng định dạng để truyền vào datepicker
-      this.dateSV = this.timeDetail.tgSV.split(" - ").map(item => {
-        return moment(item, 'DD/MM/YYYY').format('YYYY-MM-DD')
-      })
-      this.dateLT = this.timeDetail.tgLT.split(" - ").map(item => {
-        return moment(item, 'DD/MM/YYYY').format('YYYY-MM-DD')
-      })
-      this.dateGV = this.timeDetail.tgGV.split(" - ").map(item => {
-        return moment(item, 'DD/MM/YYYY').format('YYYY-MM-DD')
-      })
-      this.dateK = this.timeDetail.tgK.split(" - ").map(item => {
-        return moment(item, 'DD/MM/YYYY').format('YYYY-MM-DD')
-      })
+      this.type = type
+      if (type == 'update') {
+        this.timeDetail = item
+        //Format cho đúng định dạng để truyền vào datepicker
+        this.dateSV = this.timeDetail.tgSV.split(" - ").map(item => {
+          return moment(item, 'DD/MM/YYYY').format('YYYY-MM-DD')
+        })
+        this.dateLT = this.timeDetail.tgLT.split(" - ").map(item => {
+          return moment(item, 'DD/MM/YYYY').format('YYYY-MM-DD')
+        })
+        this.dateGV = this.timeDetail.tgGV.split(" - ").map(item => {
+          return moment(item, 'DD/MM/YYYY').format('YYYY-MM-DD')
+        })
+        this.dateK = this.timeDetail.tgK.split(" - ").map(item => {
+          return moment(item, 'DD/MM/YYYY').format('YYYY-MM-DD')
+        })
+      }
+      if (type == 'addnew') this.timeDetail = {}
+
       //Mở dialog
       this.dialog = true
     },
@@ -267,45 +271,67 @@ export default {
           + moment(date2, 'YYYY-MM-DD').format('DD/MM/YYYY')
     },
     saveTime() {
-      this.$services.AdminService.fixTime({id: this.timeDetail.id}, {
-        startYear: "2021",
-        endYear: "2022",
-        semester: "1",
-        startTimeStudent : moment().format(this.temp.startTimeStudent),
-        endTimeStudent : moment().format(this.temp.endTimeStudent),
-        startTimeMonitor : moment().format(this.temp.startTimeMonitor),
-        endTimeMonitor : moment().format(this.temp.endTimeMonitor),
-        startTimeHeadMaster : moment().format(this.temp.startTimeHeadMaster),
-        endTimeHeadMaster : moment().format(this.temp.endTimeHeadMaster),
-        startTimeDepartment : moment().format(this.temp.startTimeDepartment),
-        endTimeDepartment : moment().format(this.temp.endTimeDepartment),
-        status: this.timeDetail.status
-      })
-      .then( () => {
-        this.$emit('done-edit', this.timeDetail)
-        this.dialog = false
-      })
+      if(this.type == 'update'){
+        this.$services.AdminService.fixTime({id: this.timeDetail.id}, {
+          startYear: this.timeDetail.namHoc.split('-')[0],
+          endYear: this.timeDetail.namHoc.split('-')[1],
+          semester: this.timeDetail.semester,
+          startTimeStudent: moment().format(this.temp.startTimeStudent),
+          endTimeStudent: moment().format(this.temp.endTimeStudent),
+          startTimeMonitor: moment().format(this.temp.startTimeMonitor),
+          endTimeMonitor: moment().format(this.temp.endTimeMonitor),
+          startTimeHeadMaster: moment().format(this.temp.startTimeHeadMaster),
+          endTimeHeadMaster: moment().format(this.temp.endTimeHeadMaster),
+          startTimeDepartment: moment().format(this.temp.startTimeDepartment),
+          endTimeDepartment: moment().format(this.temp.endTimeDepartment),
+          status: this.timeDetail.status
+        })
+            .then(() => {
+              this.$emit('done-edit', this.timeDetail)
+              this.dialog = false
+            })
+      }
+      if(this.type == 'addnew'){
+        console.log("asgfdjhgasf", this.timeDetail)
+        this.$services.AdminService.createNewTime({
+          id: 10,
+          startYear: this.timeDetail.namHoc.split('-')[0],
+          endYear: this.timeDetail.namHoc.split('-')[1],
+          semester: this.timeDetail.semester,
+          startTimeStudent: moment(this.timeDetail.tgSV.split('-')[0], 'DD/MM/YYYY').format('YYY-MM-DD'),
+          endTimeStudent: moment(this.timeDetail.tgSV.split('-')[1], 'DD/MM/YYYY').format('YYY-MM-DD'),
+          startTimeMonitor: moment(this.timeDetail.tgLT.split('-')[0], 'DD/MM/YYYY').format('YYY-MM-DD'),
+          endTimeMonitor: moment(this.timeDetail.tgLT.split('-')[1], 'DD/MM/YYYY').format('YYY-MM-DD'),
+          startTimeHeadMaster: moment(this.timeDetail.tgGV.split('-')[0], 'DD/MM/YYYY').format('YYY-MM-DD'),
+          endTimeHeadMaster: moment(this.timeDetail.tgGV.split('-')[1], 'DD/MM/YYYY').format('YYY-MM-DD'),
+          startTimeDepartment: moment(this.timeDetail.tgK.split('-')[0], 'DD/MM/YYYY').format('YYY-MM-DD'),
+          endTimeDepartment: moment(this.timeDetail.tgK.split('-')[1],'DD/MM/YYYY' ).format('YYYY-MM-DD'),
+        })
+        .then(()=> {
+          console.log("Them Thanh coong")
+        })
+      }
     },
-    saveDateSV(date){
-      this.timeDetail.tgSV =this.formatDate(date[0], date[1])
+    saveDateSV(date) {
+      this.timeDetail.tgSV = this.formatDate(date[0], date[1])
       this.temp.startTimeStudent = date[0]
       this.temp.endTimeStudent = date[1]
       this.$refs.menuSV.save(date)
     },
-    saveDateLT(date){
-      this.timeDetail.tgLT =this.formatDate(date[0], date[1])
+    saveDateLT(date) {
+      this.timeDetail.tgLT = this.formatDate(date[0], date[1])
       this.temp.startTimeMonitor = date[0]
       this.temp.endTimeMonitor = date[1]
       this.$refs.menuLT.save(date)
     },
-    saveDateGV(date){
-      this.timeDetail.tgGV =this.formatDate(date[0], date[1])
+    saveDateGV(date) {
+      this.timeDetail.tgGV = this.formatDate(date[0], date[1])
       this.temp.startTimeHeadMaster = date[0]
       this.temp.endTimeHeadMaster = date[1]
       this.$refs.menuGV.save(date)
     },
-    saveDateK(date){
-      this.timeDetail.tgK =this.formatDate(date[0], date[1])
+    saveDateK(date) {
+      this.timeDetail.tgK = this.formatDate(date[0], date[1])
       this.temp.startTimeDepartment = date[0]
       this.temp.endTimeDepartment = date[1]
       this.$refs.menuK.save(date)

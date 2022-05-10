@@ -58,7 +58,7 @@ export default {
   name: "DialogEditTeacher",
   data() {
     return {
-      dialog: true,
+      dialog: false,
       item: {}
     }
   },

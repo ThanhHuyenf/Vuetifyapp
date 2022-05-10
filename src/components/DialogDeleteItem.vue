@@ -29,7 +29,7 @@
               text
               depressed
               color="primary"
-              @click="dialog = false"
+              @click="accept"
           >
             Đồng ý
           </v-btn>
@@ -44,12 +44,20 @@ export default {
   name: "DialogDeleteItem",
   data() {
     return {
-      dialog: false
+      dialog: false,
+      item: ''
     }
   },
   methods: {
-    openDialog(){
+    openDialog(item) {
+      this.item = item
       this.dialog = true
+    },
+    accept() {
+      this.$emit('accept', this.item)
+    },
+    closeDialog(){
+      this.dialog = false
     }
   }
 }

@@ -255,10 +255,10 @@ export default {
           .then(res => {
             console.log(res.data)
             this.items = res.data
-            this.items.forEach(element => {
-              element.email = "huyenntt@hnue.edu.vn"
-              element.listClasses = ["67A", "67B"]
-            })
+            // this.items.forEach(element => {
+            //   element.email = "huyenntt@hnue.edu.vn"
+            //   element.listClasses = ["67A", "67B"]
+            // })
           })
     },
     edit(item) {
