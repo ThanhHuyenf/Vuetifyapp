@@ -103,7 +103,7 @@ export default {
               this.loading = false
               this.wrongAcc = true
               this.message = 'Tài khoản/ mật khẩu không chính xác'
-              this.clear()
+              // this.clear()
             })
       }
     }
