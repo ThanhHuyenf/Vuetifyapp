@@ -71,9 +71,9 @@
 
 <script>
 import Header from "@/components/Header";
-import DialogDeleteItem from "@/components/DialogDeleteItem";
-import DialogEditClass from "@/components/DialogEditClass";
-import DialogAddClasses from "@/components/DialogAddClasses";
+import DialogDeleteItem from "@/components/Dialogs/DeleteItem";
+import DialogEditClass from "@/components/Dialogs/EditClass";
+import DialogAddClasses from "@/components/Dialogs/AddClasses";
 
 export default {
   name: "ListClassesKhoa",

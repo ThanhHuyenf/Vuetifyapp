@@ -135,7 +135,7 @@
 <script>
 import Header from "@/components/Header";
 import Counter from "@/components/Counter";
-import DialogChangePosition from "@/components/DialogChangePosition";
+import DialogChangePosition from "@/components/Dialogs/ChangePosition";
 
 export default {
   name: "ListMembersGV",

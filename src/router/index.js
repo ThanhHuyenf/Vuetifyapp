@@ -177,21 +177,21 @@ const router = new VueRouter({
     routes
 })
 
-router.beforeEach((to, from, next) => {
-    if (to.name === 'Login') {
-        return next();
-    }
-    // localStorage.setItem('me','abc')
-    const account = localStorage.getItem('me');
-    if (!account) {
-        return next({
-            name: 'Login',
-            query: {
-                redirect: '/login',
-            },
-        });
-    }
-    return next()
-})
+// router.beforeEach((to, from, next) => {
+//     if (to.name === 'Login') {
+//         return next();
+//     }
+//     // localStorage.setItem('me','abc')
+//     const account = localStorage.getItem('me');
+//     if (!account) {
+//         return next({
+//             name: 'Login',
+//             query: {
+//                 redirect: '/login',
+//             },
+//         });
+//     }
+//     return next()
+// })
 
 export default router

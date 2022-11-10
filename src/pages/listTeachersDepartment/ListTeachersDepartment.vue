@@ -162,8 +162,8 @@
 
 <script>
 import Header from "@/components/Header";
-import DialogEditTeacher from "@/components/DialogEditTeacher";
-import DialogAddTeacher from "@/components/DialogAddTeacher";
+import DialogEditTeacher from "@/components/Dialogs/EditTeacher";
+import DialogAddTeacher from "@/components/Dialogs/AddTeacher";
 
 export default {
   name: "ListTeachersDepartment",
