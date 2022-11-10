@@ -62,7 +62,7 @@
 
 <script>
 import Header from "@/components/Header";
-import DialogAddTeacher from "@/components/DialogAddTeacher";
+import DialogAddTeacher from "@/components/Dialogs/AddTeacher";
 
 export default {
   name: "ListTeacherAdmin",

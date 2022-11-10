@@ -58,10 +58,10 @@
 
 <script>
 import Header from "@/components/Header";
-import DialogEditTime from "@/components/DialogEditTime";
+import DialogEditTime from "@/components/Dialogs/EditTime";
 import moment from "moment";
 // import DialogAddTime from "@/components/DialogAddTime";
-import DialogDeleteItem from "@/components/DialogDeleteItem";
+import DialogDeleteItem from "@/components/Dialogs/DeleteItem";
 
 export default {
   name: "ManageTime",

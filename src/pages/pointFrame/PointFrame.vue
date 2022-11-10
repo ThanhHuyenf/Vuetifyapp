@@ -60,8 +60,8 @@
 
 <script>
 import Header from "@/components/Header";
-import DialogPointFrame from "@/components/DialogPointFrame";
-import DialogDeleteItem from "@/components/DialogDeleteItem";
+import DialogPointFrame from "@/components/Dialogs/PointFrame";
+import DialogDeleteItem from "@/components/Dialogs/DeleteItem";
 
 export default {
   name: "PointFrame",

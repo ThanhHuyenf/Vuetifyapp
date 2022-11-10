@@ -70,9 +70,9 @@
 
 <script>
 import Header from "@/components/Header";
-import DialogAddDepartment from "@/components/DialogAddDepartment";
-import DialogEditDepartment from "@/components/DialogEditDepartment";
-import DialogDeleteItem from "@/components/DialogDeleteItem";
+import DialogAddDepartment from "@/components/Dialogs/AddDepartment";
+import DialogEditDepartment from "@/components/Dialogs/EditDepartment";
+import DialogDeleteItem from "@/components/Dialogs/DeleteItem";
 
 export default {
   name: "ListFaculties",

@@ -104,8 +104,8 @@
 <script>
 import Header from "@/components/Header";
 import moment from "moment";
-import DialogAddStudent from "@/components/DialogAddStudent";
-import DialogDeleteItem from "@/components/DialogDeleteItem";
+import DialogAddStudent from "@/components/Dialogs/AddStudent";
+import DialogDeleteItem from "@/components/Dialogs/DeleteItem";
 
 export default {
   name: "ListMembersAdmin",
