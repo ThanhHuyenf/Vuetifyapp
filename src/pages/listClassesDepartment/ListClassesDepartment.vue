@@ -43,9 +43,9 @@
                   </v-list-item>
                   <v-list-item>
                     <router-link :to="{
-                                 name: 'DetailClass',
+                                 name: 'QuanLyDuyetKhoa.Detail',
                                  params: {
-                                   id: item.classId,
+                                   markId: item.className,
                                  }
               }">
                       <v-list-item-title>Xem chi tiết</v-list-item-title>
@@ -74,13 +74,14 @@ import Header from "@/components/Header";
 import DialogDeleteItem from "@/components/Dialogs/DeleteItem";
 import DialogEditClass from "@/components/Dialogs/EditClass";
 import DialogAddClasses from "@/components/Dialogs/AddClasses";
+import {listClassesDepartment} from "@/testData"
 
 export default {
   name: "ListClassesKhoa",
   components: {DialogAddClasses, DialogEditClass, DialogDeleteItem, Header},
-  created() {
-    this.getData()
-  },
+  // created() {
+  //   // this.getData()
+  // },
   data() {
     return {
       title: 'Danh sách lớp',
@@ -145,6 +146,9 @@ export default {
         }
       ]
     }
+  },
+  created(){
+    this.items = listClassesDepartment
   },
   computed: {
     filteredItems() {

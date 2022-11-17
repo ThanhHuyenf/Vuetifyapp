@@ -21,6 +21,7 @@
 
 <script>
 import Header from "@/components/Header";
+// import {listClassesDepartment} from "@/testData"
 
 export default {
   name: "DetailClass",
@@ -125,6 +126,7 @@ export default {
   },
   created() {
     this.getData()
+    // item
   },
   methods: {
     getData() {

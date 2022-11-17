@@ -82,6 +82,7 @@
 
 <script>
 import Header from "@/components/Header";
+import {tempDetail} from "@/testData"
 
 export default {
   name: "DetailClassReviewDepartment",
@@ -111,7 +112,9 @@ export default {
             radius: "55%",
             center: ["50%", "60%"],
             data: [
-              {value: 3, name: "Yếu"},
+              {value: 6, name: "Tốt"},
+              {value: 3, name: "Xuất sắc"},
+              {value: 1, name: "Trung bình"},
             ],
             emphasis: {
               itemStyle: {
@@ -199,7 +202,10 @@ export default {
     }
   },
   created() {
-    this.getData()
+    this.items = tempDetail.map(item => {
+      return {...item, diemTB : Math.floor((item.totalStudentScore + item.totalMonitorScore + item.totalTeacherScore)/3) }
+    })
+    // this.getData()
   },
   computed: {
     filteredItems() {

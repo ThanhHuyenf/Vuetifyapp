@@ -110,6 +110,7 @@
 
 <script>
 import Header from "@/components/Header";
+import {listClassesReviewDepartmentData} from "@/testData"
 
 export default {
   name: "ListClassGV",
@@ -172,7 +173,8 @@ export default {
     }
   },
   created() {
-    this.getData()
+    // this.getData()
+    this.data = listClassesReviewDepartmentData
   },
   computed: {
     filteredItems() {

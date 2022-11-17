@@ -27,7 +27,7 @@
       <div class="row">
         <div class="col-5">Họ và tên : {{ infor.name }}</div>
         <div class="col-3">Ngày sinh: {{ infor.birthDate }}</div>
-        <div class="col-4">Mã sinh viên : {{ infor.studentId }}</div>
+        <div class="col-4">Mã sinh viên : {{ infor.userID }}</div>
       </div>
 
       <div class="row">
@@ -867,6 +867,7 @@
 <script>
 import {mapActions} from "vuex";
 import moment from "moment";
+import {listMemberTeacherData} from "@/testData/index.js"
 
 export default {
   name: "FormPointTraining",
@@ -878,7 +879,7 @@ export default {
     return {
       student: false,
       monitor: false,
-      department: false,
+      department: true,
       dialogComplete: false,
       dayNow: '',
       monthNow: '',
@@ -889,7 +890,7 @@ export default {
         name: '',
         birthDate: '',
         semester: '',
-        studentId: '',
+        userID: '',
         year: '',
         className: ''
       },
@@ -1067,11 +1068,12 @@ export default {
         {pointId: 55, teacherScore: 0},
         {pointId: 56, teacherScore: 0},
       ],
+      availableForMark: true
     }
   },
   created() {
-    this.getTag()
-    this.getData()
+    // this.getTag()
+    // this.getData()
 
     if (this.tag.role === 'Student') {
       this.message = 'Điểm số của bạn đã được lưu! Quay về trang chủ!'
@@ -1084,14 +1086,19 @@ export default {
     this.monthNow = d.getMonth() + 1
     this.yearNow = d.getFullYear()
 
+    const tempUser = listMemberTeacherData.filter(item => item.userID === this.$route.params.id)
+    this.infor = {...tempUser[0]}
+    console.log(tempUser);
+
+
   },
   computed: {
     tag() {
       return this.$store.state.tag
     },
-    availableForMark() {
-      return this.$store.state.availableForMark
-    },
+    // availableForMark() {
+    //   return this.$store.state.availableForMark
+    // },
     averageStudent() {
       let averageStu = this.markDetailStudent.reduce((averageStu, element) => averageStu + parseFloat(element.studentScore), 0);
       return averageStu
@@ -1221,6 +1228,7 @@ export default {
           this.markDetailTeacher.map(item => item.teacherScore = 0)
           break;
       }
+      this.markDetailTeacher.map(item => item.teacherScore = 0)
     },
     completed() {
       this.dialogComplete = false

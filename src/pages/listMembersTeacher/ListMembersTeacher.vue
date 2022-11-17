@@ -4,9 +4,9 @@
       <div slot="data">
         <v-item-group class="mt-2 pa-4">
           <div>
-            <Counter :year="2022"
+            <Counter :year="2023"
                      :month="11"
-                     :date="9"
+                     :date="20"
                      :hours="16"
                      :minute="0"></Counter>
           </div>
@@ -32,9 +32,9 @@
               class="elevation-1 rounded-0 mt-4"
           >
 
-            <template #item.index="{ item }">
+            <!-- <template #item.index="{ item }">
               {{ filteredItems.indexOf(item) + 1 }}
-            </template>
+            </template> -->
 
             <template v-slot:header.className="{header}">
               {{ header.text }}
@@ -136,6 +136,7 @@
 import Header from "@/components/Header";
 import Counter from "@/components/Counter";
 import DialogChangePosition from "@/components/Dialogs/ChangePosition";
+import {listMemberTeacherData} from "@/testData/index.js"
 
 export default {
   name: "ListMembersGV",
@@ -148,19 +149,19 @@ export default {
     return {
       title: "Danh sách thành viên",
       headers: [
-        {
-          text: '#',
-          align: 'left',
-          sortable: false,
-          value: 'index',
-          width: '5%'
-        },
+        // {
+        //   text: '#',
+        //   align: 'left',
+        //   sortable: false,
+        //   value: 'index',
+        //   width: '5%'
+        // },
         {
           text: 'Mã sinh viên',
           align: 'start',
           sortable: false,
           value: 'userID',
-          width: '10%'
+          width: '15%'
         },
         {
           text: 'Họ tên',
@@ -220,7 +221,9 @@ export default {
     }
   },
   created() {
-    this.getData()
+    // this.getData()
+    console.log("listMemberTeacherData", listMemberTeacherData);
+    this.items = listMemberTeacherData
   },
   computed: {
     filteredItems() {
